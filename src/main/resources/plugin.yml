@@ -1,0 +1,10 @@
+version: 2.4.7
+name: DragonCore
+main: eos.moe.dragoncore.DragonCore
+depend: [PlaceholderAPI]
+softdepend: [MythicMobs,DragonArmourers,SX-Attribute,AttributePlus]
+commands:
+  dragoncore:
+    aliases:
+      - core
+
