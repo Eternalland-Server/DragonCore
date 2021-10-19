@@ -32,7 +32,6 @@ public class MainCommand implements TabExecutor {
         registerCommand(new NameCommand());
         registerCommand(new OpenHudCommand());
         registerCommand(new OpenGuiCommand());
-        registerCommand(new TestCommand());
         registerCommand(new SoundCommand());
         registerCommand(new FunctionCommand());
         registerCommand(new Sound1Command());

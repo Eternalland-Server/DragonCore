@@ -38,12 +38,9 @@ public class DragonCore extends JavaPlugin {
     public void onEnable() {
 
         Bukkit.getConsoleSender().sendMessage("§a************************************************************");
-        Bukkit.getConsoleSender().sendMessage("§6[DragonCore] §a欢迎使用【龙之核心】，插件作者为QQ448780139");
-        Bukkit.getConsoleSender().sendMessage("§6[DragonCore] §a欢迎加入QQ交流群: 901704037");
-        Bukkit.getConsoleSender().sendMessage("§6[DragonCore] §a欢迎注册社区网站: https://dragoncore.top/");
+        Bukkit.getConsoleSender().sendMessage("§6[DragonCore] §a龙之核心插件原作者: 空白格(QQ: 448780139)");
+        Bukkit.getConsoleSender().sendMessage("§6[DragonCore] §a当前版本维护开发者: justwei(QQ: 1731598625)");
         Bukkit.getConsoleSender().sendMessage("§a************************************************************");
-
-        new Metrics(this, 10207);
 
         instance = this;
 
@@ -74,7 +71,6 @@ public class DragonCore extends JavaPlugin {
         registerListener(new PlayerJoinListener());
         registerListener(new PlayerKeyListener());
         registerListener(new PlayerChatListener());
-        registerListener(new EasyScreenListener());
         registerListener(new PlaceholderListener());
         registerListener(new SlotListener(this));
 

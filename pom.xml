@@ -69,22 +69,6 @@
             <version>1.2.56</version>
             <scope>provided</scope>
         </dependency>
-
-        <dependency>
-            <groupId>org.serverct.ersha</groupId>
-            <artifactId>jd</artifactId>
-            <version>1.12.2-R0.1-SNAPSHOT</version>
-            <scope>system</scope>
-            <systemPath>${pom.basedir}/libs/AttributePlus.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>github.saukiya</groupId>
-            <artifactId>sxattribute</artifactId>
-            <version>1.12.2-R0.1-SNAPSHOT</version>
-            <scope>system</scope>
-            <systemPath>${pom.basedir}/libs/SX-Attribute-2.0.3.jar</systemPath>
-        </dependency>
     </dependencies>
 
     <repositories>

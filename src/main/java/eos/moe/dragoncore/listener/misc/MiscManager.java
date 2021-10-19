@@ -30,18 +30,6 @@ public class MiscManager implements Listener {
 
         PluginManager pm = Bukkit.getPluginManager();
         YamlConfiguration config = Config.getConfig();
-        if (pm.isPluginEnabled("AttributePlus") && config.getBoolean("AttributePlus", true)) {
-            Bukkit.getConsoleSender().sendMessage(" - 已兼容AP属性插件");
-            plugin.registerListener(new AttributePlusHook());
-        }
-        if (pm.isPluginEnabled("SX-Attribute") && config.getBoolean("SX-Attribute", true)) {
-            if (pm.getPlugin("SX-Attribute").getDescription().getAuthors().contains("KunSs")) {
-                Bukkit.getConsoleSender().sendMessage(" - §c不兼容重置版SX属性插件,可在群内拓展插件下载兼容插件");
-            } else {
-                Bukkit.getConsoleSender().sendMessage(" - 已兼容SX属性插件");
-                plugin.registerListener(new SXAttributeHook());
-            }
-        }
         if (pm.isPluginEnabled("DragonArmourers") && config.getBoolean("DragonArmourers", false)) {
             plugin.registerListener(new DragonArmourersHook(this));
             Bukkit.getConsoleSender().sendMessage(" - 已兼容龙之时装付费版");
