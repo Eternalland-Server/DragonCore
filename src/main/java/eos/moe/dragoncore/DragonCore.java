@@ -5,7 +5,7 @@ import eos.moe.dragoncore.command.MainCommand;
 import eos.moe.dragoncore.config.Config;
 import eos.moe.dragoncore.database.IDataBase;
 import eos.moe.dragoncore.database.YamlRepository;
-import eos.moe.dragoncore.database.mysql.MysqlRepository;
+import eos.moe.dragoncore.database.MysqlRepository;
 import eos.moe.dragoncore.listener.*;
 import eos.moe.dragoncore.listener.misc.MiscManager;
 import eos.moe.dragoncore.mythicmobs.listener.MythicMobsListener;
@@ -47,10 +47,10 @@ public class DragonCore extends JavaPlugin {
 
         Config.init(this);
         if (Config.getConfig().getBoolean("SQL.enable")) {
-            Bukkit.getConsoleSender().sendMessage("§6当前数据存储: &cMysql");
+            Bukkit.getConsoleSender().sendMessage("§6当前数据存储: §cMysql");
             DB = new MysqlRepository(this);
         } else {
-            Bukkit.getConsoleSender().sendMessage("§6当前数据存储: &cYaml");
+            Bukkit.getConsoleSender().sendMessage("§6当前数据存储: §cYaml");
             String playerDataFolder = Config.getConfig().getString("PlayerDataFolder");
             if (playerDataFolder == null || playerDataFolder.isEmpty()) {
                 DB = new YamlRepository(new File(getDataFolder(), "PlayerData"));

@@ -1,17 +1,18 @@
 package eos.moe.dragoncore.database.mysql;
 
-public enum AccountTable {
+public enum DragonCoreTable {
 
-    DRAGON_CORE_ACCOUNT(new DatabaseTable("dragoncore_account",
+    DRAGON_CORE_SLOTS(new DatabaseTable("dragoncore_slots",
             new String[] {
-                    "`uuid` varchar(36) NOT NULL PRIMARY KEY",
-                    "`player` varchar(48) NOT NULL",
-                    "`slots` json default NULL"
+                    "`uuid` varchar(36) NOT NULL",
+                    "`slot` varchar(32) NOT NULL",
+                    "`data` text default NULL",
+                    "PRIMARY KEY (`uuid`,`slot`)",
             }));
 
-    private DatabaseTable table;
+    private final DatabaseTable table;
 
-    AccountTable(DatabaseTable table) {
+    DragonCoreTable(DatabaseTable table) {
         this.table = table;
     }
 
