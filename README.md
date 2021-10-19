@@ -1,0 +1,3 @@
+# DragonCore
+
+DragonCore plugin
