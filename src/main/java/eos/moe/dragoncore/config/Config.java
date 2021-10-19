@@ -2,6 +2,7 @@ package eos.moe.dragoncore.config;
 
 import eos.moe.dragoncore.DragonCore;
 import eos.moe.dragoncore.api.event.ConfigLoadEvent;
+import eos.moe.dragoncore.api.event.YamlSendFinishedEvent;
 import eos.moe.dragoncore.network.PacketSender;
 import eos.moe.dragoncore.util.DYaml;
 import lombok.SneakyThrows;
@@ -99,6 +100,10 @@ public class Config {
             if (entry.getKey().equals("SlotConfig.yml")) continue;
             PacketSender.sendYaml(player, entry.getKey(), entry.getValue());
         }
+
+        YamlSendFinishedEvent event = new YamlSendFinishedEvent(player);
+        event.callEvent();
+
         PacketSender.sendFinished(player);
     }
 
