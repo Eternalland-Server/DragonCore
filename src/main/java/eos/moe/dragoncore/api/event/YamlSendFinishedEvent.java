@@ -16,10 +16,10 @@ public class YamlSendFinishedEvent extends PlayerEvent {
 
     @Override
     public HandlerList getHandlers() {
-        return getHANDLERS();
+        return getHandlerList();
     }
 
-    public static HandlerList getHANDLERS() {
+    public static HandlerList getHandlerList() {
         return HANDLERS;
     }
 
