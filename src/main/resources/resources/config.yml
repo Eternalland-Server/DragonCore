@@ -1,18 +1,5 @@
 SQL:
-  enable: false
-  table: "dragoncore"
-  hostname: "127.0.0.1"
-  port: "3306"
-  #数据库名，库需要自己创建，否则连接失败
-  database: "database"
-  username: "root"
-  password: "root"
-  # 最大连接数(默认为处理器数*2)
-  maxconnections: 0
-  properties:
-    - "useSSL=false"
-    - "useUnicode=true"
-    - "characterEncoding=utf8"
+  enable: true
 
 # 玩家背包数据目录(当SQL为false时可以使用该选项)
 # 填空则是以插件目录内的PlayerData进行保存
