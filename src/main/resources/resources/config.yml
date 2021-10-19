@@ -5,7 +5,7 @@ SQL:
 # 填空则是以插件目录内的PlayerData进行保存
 PlayerDataFolder: ""
 
-JoinPacketDelay: 60
+JoinPacketDelay: 40
 
 # 压缩包需放在DragonCore目录下，并命名为Resource.zip
 Password: "压缩包密码"
