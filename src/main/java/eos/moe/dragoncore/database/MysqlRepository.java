@@ -13,6 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,8 +34,7 @@ public class MysqlRepository implements IDataBase {
 
     @Override
     public void getData(Player player, String identifier, Callback<ItemStack> callback) {
-        try {
-            DatabaseQuery query = dataManager.createQuery(DragonCoreTable.DRAGON_CORE_SLOTS.getTableName(), new String[] {"uuid", "slot"}, new String[] {player.getUniqueId().toString(), identifier});
+        try (DatabaseQuery query = dataManager.createQuery(DragonCoreTable.DRAGON_CORE_SLOTS.getTableName(), new String[] {"uuid", "slot"}, new String[] {player.getUniqueId().toString(), identifier})) {
             ResultSet result = query.getResultSet();
             if (result.next()) {
                 String data = result.getString("data");
@@ -54,7 +54,7 @@ public class MysqlRepository implements IDataBase {
                 Scheduler.run(() -> callback.onResult(new ItemStack(Material.AIR)));
             }
         }
-        catch (Exception e) {
+        catch (SQLException e) {
             e.printStackTrace();
             Scheduler.run(callback::onFail);
         }
@@ -76,8 +76,7 @@ public class MysqlRepository implements IDataBase {
     public void getAllData(Player player, Callback<Map<String, ItemStack>> callback) {
         Map<String, ItemStack> items = new HashMap<>();
 
-        try {
-            DatabaseQuery query = dataManager.createQuery(DragonCoreTable.DRAGON_CORE_SLOTS.getTableName(), "uuid", player.getUniqueId().toString());
+        try (DatabaseQuery query = dataManager.createQuery(DragonCoreTable.DRAGON_CORE_SLOTS.getTableName(), "uuid", player.getUniqueId().toString())) {
             ResultSet result = query.getResultSet();
             while (result.next()) {
                 String slot = result.getString("slot");
