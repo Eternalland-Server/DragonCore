@@ -30,6 +30,7 @@ public class MainCommand implements TabExecutor {
         registerCommand(new ColorCommand());
         registerCommand(new LoreCommand());
         registerCommand(new NameCommand());
+        registerCommand(new GuiListCommand());
         registerCommand(new OpenHudCommand());
         registerCommand(new OpenGuiCommand());
         registerCommand(new SoundCommand());
@@ -73,6 +74,7 @@ public class MainCommand implements TabExecutor {
                 sender.sendMessage("/core color <#FFFFFF>   设置物品附魔颜色");
                 sender.sendMessage("/core lore <#ff0000-#1800ff-#00ff48-#e4ff00>喵喵喵喵喵喵喵喵<end>   添加渐变Lore");
                 sender.sendMessage("/core name <#ff0000-#1800ff-#00ff48-#e4ff00>喵喵喵喵喵喵喵喵<end>   添加渐变名称");
+                sender.sendMessage("/core guilist   查看界面列表");
                 sender.sendMessage("/core opengui <玩家> <文件名>   令玩家打开某个界面");
                 sender.sendMessage("/core openhud <玩家> <文件名>   令玩家打开某个hud");
                 sender.sendMessage("/core reload 重载配置文件");
