@@ -40,7 +40,10 @@ public class PacketSender extends PluginMessageSender {
         });
     }
 
+    public static void sendGuiYaml(Player player, String path, YamlConfiguration yaml) {
+        sendYaml(player, String.format("Gui/%s", path), yaml);
 
+    }
     public static void sendYaml(Player player, String fileName, YamlConfiguration yaml) {
         YamlPacketEvent yamlPacketEvent = new YamlPacketEvent(player, fileName, yaml);
         Bukkit.getPluginManager().callEvent(yamlPacketEvent);
