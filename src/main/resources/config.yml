@@ -16,20 +16,8 @@ ClientTitle: "欢迎使用龙之核心,该标题可在config.yml修改"
 # 聊天若输入渐变格式，会变成渐变色文本
 replaceChatColor: true
 
-# 是否兼容AP属性插件
-AttributePlus: true
-# 是否兼容SX属性插件
-SX-Attribute: true
 # 是否兼容龙之时装付费版
 DragonArmourers: false
-
-# 提示：所有文件(除了config.yml)均可创建一个同名的文件夹，里面任意的yml均会载入
-# 例如插件存在EntityModel.yml
-# 则可以创建一个文件夹EntityModel，里面的所有yml文件都会载入
-# DragonCore/
-#  - EntityModel/
-#    - 日系汽车.yml
-#    - 国产汽车.yml
 
 ScriptTools:
   # 这四个已默认拥有,不需要添加

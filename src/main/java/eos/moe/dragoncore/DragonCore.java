@@ -2,7 +2,8 @@ package eos.moe.dragoncore;
 
 
 import eos.moe.dragoncore.command.MainCommand;
-import eos.moe.dragoncore.config.Config;
+import eos.moe.dragoncore.config.FileManager;
+import eos.moe.dragoncore.config.sub.ConfigFile;
 import eos.moe.dragoncore.database.IDataBase;
 import eos.moe.dragoncore.database.YamlRepository;
 import eos.moe.dragoncore.database.MysqlRepository;
@@ -26,6 +27,7 @@ public class DragonCore extends JavaPlugin {
     private static DragonCore instance;
 
     private MiscManager miscManager;
+    private FileManager fileManager;
     private IDataBase DB;
 
     public static DragonCore getInstance() {
@@ -45,13 +47,15 @@ public class DragonCore extends JavaPlugin {
 
         NBTUtils.loadNBTUtils();
 
-        Config.init(this);
-        if (Config.getConfig().getBoolean("SQL.enable")) {
+        /*Config.init(this);*/
+        fileManager = new FileManager(this);
+        fileManager.init();
+        if (ConfigFile.sql) {
             Bukkit.getConsoleSender().sendMessage("§6当前数据存储: §cMysql");
             DB = new MysqlRepository(this);
         } else {
             Bukkit.getConsoleSender().sendMessage("§6当前数据存储: §cYaml");
-            String playerDataFolder = Config.getConfig().getString("PlayerDataFolder");
+            String playerDataFolder = ConfigFile.playerDataFolder;
             if (playerDataFolder == null || playerDataFolder.isEmpty()) {
                 DB = new YamlRepository(new File(getDataFolder(), "PlayerData"));
             } else {

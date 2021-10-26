@@ -1,8 +1,9 @@
 package eos.moe.dragoncore.util;
 
 import eos.moe.armourers.api.DragonAPI;
+import eos.moe.dragoncore.DragonCore;
 import eos.moe.dragoncore.api.SlotAPI;
-import eos.moe.dragoncore.config.Config;
+import eos.moe.dragoncore.config.sub.ConfigFile;
 import jdk.nashorn.api.scripting.NashornScriptEngineFactory;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
@@ -32,8 +33,7 @@ public class ScriptUtil {
             player.sendMessage("§c[错误] §f当前Java版本不存在Nashorn脚本库");
             return false;
         }
-        YamlConfiguration config = Config.getConfig();
-        if (config.getBoolean("DragonArmourers")) {
+        if (ConfigFile.dragonArmourers) {
             if (Bukkit.getPluginManager().isPluginEnabled("DragonArmourers")) {
                 engine.put("DragonAPI", DragonAPI.class);
             } else {
@@ -50,6 +50,7 @@ public class ScriptUtil {
         engine.put("Arrays", Arrays.class);
         engine.put("SlotAPI", SlotAPI.class);
         engine.put("Material", Material.class);
+        YamlConfiguration config = DragonCore.getInstance().getFileManager().getConfig();
         ConfigurationSection scriptTools = config.getConfigurationSection("ScriptTools");
         if (scriptTools != null) {
             for (String key : scriptTools.getKeys(false)) {

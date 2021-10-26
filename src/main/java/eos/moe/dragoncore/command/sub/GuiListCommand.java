@@ -1,15 +1,18 @@
 package eos.moe.dragoncore.command.sub;
 
+import eos.moe.dragoncore.DragonCore;
 import eos.moe.dragoncore.command.CommandBase;
-import eos.moe.dragoncore.config.Config;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class GuiListCommand extends CommandBase {
+
+    private DragonCore plugin = DragonCore.getInstance();
+
     @Override
     public void onConsoleCommand(CommandSender sender, String[] args) {
         sender.sendMessage("Gui列表: ");
-        for (String s : Config.fileMap.keySet()) {
+        for (String s : plugin.getFileManager().getGui().keySet()) {
             sender.sendMessage(" §7" + s);
         }
     }

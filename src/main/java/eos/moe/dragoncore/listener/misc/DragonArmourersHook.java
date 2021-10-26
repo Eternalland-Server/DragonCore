@@ -2,9 +2,8 @@ package eos.moe.dragoncore.listener.misc;
 
 import eos.moe.armourers.api.DragonAPI;
 import eos.moe.armourers.api.PlayerSkinUpdateEvent;
-import eos.moe.dragoncore.DragonCore;
 import eos.moe.dragoncore.api.event.PlayerSlotUpdateEvent;
-import eos.moe.dragoncore.config.Config;
+import eos.moe.dragoncore.config.FileManager;
 import eos.moe.dragoncore.config.SlotSetting;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
@@ -34,7 +33,7 @@ public class DragonArmourersHook implements Listener {
             return;
         }
         for (Map.Entry<String, ItemStack> entry : map.entrySet()) {
-            SlotSetting slotSetting = Config.slotSettings.get(entry.getKey());
+            SlotSetting slotSetting = FileManager.getSlotSettings().get(entry.getKey());
             if (slotSetting != null && slotSetting.isSkin() && entry.getValue() != null
                     && entry.getValue().getType() != Material.AIR) {
                 // entry.key 就是槽位名  entry.value就是物品

@@ -1,0 +1,6 @@
+# 按键名
+Y:
+  # 执行的指令
+  - "[op]say you press y"
+  - "[console]say you press y"
+  - "say you press y"

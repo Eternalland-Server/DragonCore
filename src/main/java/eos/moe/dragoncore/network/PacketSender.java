@@ -1,10 +1,13 @@
 package eos.moe.dragoncore.network;
 
 
+import eos.moe.dragoncore.DragonCore;
 import eos.moe.dragoncore.api.event.YamlPacketEvent;
 import eos.moe.dragoncore.api.worldtexture.WorldTexture;
 import eos.moe.dragoncore.api.worldtexture.animation.Animation;
-import eos.moe.dragoncore.config.Config;
+import eos.moe.dragoncore.config.FileManager;
+import eos.moe.dragoncore.config.FolderType;
+import eos.moe.dragoncore.config.sub.ConfigFile;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -22,6 +25,7 @@ import java.util.stream.Collectors;
 
 public class PacketSender extends PluginMessageSender {
 
+    private static DragonCore plugin = DragonCore.getInstance();
 
     public static void removeModelEntityAnimation(LivingEntity entity, String animation, int transitionTime) {
         sendPluginMessage(getNearPlayers(entity), 0, buffer -> {
@@ -40,10 +44,10 @@ public class PacketSender extends PluginMessageSender {
         });
     }
 
-    public static void sendGuiYaml(Player player, String path, YamlConfiguration yaml) {
-        sendYaml(player, String.format("Gui/%s", path), yaml);
-
+    public static void sendYaml(Player player, FolderType type, String fileName, YamlConfiguration yaml) {
+        sendYaml(player, type.format(fileName), yaml);
     }
+
     public static void sendYaml(Player player, String fileName, YamlConfiguration yaml) {
         YamlPacketEvent yamlPacketEvent = new YamlPacketEvent(player, fileName, yaml);
         Bukkit.getPluginManager().callEvent(yamlPacketEvent);
@@ -85,7 +89,7 @@ public class PacketSender extends PluginMessageSender {
 
     // 压缩包密码
     public static void sendZipPassword(Player player) {
-        String str = Config.password;
+        String str = ConfigFile.password;
         sendPluginMessage(player, 18, buffer -> {
             buffer.writeString(str);
         });
@@ -231,8 +235,8 @@ public class PacketSender extends PluginMessageSender {
 
     public static void sendKeyRegister(Player player) {
         sendPluginMessage(player, 14, buffer -> {
-            Set<String> set = Config.fileMap.get("KeyConfig.yml").getKeys(false);
-            set.addAll(Config.registeredKeys);
+            Set<String> set = plugin.getFileManager().getKeyConfig().getKeys(false);
+            set.addAll(ConfigFile.registeredKeys);
             buffer.writeInt(set.size());
             for (String s : set) {
                 buffer.writeString(s);

@@ -1,5 +1,6 @@
-package eos.moe.dragoncore.config;
+package eos.moe.dragoncore.config.sub;
 
+import eos.moe.dragoncore.DragonCore;
 import eos.moe.dragoncore.network.PacketSender;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -10,16 +11,17 @@ import java.io.IOException;
 
 
 public class WorldTextureConfig {
+
+    private static DragonCore plugin = DragonCore.getInstance();
+
     public static YamlConfiguration getConfig() {
-        return Config.fileMap.get("WorldTexture.yml");
+        return plugin.getFileManager().getWorldTexture();
     }
 
     public static void saveConfig() {
         try {
-            YamlConfiguration config = Config.fileMap.get("WorldTexture.yml");
-            config.save(new File(
-                    "plugins" + File.separator + "DragonCore" + File.separator + "WorldTexture.yml")
-            );
+            YamlConfiguration config = plugin.getFileManager().getWorldTexture();
+            config.save(new File(plugin.getDataFolder(), "WorldTexture.yml"));
             for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
                 PacketSender.sendYaml(onlinePlayer, "WorldTexture.yml", config);
             }

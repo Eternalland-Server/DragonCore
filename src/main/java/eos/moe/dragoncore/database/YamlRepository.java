@@ -1,6 +1,5 @@
 package eos.moe.dragoncore.database;
 
-import eos.moe.dragoncore.DragonCore;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.InvalidConfigurationException;

@@ -1,61 +1,7 @@
 # 自定义的槽位必须填在此处，否则槽位将不允许点击操作
 
-额外槽位1:
-  # 本槽位是否启用属性兼容
-  attribute: true
+test_slot:
   limit: [ ]
-额外槽位2:
-  # 本槽位是否启用属性兼容
-  attribute: true
-  limit: [ ]
-额外槽位3:
-  # 本槽位是否启用属性兼容
-  attribute: true
-  limit: [ ]
-额外槽位4:
-  # 本槽位是否启用属性兼容
-  attribute: true
-  limit: [ ]
-额外槽位5:
-  # 本槽位是否启用属性兼容
-  attribute: true
-  limit: [ ]
-
-吊坠槽位:
-  # 本槽位是否启用属性兼容
-  attribute: true
-  # 本槽位是否启用时装兼容
-  skin: true
-  # 自定义槽位限制放入功能
-  limit:
-    # lorecontains|xxx   可以限制物品某行lore包含 xxx 才能放入【这个是要求某行lore包含指定文本就行】
-    # lore|xxx   可以限制物品需要有 xxx 这个lore才能放入【这个是要求完整匹配整行lore的】
-    # permission|xxx  可以限制玩家需要有 xxx 权限才可以放入
-    # skin|xxx   可以限制物品的时装类型必须是 xxx 才能放入,xxx若为*则是个时装都可以放入【此选项需要龙之时装付费版才可使用】
-    # emptyslot|xxx   可以限制只有当槽位xxx没有物品时，这个槽位才能放入
-    - "lore|吊坠"
-    - "permission|essentials.use"
-项链槽位:
-  # 本槽位是否启用属性兼容
-  attribute: true
-  limit:
-    - "项链"
-戒指槽位:
-  # 本槽位是否启用属性兼容
-  attribute: true
-  limit:
-    - "戒指"
-手镯槽位:
-  # 本槽位是否启用属性兼容
-  attribute: true
-  limit:
-    - "手镯"
-护身符槽位:
-  # 本槽位是否启用属性兼容
-  attribute: true
-  limit:
-    - "护身符"
-
 
 
 # 脚本功能，不会改的不要乱改哦~

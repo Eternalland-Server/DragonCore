@@ -3,7 +3,6 @@ package eos.moe.dragoncore.listener.misc;
 
 import eos.moe.dragoncore.DragonCore;
 import eos.moe.dragoncore.api.event.PlayerSlotUpdateEvent;
-import eos.moe.dragoncore.config.Config;
 import eos.moe.dragoncore.database.IDataBase;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -27,7 +26,7 @@ public class MiscManager implements Listener {
         this.cacheMap = new ConcurrentHashMap<>();
 
         PluginManager pm = Bukkit.getPluginManager();
-        YamlConfiguration config = Config.getConfig();
+        YamlConfiguration config = plugin.getFileManager().getConfig();
         if (pm.isPluginEnabled("DragonArmourers") && config.getBoolean("DragonArmourers", false)) {
             plugin.registerListener(new DragonArmourersHook(this));
             Bukkit.getConsoleSender().sendMessage(" - 已兼容龙之时装付费版");

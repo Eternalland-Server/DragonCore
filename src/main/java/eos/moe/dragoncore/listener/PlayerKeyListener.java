@@ -1,26 +1,23 @@
 package eos.moe.dragoncore.listener;
 
+import eos.moe.dragoncore.DragonCore;
 import eos.moe.dragoncore.api.KeyPressEvent;
-import eos.moe.dragoncore.config.Config;
 import eos.moe.dragoncore.util.CommandUtil;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.UUID;
 
 public class PlayerKeyListener implements Listener {
-    //private Map<UUID, Map<String, Long>> cooldown = new HashMap<>();
 
+    private DragonCore plugin = DragonCore.getInstance();
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onKeyPressEvent(KeyPressEvent e) {
         if (e.isCancelled()) return;
 
-        List<String> stringList = Config.fileMap.get("KeyConfig.yml").getStringList(e.getKey());
+        List<String> stringList = plugin.getFileManager().getKeyConfig().getStringList(e.getKey());
         for (String s : stringList) {
             CommandUtil.executeCommand(e.getPlayer(), s);
         }

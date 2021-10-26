@@ -3,7 +3,7 @@ package eos.moe.dragoncore.command.sub;
 
 import eos.moe.dragoncore.DragonCore;
 import eos.moe.dragoncore.command.CommandBase;
-import eos.moe.dragoncore.config.Config;
+import eos.moe.dragoncore.config.YamlHandler;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -13,10 +13,13 @@ import org.bukkit.entity.Player;
  * @Date: 2020/9/15 0:25
  */
 public class ReloadCommand extends CommandBase {
+
+    private DragonCore plugin = DragonCore.getInstance();
+
     @Override
     public void onConsoleCommand(CommandSender sender, String[] args) {
-        Config.init(DragonCore.getInstance());
-        Config.sendYamlToClient();
+        plugin.getFileManager().init();
+        YamlHandler.sendYaml2Player();
         sender.sendMessage("§a重载完成");
     }
 

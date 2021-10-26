@@ -1,7 +1,7 @@
 package eos.moe.dragoncore.api;
 
 import eos.moe.dragoncore.api.worldtexture.WorldTexture;
-import eos.moe.dragoncore.config.Config;
+import eos.moe.dragoncore.config.sub.ConfigFile;
 import eos.moe.dragoncore.network.PacketSender;
 import eos.moe.dragoncore.util.ColorUtil;
 import org.bukkit.Bukkit;
@@ -99,12 +99,12 @@ public class CoreAPI {
      * @param key
      */
     public static void registerKey(String key) {
-        Config.registeredKeys.add(key);
+        ConfigFile.registeredKeys.add(key);
         Bukkit.getOnlinePlayers().forEach(PacketSender::sendKeyRegister);
     }
 
     public static void unregisterKey(String key) {
-        Config.registeredKeys.remove(key);
+        ConfigFile.registeredKeys.remove(key);
         Bukkit.getOnlinePlayers().forEach(PacketSender::sendKeyRegister);
     }
 

@@ -55,6 +55,7 @@ public class KeyPressEvent extends PlayerEvent implements Cancellable {
         System.out.println("  key  当前按下的按键");
         System.out.println("  keys 当前所有按下的按键");
     }
+
     public boolean callEvent() {
         Bukkit.getPluginManager().callEvent(this);
         return !((Cancellable)this).isCancelled();

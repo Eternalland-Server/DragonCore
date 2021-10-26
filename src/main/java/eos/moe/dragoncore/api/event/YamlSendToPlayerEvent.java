@@ -6,11 +6,11 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.player.PlayerEvent;
 
-public class YamlSendFinishedEvent extends PlayerEvent {
+public class YamlSendToPlayerEvent extends PlayerEvent {
 
     private static final HandlerList HANDLERS = new HandlerList();
 
-    public YamlSendFinishedEvent(Player who) {
+    public YamlSendToPlayerEvent(Player who) {
         super(who);
     }
 

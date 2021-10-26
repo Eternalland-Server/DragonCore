@@ -1,14 +1,9 @@
 package eos.moe.dragoncore.command.sub;
 
-import eos.moe.dragoncore.api.CoreAPI;
 import eos.moe.dragoncore.command.CommandBase;
-import eos.moe.dragoncore.config.WorldTextureConfig;
-import eos.moe.dragoncore.network.PacketSender;
-import org.bukkit.Location;
+import eos.moe.dragoncore.config.sub.WorldTextureConfig;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
 public class WorldTexture_CreateCommand extends CommandBase {

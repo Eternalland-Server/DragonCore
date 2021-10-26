@@ -13,7 +13,7 @@ public class CooldownAPI {
 
     public static void setPlayerCooldown(Player player, ItemStack itemStack, int milliseconds) {
         Validate.notNull(itemStack);
-        setPlayerCooldown(player, itemStack.getType().name(), ItemUtil.getName(itemStack), ItemUtil.getLore(itemStack), Collections.EMPTY_MAP, milliseconds);
+        setPlayerCooldown(player, itemStack.getType().name(), ItemUtil.getName(itemStack), ItemUtil.getLore(itemStack), new HashMap<>(), milliseconds);
     }
 
     public static void setPlayerCooldown(Player player, String material, String name, List<String> lore, Map<String, String> nbts, int milliseconds) {
@@ -27,7 +27,7 @@ public class CooldownAPI {
     }
 
     public static int getPlayerCooldown(Player player, ItemStack itemStack) {
-        return getPlayerCooldown(player, itemStack.getType().name(), ItemUtil.getName(itemStack), ItemUtil.getLore(itemStack), Collections.EMPTY_MAP);
+        return getPlayerCooldown(player, itemStack.getType().name(), ItemUtil.getName(itemStack), ItemUtil.getLore(itemStack), new HashMap<>());
     }
 
     public static int getPlayerCooldown(Player player, String material, String name, List<String> lore, Map<String, String> nbts) {

@@ -3,7 +3,6 @@ package eos.moe.dragoncore.listener;
 import eos.moe.dragoncore.DragonCore;
 import eos.moe.dragoncore.api.SlotAPI;
 import eos.moe.dragoncore.api.gui.event.CustomPacketEvent;
-import eos.moe.dragoncore.config.Config;
 import eos.moe.dragoncore.database.IDataBase;
 import eos.moe.dragoncore.network.PacketSender;
 import eos.moe.dragoncore.util.ItemUtil;
@@ -27,9 +26,6 @@ public class SlotListener implements Listener {
         this.plugin = plugin;
     }
 
-
-
-
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onSlotClickEvent(CustomPacketEvent e) {
         Player player = e.getPlayer();
@@ -49,7 +45,7 @@ public class SlotListener implements Listener {
         } catch (NumberFormatException ignored) {
 
         }
-        if (!Config.getSlotConfig().contains(slotIdentity + ".limit")) {
+        if (!plugin.getFileManager().getSlotConfig().contains(slotIdentity + ".limit")) {
             return;
         }
 
@@ -163,7 +159,7 @@ public class SlotListener implements Listener {
         if (e.getData().size() != 1)
             return;
         String slotIdentity = e.getData().get(0);
-        if (!Config.getSlotConfig().contains(slotIdentity + ".limit")) {
+        if (!plugin.getFileManager().getSlotConfig().contains(slotIdentity + ".limit")) {
             return;
         }
         ItemStack itemStack = SlotAPI.getCacheSlotItem(e.getPlayer(), slotIdentity);
@@ -208,7 +204,7 @@ public class SlotListener implements Listener {
     }
 
     public static boolean checkItemStackCanPutInSlot(Player player, String slotIdentity, ItemStack itemStack) {
-        YamlConfiguration yaml = Config.getSlotConfig();
+        YamlConfiguration yaml = DragonCore.getInstance().getFileManager().getSlotConfig();
         if (!yaml.contains(slotIdentity + ".limit")) {
             return false;
         }
