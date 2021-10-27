@@ -22,7 +22,7 @@ public class SlotAPI {
         Validate.notNull(identifier, "identifier cant be null");
         Validate.notNull(itemStack, "itemStack cant be null");
 
-        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> plugin.getDB().setData(player, identifier, itemStack, new IDataBase.Callback<ItemStack>() {
+        plugin.getDB().setData(player, identifier, itemStack, new IDataBase.Callback<ItemStack>() {
             @Override
             public void onResult(ItemStack p0) {
                 DragonCore.getInstance().getMiscManager().putItem(player, identifier, itemStack);
@@ -40,15 +40,15 @@ public class SlotAPI {
                     callback.onFail();
                 }
             }
-        }));
+        });
     }
 
     public static void getSlotItem(Player player, String identifier, IDataBase.Callback<ItemStack> callback) {
-        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> plugin.getDB().getData(player, identifier, callback));
+        plugin.getDB().getData(player, identifier, callback);
     }
 
     public static void getAllSlotItem(Player player, IDataBase.Callback<Map<String, ItemStack>> callback) {
-        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> plugin.getDB().getAllData(player, callback));
+        plugin.getDB().getAllData(player, callback);
     }
 
     public static ItemStack getCacheSlotItem(Player player, String identifier) {

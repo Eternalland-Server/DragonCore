@@ -21,6 +21,7 @@ import java.util.*;
 public class SlotListener implements Listener {
 
     private DragonCore plugin;
+    private final Set<UUID> saving = new HashSet<>();
 
     public SlotListener(DragonCore plugin) {
         this.plugin = plugin;
@@ -168,8 +169,6 @@ public class SlotListener implements Listener {
         }
         PacketSender.putClientSlotItem(e.getPlayer(), slotIdentity, itemStack);
     }
-
-    private final Set<UUID> saving = new HashSet<>();
 
     public void setItemStack(Player player, String slotIdentity, ItemStack itemStack) {
         saving.add(player.getUniqueId());

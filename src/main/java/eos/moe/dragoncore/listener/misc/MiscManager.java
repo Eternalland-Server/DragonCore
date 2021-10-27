@@ -37,20 +37,22 @@ public class MiscManager implements Listener {
     public void onJoin(PlayerJoinEvent e) {
         Player player = e.getPlayer();
         cacheMap.remove(e.getPlayer().getUniqueId());
-        System.out.println("[DragonCore] 开始载入玩家 " + player.getName() + " 物品");
-        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> plugin.getDB().getAllData(player, new IDataBase.Callback<Map<String, ItemStack>>() {
+        Bukkit.getConsoleSender().sendMessage("[DragonCore] 开始载入玩家 " + player.getName() + " 物品");
+        long start = System.currentTimeMillis();
+        plugin.getDB().getAllData(player, new IDataBase.Callback<Map<String, ItemStack>>() {
             @Override
             public void onResult(Map<String, ItemStack> p0) {
+                long end = System.currentTimeMillis();
                 MiscManager.this.cacheMap.put(player.getUniqueId(), p0);
-                System.out.println("[DragonCore] 载入玩家 " + player.getName() + " 物品完成,共 " + p0.size() + " 个物品");
+                Bukkit.getConsoleSender().sendMessage("[DragonCore] 载入玩家 " + player.getName() + " 物品完成,共 " + p0.size() + " 个物品(" + (end - start) + "ms)");
             }
 
             @Override
             public void onFail() {
                 MiscManager.this.cacheMap.put(player.getUniqueId(), new HashMap<>());
-                System.out.println("[DragonCore] 载入玩家 " + player.getName() + " 物品失败");
+                Bukkit.getConsoleSender().sendMessage("[DragonCore] 载入玩家 " + player.getName() + " 物品失败");
             }
-        }));
+        });
     }
 
 
