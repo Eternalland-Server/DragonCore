@@ -3,6 +3,7 @@ package eos.moe.dragoncore.listener;
 import eos.moe.dragoncore.config.FileManager;
 import eos.moe.dragoncore.config.sub.ConfigFile;
 import eos.moe.dragoncore.util.ColorUtil;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
@@ -11,6 +12,9 @@ public class PlayerChatListener implements Listener {
 
     @EventHandler
     public void onRGB(AsyncPlayerChatEvent e) {
+        Player player = e.getPlayer();
+        if (!player.isOp()) return;
+
         if (ConfigFile.replaceChatColor && e.getMessage().contains("<end>")) {
             try {
                 e.setMessage(ColorUtil.parseColor(e.getMessage()));
