@@ -1,10 +1,13 @@
 package eos.moe.dragoncore.mythicmobs.listener;
 
 import eos.moe.dragoncore.mythicmobs.mechanics.AnimationMechanic;
-import eos.moe.dragoncore.mythicmobs.mechanics.SoundMechanic;
+import eos.moe.dragoncore.mythicmobs.mechanics.ModelMechanic;
+import eos.moe.dragoncore.mythicmobs.mechanics.SendSoundMechanic;
+import eos.moe.dragoncore.mythicmobs.mechanics.StopSoundMechanic;
 import io.lumine.xikage.mythicmobs.api.bukkit.events.MythicMechanicLoadEvent;
 import io.lumine.xikage.mythicmobs.api.bukkit.events.MythicMobSpawnEvent;
 import net.minecraft.server.v1_12_R1.*;
+import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftEntity;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.EventHandler;
@@ -57,18 +60,35 @@ public class MythicMobsListener implements Listener {
                         field2.set(o1, new DragonCore_PathfinderGoalMeleeAttack(entityLiving, pathfinderGoalMeleeAttack, attackDistance));
                     }
                 }
-            } catch (Exception ex) {
-                //ex.printStackTrace();
+            } catch (Exception ignored) {
             }
         }
     }
 
     @EventHandler
     public void onMythicMechanicLoad(MythicMechanicLoadEvent e) {
-        if (e.getMechanicName().equalsIgnoreCase("animation")) {
+        if (e.getMechanicName().equalsIgnoreCase("Animation")) {
             e.register(new AnimationMechanic(e.getContainer(), e.getConfig()));
-        } else if (e.getMechanicName().equalsIgnoreCase("coresound")) {
-            e.register(new SoundMechanic(e.getContainer(), e.getConfig()));
+            Bukkit.getConsoleSender().sendMessage("§6[DragonCore] MythicMobs mechanic register:§a Animation");
+            return;
+        }
+
+        if (e.getMechanicName().equalsIgnoreCase("SendSound")) {
+            e.register(new SendSoundMechanic(e.getContainer(), e.getConfig()));
+            Bukkit.getConsoleSender().sendMessage("§6[DragonCore] MythicMobs mechanic register:§a SendSound");
+            return;
+        }
+
+        if (e.getMechanicName().equalsIgnoreCase("StopSound")) {
+            e.register(new StopSoundMechanic(e.getContainer(), e.getConfig()));
+            Bukkit.getConsoleSender().sendMessage("§6[DragonCore] MythicMobs mechanic register:§a StopSound");
+            return;
+        }
+
+
+        if (e.getMechanicName().equalsIgnoreCase("Model")) {
+            e.register(new ModelMechanic(e.getContainer(), e.getConfig()));
+            Bukkit.getConsoleSender().sendMessage("§6[DragonCore] MythicMobs mechanic register:§a Model");
         }
     }
 

@@ -312,9 +312,9 @@ public class PacketSender extends PluginMessageSender {
         });
     }
 
-    public static void sendStopSound(Player player, String sound) {
+    public static void sendStopSound(Player player, String key) {
         sendPluginMessage(player, 20, buffer -> {
-            buffer.writeString(sound);
+            buffer.writeString(key);
         });
     }
 

@@ -10,30 +10,23 @@ import io.lumine.xikage.mythicmobs.skills.SkillMetadata;
 import io.lumine.xikage.mythicmobs.skills.mechanics.CustomMechanic;
 import io.lumine.xikage.mythicmobs.skills.placeholders.parsers.PlaceholderString;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 
-public class AnimationMechanic extends SkillMechanic implements ITargetedEntitySkill {
+public class StopSoundMechanic extends SkillMechanic implements ITargetedEntitySkill {
+    private final PlaceholderString sound;
 
-    private String animation;
-    private boolean isRemove;
-    private int transitionTime;
-
-    public AnimationMechanic(CustomMechanic holder, MythicLineConfig mlc) {
+    public StopSoundMechanic(CustomMechanic holder, MythicLineConfig mlc) {
         super(holder.getConfigLine(), mlc);
         this.setAsyncSafe(false);
-        this.animation = mlc.getString(new String[]{"n", "name"}, null);
-        this.isRemove = mlc.getBoolean(new String[]{"r", "remove"}, false);
-        this.transitionTime = mlc.getInteger(new String[]{"t", "time"}, 200);
+
+        this.sound = mlc.getPlaceholderString(new String[]{"sound"}, "");
     }
 
+    @Override
     public boolean castAtEntity(final SkillMetadata data, final AbstractEntity target) {
         LivingEntity bukkitTarget = (LivingEntity) BukkitAdapter.adapt(target);
-        if (this.animation == null || bukkitTarget == null)
-            return false;
-
-        if (!this.isRemove) {
-            PacketSender.setModelEntityAnimation(bukkitTarget, animation, transitionTime);
-        } else {
-            PacketSender.removeModelEntityAnimation(bukkitTarget, animation, transitionTime);
+        if (bukkitTarget instanceof Player) {
+            PacketSender.sendStopSound(((Player) bukkitTarget), sound.get());
         }
         return true;
     }
