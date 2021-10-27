@@ -51,7 +51,8 @@ public class PluginMessageReceiver implements PluginMessageListener {
                 }
             }
         } catch (Throwable e) {
-            plugin.getSLF4JLogger().warn("处理客户端发包过程中出现异常", e);
+            plugin.getLogger().info("处理客户端发包过程中出现异常");
+            e.printStackTrace();
         } finally {
             buf.release();
         }
