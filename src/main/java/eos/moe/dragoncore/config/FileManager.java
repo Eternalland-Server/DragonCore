@@ -40,6 +40,7 @@ public class FileManager extends IConfiguration {
     @Getter private final HashMap<String, YamlConfiguration> itemTip;
 
     @Getter private final static Map<String, SlotSetting> slotSettings = new HashMap<>();
+    @Getter private final static List<String> fontReplace = new ArrayList<>();
 
     public FileManager(DragonCore plugin) {
         super(plugin);
@@ -65,6 +66,7 @@ public class FileManager extends IConfiguration {
 
         ConfigFile.init();
         loadSlotSetting();
+        loadFontReplace();
     }
 
     public void sendYaml2Player(Player player) {
@@ -109,6 +111,7 @@ public class FileManager extends IConfiguration {
     }
 
     private void loadSlotSetting() {
+        slotSettings.clear();
         for (String key : slotConfig.getKeys(false)) {
             if ("Script".equals(key)) continue;
             ConfigurationSection section = config.getConfigurationSection(key);
@@ -116,6 +119,13 @@ public class FileManager extends IConfiguration {
                 SlotSetting slotSetting = new SlotSetting(section);
                 slotSettings.put(slotSetting.getIdentifier(), slotSetting);
             }
+        }
+    }
+
+    private void loadFontReplace() {
+        fontReplace.clear();
+        for (YamlConfiguration yaml : fontConfig.values()) {
+            fontReplace.addAll(yaml.getKeys(false));
         }
     }
 

@@ -22,13 +22,4 @@ public class PlayerKeyListener implements Listener {
             CommandUtil.executeCommand(e.getPlayer(), s);
         }
     }
-
-    /*@EventHandler
-    public void test(ChatTextboxEvent e) {
-        // 把聊天栏的  /马儿 变成 韫
-        if (e.getCurrentText().contains("/马儿")) {
-            PacketSender.setChatBoxText(e.getPlayer(),
-                    e.getCurrentText().replace("/马儿", "韫"));
-        }
-    }*/
 }
