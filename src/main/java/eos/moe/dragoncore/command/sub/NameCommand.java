@@ -2,14 +2,10 @@ package eos.moe.dragoncore.command.sub;
 
 import eos.moe.dragoncore.command.CommandBase;
 import eos.moe.dragoncore.util.ColorUtil;
-import eos.moe.dragoncore.util.ItemUtil;
-import joptsimple.internal.Strings;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.List;
 
 public class NameCommand extends CommandBase {
     @Override
