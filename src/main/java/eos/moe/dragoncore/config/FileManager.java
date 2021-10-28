@@ -114,7 +114,7 @@ public class FileManager extends IConfiguration {
         slotSettings.clear();
         for (String key : slotConfig.getKeys(false)) {
             if ("Script".equals(key)) continue;
-            ConfigurationSection section = config.getConfigurationSection(key);
+            ConfigurationSection section = slotConfig.getConfigurationSection(key);
             if (section != null) {
                 SlotSetting slotSetting = new SlotSetting(section);
                 slotSettings.put(slotSetting.getIdentifier(), slotSetting);
@@ -140,9 +140,7 @@ public class FileManager extends IConfiguration {
         }
         else {
             List<File> files = getYamlFiles(file, new ArrayList<>());
-            files.forEach(sub -> {
-                yaml.put(sub.getName(), loadConfiguration(sub));
-            });
+            files.forEach(sub -> yaml.put(sub.getName(), loadConfiguration(sub)));
         }
 
         Bukkit.getConsoleSender().sendMessage("§a┃ §6Loading " + subFolder + ":");
