@@ -1,8 +1,13 @@
 package eos.moe.dragoncore.listener;
 
+import com.taylorswiftcn.justwei.util.MegumiUtil;
 import eos.moe.dragoncore.DragonCore;
 import eos.moe.dragoncore.api.SlotAPI;
+import eos.moe.dragoncore.api.event.ScreenSlotClickEvent;
+import eos.moe.dragoncore.api.event.ScreenSlotClickedEvent;
 import eos.moe.dragoncore.api.gui.event.CustomPacketEvent;
+import eos.moe.dragoncore.api.slot.ClickType;
+import eos.moe.dragoncore.config.FileManager;
 import eos.moe.dragoncore.database.IDataBase;
 import eos.moe.dragoncore.network.PacketSender;
 import eos.moe.dragoncore.util.ItemUtil;
@@ -30,34 +35,36 @@ public class SlotListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onSlotClickEvent(CustomPacketEvent e) {
         Player player = e.getPlayer();
-        if (!e.getIdentifier().equals("DragonCore_ClickSlot"))
-            return;
-        if (e.isCancelled())
-            return;
-        if (e.getData().size() != 2)
-            return;
-        if (saving.contains(player.getUniqueId())) {
-            return;
-        }
-        String slotIdentity = e.getData().get(0);
-        int mouseButton = 0;
-        try {
-            mouseButton = Integer.parseInt(e.getData().get(1));
-        } catch (NumberFormatException ignored) {
 
-        }
-        if (!plugin.getFileManager().getSlotConfig().contains(slotIdentity + ".limit")) {
+        if (!e.getIdentifier().equals("DragonCore_ClickSlot")) return;
+        if (e.isCancelled()) return;
+        if (e.getData().size() != 2) return;
+        if (saving.contains(player.getUniqueId())) return;
+
+        String identifier = e.getData().get(0);
+        String clickParam = e.getData().get(1);
+        if (!MegumiUtil.isInteger(clickParam)) return;
+
+        ClickType clickType = ClickType.getType(Integer.parseInt(clickParam));
+        if (clickType == null) return;
+
+        ScreenSlotClickEvent clickEvent = new ScreenSlotClickEvent(player, identifier, clickType);
+        if (!clickEvent.callEvent()) return;
+
+        if (!FileManager.getSlotSettings().containsKey(identifier)) {
             return;
         }
 
         saving.add(player.getUniqueId());
 
-        int finalButton = mouseButton;
-        SlotAPI.getSlotItem(player, slotIdentity, new IDataBase.Callback<ItemStack>() {
+        SlotAPI.getSlotItem(player, identifier, new IDataBase.Callback<ItemStack>() {
             @Override
             public void onResult(ItemStack itemStack) {
                 saving.remove(player.getUniqueId());
-                handleSlotClick(player, slotIdentity, finalButton, itemStack);
+                handleSlotClick(player, identifier, clickType, itemStack);
+
+                ScreenSlotClickedEvent clickedEvent = new ScreenSlotClickedEvent(player, identifier, clickType);
+                clickedEvent.callEvent();
             }
 
             @Override
@@ -69,7 +76,7 @@ public class SlotListener implements Listener {
 
     }
 
-    public void handleSlotClick(Player player, String slotIdentity, int mouseButton, ItemStack slotItem) {
+    public void handleSlotClick(Player player, String slotIdentity, ClickType clickType, ItemStack slotItem) {
         ItemStack handItem = player.getItemOnCursor();
         if (slotItem == null) {
             slotItem = new ItemStack(Material.AIR);
@@ -79,7 +86,7 @@ public class SlotListener implements Listener {
         }
 
         // 鼠标中键
-        if (mouseButton == 2 && player.hasPermission("core.slot.clone")) {
+        if (clickType == ClickType.MIDDLE_CLICK && player.isOp()) {
             if (slotItem.getType() != Material.AIR && handItem.getType() == Material.AIR) {
                 player.setItemOnCursor(slotItem.clone());
                 return;
@@ -93,7 +100,7 @@ public class SlotListener implements Listener {
 
 
         //左键点击槽位
-        if (mouseButton == 0) {
+        if (clickType == ClickType.LEFT_CLICK) {
             //相同物品则把手上物品放入
             if (slotItem.getType() != Material.AIR && handItem.getType() != Material.AIR) {
                 if (slotItem.isSimilar(handItem)) {
@@ -116,7 +123,7 @@ public class SlotListener implements Listener {
 
         }
         //右键点击槽位
-        if (mouseButton == 1) {
+        if (clickType == ClickType.RIGHT_CLICK) {
             //如果格子是空的，且手上有物品  ->  放置一个进去
             if (slotItem.getType() == Material.AIR && handItem.getType() != Material.AIR) {
                 setItemStack(player, slotIdentity, setAmount(handItem.clone(), 1));
