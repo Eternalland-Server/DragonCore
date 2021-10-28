@@ -8,13 +8,13 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.player.PlayerEvent;
 
-public class ScreenSlotClickedEvent extends PlayerEvent {
+public class PlayerSlotClickedEvent extends PlayerEvent {
 
     @Getter private final String identifier;
     @Getter private final ClickType clickType;
     private final static HandlerList handlerList = new HandlerList();
 
-    public ScreenSlotClickedEvent(Player who, String identifier, ClickType clickType) {
+    public PlayerSlotClickedEvent(Player who, String identifier, ClickType clickType) {
         super(who);
         this.identifier = identifier;
         this.clickType = clickType;

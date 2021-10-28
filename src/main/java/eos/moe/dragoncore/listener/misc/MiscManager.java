@@ -65,7 +65,6 @@ public class MiscManager implements Listener {
         if (cacheMap.containsKey(player.getUniqueId())) {
             cacheMap.get(player.getUniqueId()).put(identifier, itemStack);
             new PlayerSlotUpdateEvent(player, identifier, itemStack).callEvent();
-
         }
     }
 

@@ -8,14 +8,14 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.player.PlayerEvent;
 
-public class ScreenSlotClickEvent extends PlayerEvent implements Cancellable {
+public class PlayerSlotClickEvent extends PlayerEvent implements Cancellable {
 
     @Getter private final String identifier;
     @Getter private final ClickType clickType;
     private boolean cancel;
     private final static HandlerList handlerList = new HandlerList();
 
-    public ScreenSlotClickEvent(Player who, String identifier, ClickType clickType) {
+    public PlayerSlotClickEvent(Player who, String identifier, ClickType clickType) {
         super(who);
         this.identifier = identifier;
         this.clickType = clickType;

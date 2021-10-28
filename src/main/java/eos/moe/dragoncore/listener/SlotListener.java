@@ -3,8 +3,8 @@ package eos.moe.dragoncore.listener;
 import com.taylorswiftcn.justwei.util.MegumiUtil;
 import eos.moe.dragoncore.DragonCore;
 import eos.moe.dragoncore.api.SlotAPI;
-import eos.moe.dragoncore.api.event.ScreenSlotClickEvent;
-import eos.moe.dragoncore.api.event.ScreenSlotClickedEvent;
+import eos.moe.dragoncore.api.event.PlayerSlotClickEvent;
+import eos.moe.dragoncore.api.event.PlayerSlotClickedEvent;
 import eos.moe.dragoncore.api.gui.event.CustomPacketEvent;
 import eos.moe.dragoncore.api.slot.ClickType;
 import eos.moe.dragoncore.config.FileManager;
@@ -48,7 +48,7 @@ public class SlotListener implements Listener {
         ClickType clickType = ClickType.getType(Integer.parseInt(clickParam));
         if (clickType == null) return;
 
-        ScreenSlotClickEvent clickEvent = new ScreenSlotClickEvent(player, identifier, clickType);
+        PlayerSlotClickEvent clickEvent = new PlayerSlotClickEvent(player, identifier, clickType);
         if (!clickEvent.callEvent()) return;
 
         if (!FileManager.getSlotSettings().containsKey(identifier)) {
@@ -63,7 +63,7 @@ public class SlotListener implements Listener {
                 saving.remove(player.getUniqueId());
                 handleSlotClick(player, identifier, clickType, itemStack);
 
-                ScreenSlotClickedEvent clickedEvent = new ScreenSlotClickedEvent(player, identifier, clickType);
+                PlayerSlotClickedEvent clickedEvent = new PlayerSlotClickedEvent(player, identifier, clickType);
                 clickedEvent.callEvent();
             }
 
