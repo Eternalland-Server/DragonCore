@@ -2,6 +2,7 @@ package eos.moe.dragoncore.listener.misc;
 
 
 import eos.moe.dragoncore.DragonCore;
+import eos.moe.dragoncore.api.event.PlayerSlotLoadedEvent;
 import eos.moe.dragoncore.api.event.PlayerSlotUpdateEvent;
 import eos.moe.dragoncore.database.IDataBase;
 import org.bukkit.Bukkit;
@@ -44,6 +45,7 @@ public class MiscManager implements Listener {
             public void onResult(Map<String, ItemStack> p0) {
                 long end = System.currentTimeMillis();
                 MiscManager.this.cacheMap.put(player.getUniqueId(), p0);
+                new PlayerSlotLoadedEvent(player).callEvent();
                 Bukkit.getConsoleSender().sendMessage("[DragonCore] 载入玩家 " + player.getName() + " 物品完成,共 " + p0.size() + " 个物品(" + (end - start) + "ms)");
             }
 
