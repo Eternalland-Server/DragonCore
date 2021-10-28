@@ -1,12 +1,15 @@
 package eos.moe.dragoncore.command.sub;
 
+import eos.moe.dragoncore.DragonCore;
 import eos.moe.dragoncore.command.CommandBase;
-import eos.moe.dragoncore.config.sub.WorldTextureConfig;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
 public class WorldTexture_CreateCommand extends CommandBase {
+
+    private DragonCore plugin = DragonCore.getInstance();
+
     @Override
     public void onConsoleCommand(CommandSender sender, String[] args) {
         sender.sendMessage("控制台无法使用该指令");
@@ -32,22 +35,8 @@ public class WorldTexture_CreateCommand extends CommandBase {
         section.set("alpha", 1);
         section.set("follow", args[4].equals("true"));
         section.set("glow", true);
-        WorldTextureConfig.getConfig().set(args[0], section);
-        WorldTextureConfig.saveConfig();
-
-
-        /*player.getNearbyEntities(10, 10, 10).forEach(e -> {
-            if (e instanceof LivingEntity) {
-                Location location = player.getEyeLocation().clone();
-                location.setX(Float.parseFloat(args[5]));
-                location.setY(Float.parseFloat(args[6]));
-                location.setZ(Float.parseFloat(args[7]));
-                CoreAPI.setPlayerWorldTexture(player, args[0], location, 0, 0, 0, args[1],
-                        Float.parseFloat(args[2]), Float.parseFloat(args[3]), 1, args[8].equals("true"), false, e.getUniqueId(),  args[9].equals("true")
-                );
-            }
-        });*/
-
+        plugin.getFileManager().getWorldTexture().set(args[0], section);
+        plugin.getFileManager().saveWorldTexture();
 
         player.sendMessage("创建完成");
 

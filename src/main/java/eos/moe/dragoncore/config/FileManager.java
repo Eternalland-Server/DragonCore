@@ -182,4 +182,15 @@ public class FileManager extends IConfiguration {
 
         return config;
     }
+
+    public void saveWorldTexture() {
+        try {
+            worldTexture.save(new File(plugin.getDataFolder(), "WorldTexture.yml"));
+            for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+                PacketSender.sendYaml(onlinePlayer, "WorldTexture.yml", worldTexture);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
