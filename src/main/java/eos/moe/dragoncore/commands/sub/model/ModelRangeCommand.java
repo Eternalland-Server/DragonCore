@@ -1,4 +1,4 @@
-package eos.moe.dragoncore.commands.sub.animation;
+package eos.moe.dragoncore.commands.sub.model;
 
 import com.taylorswiftcn.justwei.commands.SubCommand;
 import com.taylorswiftcn.justwei.util.MegumiUtil;
@@ -8,31 +8,34 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
-public class ModelStopCommand extends SubCommand {
+public class ModelRangeCommand extends SubCommand {
     @Override
     public String getIdentifier() {
-        return "modelStop";
+        return "modelRange";
     }
 
     @Override
     public void perform(CommandSender commandSender, String[] strings) {
         if (strings.length < 3) return;
 
+        String model = strings[1];
+        String s = strings[2];
+
+        if (!MegumiUtil.isNumber(s)) {
+            commandSender.sendMessage(" §7参数有误，请检查输入的数字");
+            return;
+        }
+
         Player player = getPlayer();
-        String animation = strings[1];
-        String duration = strings[2];
+        int range = Integer.parseInt(s);
 
-        if (!MegumiUtil.isNumber(duration)) return;
-
-        int time = Integer.parseInt(duration);
-
-        player.getNearbyEntities(10, 10, 10).forEach(entity -> {
+        player.getNearbyEntities(range, range, range).forEach(entity -> {
             if (entity instanceof LivingEntity) {
-                PacketSender.removeModelEntityAnimation((LivingEntity) entity, animation, time);
+                PacketSender.setEntityModel(player, entity.getUniqueId(), model);
             }
         });
 
-        player.sendMessage(" §7已为半径10米内怪物取消动作" + animation + "(仅适用于存在该动作的模型)");
+        commandSender.sendMessage(" §7已设置周围生物模型");
     }
 
     @Override

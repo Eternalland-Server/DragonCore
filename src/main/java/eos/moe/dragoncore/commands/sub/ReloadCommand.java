@@ -21,7 +21,7 @@ public class ReloadCommand extends SubCommand {
 
     @Override
     public void perform(CommandSender commandSender, String[] strings) {
-        if (strings.length == 0) {
+        if (strings.length == 1) {
             plugin.getFileManager().init();
             ClientHandler.sendYaml2Player();
             commandSender.sendMessage(" §7重载完成");

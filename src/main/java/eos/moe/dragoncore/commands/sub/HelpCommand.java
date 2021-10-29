@@ -41,6 +41,8 @@ public class HelpCommand extends SubCommand {
                 Arrays.asList(
                         " §7/core modelPlay <animation> <transient time> - 使周围模型开始播放动作",
                         " §7/core modelStop <animation> <transient time> - 使周围模型停止播放动作",
+                        " §7/core modelRange <model> <range> - 设置周围生物模型",
+                        " §7/core modelSet <player> <model> - 设置玩家模型",
                         " §7/core soundPlay <player> <ogg> <volume> <pitch> <loop> - 播放OGG音乐",
                         " §7/core soundStop <player> <ogg> - 暂停播放OGG音乐",
                         " §7/core worldTexture <node> <path> <width> <height> <follow> - 在准星处设置世界贴图",

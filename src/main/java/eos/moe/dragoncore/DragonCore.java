@@ -38,7 +38,7 @@ public class DragonCore extends JavaPlugin {
     public void onEnable() {
 
         Bukkit.getConsoleSender().sendMessage("§a************************************************************");
-        Bukkit.getConsoleSender().sendMessage("§6[DragonCore] §a龙之核心插件原作者: 空白格(QQ: 448780139)");
+        Bukkit.getConsoleSender().sendMessage("§6[DragonCore] §a龙之核心插件原作者: 白龙(QQ: 448780139)");
         Bukkit.getConsoleSender().sendMessage("§6[DragonCore] §a当前版本维护开发者: justwei(QQ: 1731598625)");
         Bukkit.getConsoleSender().sendMessage("§a************************************************************");
 
