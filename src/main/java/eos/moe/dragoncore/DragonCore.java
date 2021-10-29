@@ -1,7 +1,7 @@
 package eos.moe.dragoncore;
 
 
-import eos.moe.dragoncore.command.MainCommand;
+import eos.moe.dragoncore.commands.MainCommand;
 import eos.moe.dragoncore.config.FileManager;
 import eos.moe.dragoncore.config.sub.ConfigFile;
 import eos.moe.dragoncore.database.IDataBase;
@@ -11,7 +11,6 @@ import eos.moe.dragoncore.listener.*;
 import eos.moe.dragoncore.listener.misc.MiscManager;
 import eos.moe.dragoncore.mythicmobs.listener.MythicMobsListener;
 import eos.moe.dragoncore.network.PluginMessageReceiver;
-import eos.moe.dragoncore.util.NBTUtils;
 import lombok.Getter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -44,8 +43,6 @@ public class DragonCore extends JavaPlugin {
         Bukkit.getConsoleSender().sendMessage("§a************************************************************");
 
         instance = this;
-
-        NBTUtils.loadNBTUtils();
 
         /*Config.init(this);*/
         fileManager = new FileManager(this);

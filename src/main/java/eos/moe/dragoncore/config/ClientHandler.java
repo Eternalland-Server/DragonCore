@@ -6,12 +6,12 @@ import eos.moe.dragoncore.network.PacketSender;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-public class YamlHandler {
+public class ClientHandler {
 
     private final static DragonCore plugin = DragonCore.getInstance();
 
     public static void sendYaml2Player() {
-        Bukkit.getOnlinePlayers().forEach(YamlHandler::sendYaml2Player);
+        Bukkit.getOnlinePlayers().forEach(ClientHandler::sendYaml2Player);
     }
 
     public static void sendYaml2Player(Player player) {

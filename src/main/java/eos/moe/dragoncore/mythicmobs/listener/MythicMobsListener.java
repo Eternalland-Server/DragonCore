@@ -2,8 +2,8 @@ package eos.moe.dragoncore.mythicmobs.listener;
 
 import eos.moe.dragoncore.mythicmobs.mechanics.AnimationMechanic;
 import eos.moe.dragoncore.mythicmobs.mechanics.ModelMechanic;
-import eos.moe.dragoncore.mythicmobs.mechanics.SendSoundMechanic;
-import eos.moe.dragoncore.mythicmobs.mechanics.StopSoundMechanic;
+import eos.moe.dragoncore.mythicmobs.mechanics.SoundPlayMechanic;
+import eos.moe.dragoncore.mythicmobs.mechanics.SoundStopMechanic;
 import io.lumine.xikage.mythicmobs.api.bukkit.events.MythicMechanicLoadEvent;
 import io.lumine.xikage.mythicmobs.api.bukkit.events.MythicMobSpawnEvent;
 import net.minecraft.server.v1_12_R1.*;
@@ -73,14 +73,14 @@ public class MythicMobsListener implements Listener {
             return;
         }
 
-        if (e.getMechanicName().equalsIgnoreCase("SendSound")) {
-            e.register(new SendSoundMechanic(e.getContainer(), e.getConfig()));
+        if (e.getMechanicName().equalsIgnoreCase("SoundPlay")) {
+            e.register(new SoundPlayMechanic(e.getContainer(), e.getConfig()));
             Bukkit.getConsoleSender().sendMessage("§6[DragonCore] MythicMobs mechanic register:§a SendSound");
             return;
         }
 
-        if (e.getMechanicName().equalsIgnoreCase("StopSound")) {
-            e.register(new StopSoundMechanic(e.getContainer(), e.getConfig()));
+        if (e.getMechanicName().equalsIgnoreCase("SoundStop")) {
+            e.register(new SoundStopMechanic(e.getContainer(), e.getConfig()));
             Bukkit.getConsoleSender().sendMessage("§6[DragonCore] MythicMobs mechanic register:§a StopSound");
             return;
         }

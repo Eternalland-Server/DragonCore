@@ -1,0 +1,38 @@
+package eos.moe.dragoncore.commands.sub.gui;
+
+import com.taylorswiftcn.justwei.commands.SubCommand;
+import eos.moe.dragoncore.DragonCore;
+import eos.moe.dragoncore.commands.CommandPerms;
+import org.bukkit.command.CommandSender;
+
+public class GuiListCommand extends SubCommand {
+
+    private DragonCore plugin;
+
+    public GuiListCommand() {
+        this.plugin = DragonCore.getInstance();
+    }
+
+    @Override
+    public String getIdentifier() {
+        return "guiList";
+    }
+
+    @Override
+    public void perform(CommandSender commandSender, String[] strings) {
+        commandSender.sendMessage(" §6§lGui列表: ");
+        for (String s : plugin.getFileManager().getGui().keySet()) {
+            commandSender.sendMessage("  §7- " + s);
+        }
+    }
+
+    @Override
+    public boolean playerOnly() {
+        return false;
+    }
+
+    @Override
+    public String getPermission() {
+        return CommandPerms.ADMIN.getNode();
+    }
+}
