@@ -1,6 +1,6 @@
 package eos.moe.dragoncore.commands;
 
-import com.taylorswiftcn.justwei.commands.ICommand;
+import com.taylorswiftcn.justwei.commands.JustCommand;
 import eos.moe.dragoncore.commands.sub.HelpCommand;
 import eos.moe.dragoncore.commands.sub.ManagerCommand;
 import eos.moe.dragoncore.commands.sub.ReloadCommand;
@@ -17,10 +17,10 @@ import eos.moe.dragoncore.commands.sub.sound.SoundStopCommand;
 import eos.moe.dragoncore.commands.sub.texture.WorldItemCommand;
 import eos.moe.dragoncore.commands.sub.texture.WorldTextureCommand;
 
-public class MainCommand extends ICommand {
+public class MainCommand extends JustCommand {
 
     public MainCommand() {
-        this.setHelpCommand(new HelpCommand());
+        super(new HelpCommand());
         this.register(new ManagerCommand());
         this.register(new ModelPlayCommand());
         this.register(new ModelStopCommand());

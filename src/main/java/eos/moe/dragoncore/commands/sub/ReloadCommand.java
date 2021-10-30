@@ -1,6 +1,6 @@
 package eos.moe.dragoncore.commands.sub;
 
-import com.taylorswiftcn.justwei.commands.SubCommand;
+import com.taylorswiftcn.justwei.commands.sub.SubCommand;
 import eos.moe.dragoncore.DragonCore;
 import eos.moe.dragoncore.commands.CommandPerms;
 import eos.moe.dragoncore.config.ClientHandler;
@@ -20,12 +20,10 @@ public class ReloadCommand extends SubCommand {
     }
 
     @Override
-    public void perform(CommandSender commandSender, String[] strings) {
-        if (strings.length == 1) {
-            plugin.getFileManager().init();
-            ClientHandler.sendYaml2Player();
-            commandSender.sendMessage(" §7重载完成");
-        }
+    public void perform(CommandSender sender, String[] args) {
+        plugin.getFileManager().init();
+        ClientHandler.sendYaml2Player();
+        sender.sendMessage(" §7重载完成");
     }
 
     @Override

@@ -1,6 +1,6 @@
 package eos.moe.dragoncore.commands.sub.texture;
 
-import com.taylorswiftcn.justwei.commands.SubCommand;
+import com.taylorswiftcn.justwei.commands.sub.SubCommand;
 import eos.moe.dragoncore.commands.CommandPerms;
 import eos.moe.dragoncore.network.PacketSender;
 import org.bukkit.command.CommandSender;
@@ -13,14 +13,14 @@ public class WorldItemCommand extends SubCommand {
     }
 
     @Override
-    public void perform(CommandSender commandSender, String[] strings) {
-        if (strings.length < 4) return;
+    public void perform(CommandSender sender, String[] args) {
+        if (args.length < 3) return;
 
         Player player = getPlayer();
 
-        String node = strings[1];
-        float scale = Float.parseFloat(strings[2]);
-        boolean follow = Boolean.parseBoolean(strings[3]);
+        String node = args[0];
+        float scale = Float.parseFloat(args[1]);
+        boolean follow = Boolean.parseBoolean(args[2]);
 
         float rotateX = player.getLocation().getPitch();
         float rotateY = -player.getLocation().getYaw();

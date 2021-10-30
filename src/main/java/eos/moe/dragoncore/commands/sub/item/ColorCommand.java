@@ -1,6 +1,6 @@
 package eos.moe.dragoncore.commands.sub.item;
 
-import com.taylorswiftcn.justwei.commands.SubCommand;
+import com.taylorswiftcn.justwei.commands.sub.SubCommand;
 import com.taylorswiftcn.justwei.util.MegumiUtil;
 import eos.moe.dragoncore.commands.CommandPerms;
 import eos.moe.dragoncore.util.NBTUtils;
@@ -17,8 +17,8 @@ public class ColorCommand extends SubCommand {
     }
 
     @Override
-    public void perform(CommandSender commandSender, String[] strings) {
-        if (strings.length < 2) return;
+    public void perform(CommandSender sender, String[] args) {
+        if (args.length < 1) return;
 
         Player player = getPlayer();
         ItemStack item = player.getInventory().getItemInMainHand();
@@ -28,7 +28,7 @@ public class ColorCommand extends SubCommand {
             return;
         }
 
-        String s = strings[1];
+        String s = args[0];
 
         Color color = Color.decode("0x" + s.substring(1));
         int r = color.getRed();

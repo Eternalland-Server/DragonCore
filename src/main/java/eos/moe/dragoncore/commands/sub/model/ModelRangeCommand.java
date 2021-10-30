@@ -1,6 +1,6 @@
 package eos.moe.dragoncore.commands.sub.model;
 
-import com.taylorswiftcn.justwei.commands.SubCommand;
+import com.taylorswiftcn.justwei.commands.sub.SubCommand;
 import com.taylorswiftcn.justwei.util.MegumiUtil;
 import eos.moe.dragoncore.commands.CommandPerms;
 import eos.moe.dragoncore.network.PacketSender;
@@ -15,14 +15,14 @@ public class ModelRangeCommand extends SubCommand {
     }
 
     @Override
-    public void perform(CommandSender commandSender, String[] strings) {
-        if (strings.length < 3) return;
+    public void perform(CommandSender sender, String[] args) {
+        if (args.length < 3) return;
 
-        String model = strings[1];
-        String s = strings[2];
+        String model = args[1];
+        String s = args[2];
 
         if (!MegumiUtil.isNumber(s)) {
-            commandSender.sendMessage(" §7参数有误，请检查输入的数字");
+            sender.sendMessage(" §7参数有误，请检查输入的数字");
             return;
         }
 
@@ -35,7 +35,7 @@ public class ModelRangeCommand extends SubCommand {
             }
         });
 
-        commandSender.sendMessage(" §7已设置周围生物模型");
+        sender.sendMessage(" §7已设置周围生物模型");
     }
 
     @Override

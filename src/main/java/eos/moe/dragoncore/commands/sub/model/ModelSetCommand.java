@@ -1,6 +1,6 @@
 package eos.moe.dragoncore.commands.sub.model;
 
-import com.taylorswiftcn.justwei.commands.SubCommand;
+import com.taylorswiftcn.justwei.commands.sub.SubCommand;
 import eos.moe.dragoncore.commands.CommandPerms;
 import eos.moe.dragoncore.network.PacketSender;
 import org.bukkit.Bukkit;
@@ -14,21 +14,21 @@ public class ModelSetCommand extends SubCommand {
     }
 
     @Override
-    public void perform(CommandSender commandSender, String[] strings) {
-        if (strings.length < 3) return;
+    public void perform(CommandSender sender, String[] args) {
+        if (args.length < 2) return;
 
-        String s1 = strings[1];
-        String s2 = strings[2];
+        String s1 = args[0];
+        String s2 = args[1];
 
         Player player = Bukkit.getPlayerExact(s1);
         if (player == null) {
-            commandSender.sendMessage(" §7玩家 " + s1 + " 不在线");
+            sender.sendMessage(" §7玩家 " + s1 + " 不在线");
             return;
         }
 
         PacketSender.setEntityModel(player, player.getUniqueId(), s2);
 
-        commandSender.sendMessage(" §7已设置玩家模型");
+        sender.sendMessage(" §7已设置玩家模型");
     }
 
     @Override

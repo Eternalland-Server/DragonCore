@@ -1,6 +1,6 @@
 package eos.moe.dragoncore.commands.sub.gui;
 
-import com.taylorswiftcn.justwei.commands.SubCommand;
+import com.taylorswiftcn.justwei.commands.sub.SubCommand;
 import eos.moe.dragoncore.DragonCore;
 import eos.moe.dragoncore.commands.CommandPerms;
 import eos.moe.dragoncore.network.PacketSender;
@@ -22,20 +22,20 @@ public class OpenGuiCommand extends SubCommand {
     }
 
     @Override
-    public void perform(CommandSender commandSender, String[] strings) {
-        if (strings.length < 3) return;
+    public void perform(CommandSender sender, String[] args) {
+        if (args.length < 1) return;
 
-        String s1 = strings[1];
-        String s2 = strings[2];
+        String s1 = args[0];
+        String s2 = args[1];
 
         Player player = Bukkit.getPlayerExact(s1);
         if (player == null) {
-            commandSender.sendMessage(" §7玩家 " + s1 + " 不在线");
+            sender.sendMessage(" §7玩家 " + s1 + " 不在线");
             return;
         }
 
         if (!plugin.getFileManager().getGui().containsKey(s2 + ".yml")) {
-            commandSender.sendMessage(" §7Gui文件夹内无该文件: " + s2 + ".yml");
+            sender.sendMessage(" §7Gui文件夹内无该文件: " + s2 + ".yml");
             return;
         }
 

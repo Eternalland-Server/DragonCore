@@ -1,6 +1,6 @@
 package eos.moe.dragoncore.commands.sub.texture;
 
-import com.taylorswiftcn.justwei.commands.SubCommand;
+import com.taylorswiftcn.justwei.commands.sub.SubCommand;
 import eos.moe.dragoncore.DragonCore;
 import eos.moe.dragoncore.commands.CommandPerms;
 import org.bukkit.Location;
@@ -22,17 +22,17 @@ public class WorldTextureCommand extends SubCommand {
     }
 
     @Override
-    public void perform(CommandSender commandSender, String[] strings) {
-        if (strings.length < 6) return;
+    public void perform(CommandSender sender, String[] args) {
+        if (args.length < 5) return;
 
         Player player = getPlayer();
         Location location = player.getEyeLocation();
 
-        String node = strings[1];
-        String path = strings[2];
-        float width = Float.parseFloat(strings[3]);
-        float height = Float.parseFloat(strings[4]);
-        boolean follow = Boolean.parseBoolean(strings[5]);
+        String node = args[0];
+        String path = args[1];
+        float width = Float.parseFloat(args[2]);
+        float height = Float.parseFloat(args[3]);
+        boolean follow = Boolean.parseBoolean(args[4]);
 
         float rotateX = player.getLocation().getPitch();
         float rotateY = -player.getLocation().getYaw();

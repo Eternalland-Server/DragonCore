@@ -1,6 +1,6 @@
 package eos.moe.dragoncore.config;
 
-import com.taylorswiftcn.justwei.file.IConfiguration;
+import com.taylorswiftcn.justwei.file.JustConfiguration;
 import eos.moe.dragoncore.DragonCore;
 import eos.moe.dragoncore.config.sub.ConfigFile;
 import eos.moe.dragoncore.network.PacketSender;
@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 
-public class FileManager extends IConfiguration {
+public class FileManager extends JustConfiguration {
 
     private final DragonCore plugin;
     @Getter private YamlConfiguration config;

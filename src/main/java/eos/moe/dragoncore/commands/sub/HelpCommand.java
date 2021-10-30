@@ -1,6 +1,6 @@
 package eos.moe.dragoncore.commands.sub;
 
-import com.taylorswiftcn.justwei.commands.SubCommand;
+import com.taylorswiftcn.justwei.commands.sub.SubCommand;
 import eos.moe.dragoncore.commands.CommandPerms;
 import org.bukkit.command.CommandSender;
 
@@ -22,8 +22,8 @@ public class HelpCommand extends SubCommand {
     }
 
     @Override
-    public void perform(CommandSender commandSender, String[] strings) {
-        this.help.forEach(commandSender::sendMessage);
+    public void perform(CommandSender sender, String[] args) {
+        this.help.forEach(sender::sendMessage);
     }
 
     @Override

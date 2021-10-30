@@ -1,6 +1,6 @@
 package eos.moe.dragoncore.commands.sub.item;
 
-import com.taylorswiftcn.justwei.commands.SubCommand;
+import com.taylorswiftcn.justwei.commands.sub.SubCommand;
 import com.taylorswiftcn.justwei.util.MegumiUtil;
 import eos.moe.dragoncore.commands.CommandPerms;
 import eos.moe.dragoncore.util.ColorUtil;
@@ -17,8 +17,8 @@ public class NameCommand extends SubCommand {
     }
 
     @Override
-    public void perform(CommandSender commandSender, String[] strings) {
-        if (strings.length < 2) return;
+    public void perform(CommandSender sender, String[] args) {
+        if (args.length < 1) return;
 
         Player player = getPlayer();
         ItemStack item = player.getInventory().getItemInMainHand();
@@ -29,7 +29,7 @@ public class NameCommand extends SubCommand {
         }
 
         ItemMeta meta = item.getItemMeta();
-        String text = MegumiUtil.onReplace(strings[1]);
+        String text = MegumiUtil.onReplace(args[0]);
 
         if (text.contains("<end>")) {
             try {

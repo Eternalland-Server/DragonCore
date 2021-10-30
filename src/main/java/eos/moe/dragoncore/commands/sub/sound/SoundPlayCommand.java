@@ -1,6 +1,6 @@
 package eos.moe.dragoncore.commands.sub.sound;
 
-import com.taylorswiftcn.justwei.commands.SubCommand;
+import com.taylorswiftcn.justwei.commands.sub.SubCommand;
 import eos.moe.dragoncore.commands.CommandPerms;
 import eos.moe.dragoncore.network.PacketSender;
 import org.bukkit.Bukkit;
@@ -15,27 +15,27 @@ public class SoundPlayCommand extends SubCommand {
     }
 
     @Override
-    public void perform(CommandSender commandSender, String[] strings) {
-        if (strings.length < 6) return;
+    public void perform(CommandSender sender, String[] args) {
+        if (args.length < 5) return;
 
         try {
-            String s = strings[1];
+            String s = args[0];
 
             Player player = Bukkit.getPlayerExact(s);
             if (player == null) {
-                commandSender.sendMessage(" §7玩家 " + s + " 不在线");
+                sender.sendMessage(" §7玩家 " + s + " 不在线");
                 return;
             }
 
-            String sound = strings[2];
-            float volume = Float.parseFloat(strings[3]);
-            float pitch = Float.parseFloat(strings[4]);
-            boolean loop = Boolean.parseBoolean(strings[5]);
+            String sound = args[1];
+            float volume = Float.parseFloat(args[2]);
+            float pitch = Float.parseFloat(args[3]);
+            boolean loop = Boolean.parseBoolean(args[4]);
 
             PacketSender.sendPlaySound(player, sound, sound, volume, pitch, loop, 0, 0, 0);
             player.sendMessage(" §7已开始播放: " + sound);
         } catch (NumberFormatException e) {
-            commandSender.sendMessage(" §7参数错误，请检查输入的数字");
+            sender.sendMessage(" §7参数错误，请检查输入的数字");
         }
 
     }

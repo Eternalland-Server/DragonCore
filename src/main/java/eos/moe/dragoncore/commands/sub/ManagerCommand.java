@@ -1,6 +1,6 @@
 package eos.moe.dragoncore.commands.sub;
 
-import com.taylorswiftcn.justwei.commands.SubCommand;
+import com.taylorswiftcn.justwei.commands.sub.SubCommand;
 import eos.moe.dragoncore.commands.CommandPerms;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -13,11 +13,11 @@ public class ManagerCommand extends SubCommand {
     }
 
     @Override
-    public void perform(CommandSender commandSender, String[] strings) {
-        if (strings.length < 2) return;
+    public void perform(CommandSender sender, String[] args) {
+        if (args.length < 1) return;
 
         Player player = getPlayer();
-        String s = strings[1];
+        String s = args[0];
 
         switch (s.toLowerCase()) {
             case "item": {

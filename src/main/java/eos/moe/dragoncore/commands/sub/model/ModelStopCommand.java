@@ -1,6 +1,6 @@
 package eos.moe.dragoncore.commands.sub.model;
 
-import com.taylorswiftcn.justwei.commands.SubCommand;
+import com.taylorswiftcn.justwei.commands.sub.SubCommand;
 import com.taylorswiftcn.justwei.util.MegumiUtil;
 import eos.moe.dragoncore.commands.CommandPerms;
 import eos.moe.dragoncore.network.PacketSender;
@@ -15,12 +15,12 @@ public class ModelStopCommand extends SubCommand {
     }
 
     @Override
-    public void perform(CommandSender commandSender, String[] strings) {
-        if (strings.length < 3) return;
+    public void perform(CommandSender sender, String[] args) {
+        if (args.length < 2) return;
 
         Player player = getPlayer();
-        String animation = strings[1];
-        String duration = strings[2];
+        String animation = args[0];
+        String duration = args[1];
 
         if (!MegumiUtil.isNumber(duration)) return;
 

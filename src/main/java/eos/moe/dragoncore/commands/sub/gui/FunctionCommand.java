@@ -1,6 +1,6 @@
 package eos.moe.dragoncore.commands.sub.gui;
 
-import com.taylorswiftcn.justwei.commands.SubCommand;
+import com.taylorswiftcn.justwei.commands.sub.SubCommand;
 import eos.moe.dragoncore.commands.CommandPerms;
 import eos.moe.dragoncore.network.PacketSender;
 import org.bukkit.Bukkit;
@@ -14,17 +14,17 @@ public class FunctionCommand extends SubCommand {
     }
 
     @Override
-    public void perform(CommandSender commandSender, String[] strings) {
-        if (strings.length < 5) return;
+    public void perform(CommandSender sender, String[] args) {
+        if (args.length < 4) return;
 
-        String s1 = strings[1];
-        String s2 = strings[2];
-        String s3 = strings[3];
-        String s4 = strings[4];
+        String s1 = args[0];
+        String s2 = args[1];
+        String s3 = args[2];
+        String s4 = args[3];
 
         Player player = Bukkit.getPlayerExact(s1);
         if (player == null) {
-            commandSender.sendMessage(" §7玩家 " + s1 + " 不在线");
+            sender.sendMessage(" §7玩家 " + s1 + " 不在线");
             return;
         }
 
@@ -37,7 +37,7 @@ public class FunctionCommand extends SubCommand {
             PacketSender.sendRunFunction(player, s2, "func.Function_Execute('" + s3 + "');", false);
         }
 
-        commandSender.sendMessage(" §7界面执行方法完成");
+        sender.sendMessage(" §7界面执行方法完成");
     }
 
     @Override

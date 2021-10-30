@@ -5,7 +5,7 @@ public enum CommandPerms {
     USER("dragoncore.user"),
     ADMIN("dragoncore.admin");
 
-    private String node;
+    private final String node;
 
     CommandPerms(String node) {
         this.node = node;

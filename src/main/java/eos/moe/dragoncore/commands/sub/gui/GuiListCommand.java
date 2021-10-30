@@ -1,6 +1,6 @@
 package eos.moe.dragoncore.commands.sub.gui;
 
-import com.taylorswiftcn.justwei.commands.SubCommand;
+import com.taylorswiftcn.justwei.commands.sub.SubCommand;
 import eos.moe.dragoncore.DragonCore;
 import eos.moe.dragoncore.commands.CommandPerms;
 import org.bukkit.command.CommandSender;
@@ -19,10 +19,10 @@ public class GuiListCommand extends SubCommand {
     }
 
     @Override
-    public void perform(CommandSender commandSender, String[] strings) {
-        commandSender.sendMessage(" §6§lGui列表: ");
+    public void perform(CommandSender sender, String[] args) {
+        sender.sendMessage(" §6§lGui列表: ");
         for (String s : plugin.getFileManager().getGui().keySet()) {
-            commandSender.sendMessage("  §7- " + s);
+            sender.sendMessage("  §7- " + s);
         }
     }
 
