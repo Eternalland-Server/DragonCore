@@ -5,7 +5,6 @@ import eos.moe.dragoncore.DragonCore;
 import eos.moe.dragoncore.api.event.YamlPacketEvent;
 import eos.moe.dragoncore.api.worldtexture.WorldTexture;
 import eos.moe.dragoncore.api.worldtexture.animation.Animation;
-import eos.moe.dragoncore.config.FileManager;
 import eos.moe.dragoncore.config.FolderType;
 import eos.moe.dragoncore.config.sub.ConfigFile;
 import org.bukkit.Bukkit;
@@ -36,9 +35,26 @@ public class PacketSender extends PluginMessageSender {
 
     }
 
+    public static void removeModelEntityAnimation(List<Player> players, UUID entityUUID, String animation, int transitionTime) {
+        sendPluginMessage(players, 0, buffer -> {
+            buffer.writeUniqueId(entityUUID);
+            buffer.writeString(animation);
+            buffer.writeInt(transitionTime);
+        });
+
+    }
+
     public static void setModelEntityAnimation(LivingEntity entity, String animation, int transitionTime) {
         sendPluginMessage(getNearPlayers(entity), 1, buffer -> {
             buffer.writeUniqueId(entity.getUniqueId());
+            buffer.writeString(animation);
+            buffer.writeInt(transitionTime);
+        });
+    }
+
+    public static void setModelEntityAnimation(List<Player> players, UUID entityUUID, String animation, int transitionTime) {
+        sendPluginMessage(players, 1, buffer -> {
+            buffer.writeUniqueId(entityUUID);
             buffer.writeString(animation);
             buffer.writeInt(transitionTime);
         });
