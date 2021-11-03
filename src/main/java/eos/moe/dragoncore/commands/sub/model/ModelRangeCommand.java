@@ -16,10 +16,10 @@ public class ModelRangeCommand extends SubCommand {
 
     @Override
     public void perform(CommandSender sender, String[] args) {
-        if (args.length < 3) return;
+        if (args.length < 2) return;
 
-        String model = args[1];
-        String s = args[2];
+        String model = args[0];
+        String s = args[1];
 
         if (!MegumiUtil.isNumber(s)) {
             sender.sendMessage(" §7参数有误，请检查输入的数字");
