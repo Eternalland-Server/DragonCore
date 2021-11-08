@@ -35,6 +35,15 @@ public class PacketSender extends PluginMessageSender {
 
     }
 
+    public static void removeModelEntityAnimation(List<Player> players, UUID entityUUID, String animation, int transitionTime) {
+        sendPluginMessage(players, 0, buffer -> {
+            buffer.writeUniqueId(entityUUID);
+            buffer.writeString(animation);
+            buffer.writeInt(transitionTime);
+        });
+
+    }
+
     public static void setModelEntityAnimation(LivingEntity entity, String animation, int transitionTime) {
         sendPluginMessage(getNearPlayers(entity), 1, buffer -> {
             buffer.writeUniqueId(entity.getUniqueId());
@@ -42,6 +51,15 @@ public class PacketSender extends PluginMessageSender {
             buffer.writeInt(transitionTime);
         });
     }
+
+    public static void setModelEntityAnimation(List<Player> players, UUID entityUUID, String animation, int transitionTime) {
+        sendPluginMessage(players, 1, buffer -> {
+            buffer.writeUniqueId(entityUUID);
+            buffer.writeString(animation);
+            buffer.writeInt(transitionTime);
+        });
+    }
+
 
     public static void sendYaml(Player player, FolderType type, String fileName, YamlConfiguration yaml) {
         sendYaml(player, type.format(fileName), yaml);
