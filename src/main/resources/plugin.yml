@@ -1,5 +1,5 @@
 name: DragonCore
-main: eos.moe.dragoncore.DragonCore
+main: net.sakuragame.eternal.dragoncore.DragonCore
 version: ${project.version}
 depend:
   - MegumiLib
