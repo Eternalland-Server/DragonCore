@@ -30,16 +30,6 @@ public class EntityJoinWorldEvent extends PlayerEvent {
         return HANDLERS;
     }
 
-
-    public void desc() {
-        System.out.println("该事件为 客户端某实体加入世界 的触发事件");
-        System.out.println("掉落物不会触发事件");
-        System.out.println("PS: 当客户端离开实体范围，又再次进入实体范围，也会触发该事件");
-        System.out.println("参数:");
-        System.out.println("  Player  玩家");
-        System.out.println("  UUID    加入世界的实体的UUID");
-    }
-
     public boolean callEvent() {
         Bukkit.getPluginManager().callEvent(this);
         if (this instanceof Cancellable) {

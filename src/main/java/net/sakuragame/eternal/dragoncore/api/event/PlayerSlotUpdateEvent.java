@@ -29,15 +29,6 @@ public class PlayerSlotUpdateEvent extends PlayerEvent {
         return itemStack;
     }
 
-    public void desc() {
-        System.out.println("1.该事件会在玩家进服读取物品后触发");
-        System.out.println("  此时identifier和itemStack将为null");
-        System.out.println("2.该事件会在槽位物品保存至数据库后触发");
-        System.out.println("  此时identifier不为null");
-        System.out.println("  此时itemStack有可能为null");
-        System.out.println("Ps: 事件可用来兼容属性");
-    }
-
     @Override
     public HandlerList getHandlers() {
         return HANDLERS;

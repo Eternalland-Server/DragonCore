@@ -5,15 +5,17 @@ import org.bukkit.configuration.ConfigurationSection;
 
 @Getter
 public class SlotSetting {
-    private String identifier;
-    private boolean skin;
-    private boolean attribute;
-    private ConfigurationSection section;
+    private final String identifier;
+    private final boolean skin;
+    private final boolean attribute;
+    private final boolean realmLimit;
+    private final int equipType;
 
     public SlotSetting(ConfigurationSection section) {
-        this.section = section;
         this.identifier = section.getName();
         this.skin = section.getBoolean("skin");
         this.attribute = section.getBoolean("attribute");
+        this.realmLimit = section.getBoolean("realm-limit");
+        this.equipType = section.getInt("equip-type");
     }
 }

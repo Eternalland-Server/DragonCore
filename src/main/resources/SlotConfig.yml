@@ -1,7 +1,10 @@
 # 自定义的槽位必须填在此处，否则槽位将不允许点击操作
 
 test_slot:
-  limit: [ ]
+  skin: false
+  attribute: true
+  realm-limit: true
+  equip-type: 0
 
 
 # 脚本功能，不会改的不要乱改哦~

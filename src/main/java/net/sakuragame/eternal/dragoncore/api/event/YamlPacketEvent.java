@@ -18,7 +18,6 @@ public class YamlPacketEvent extends PlayerEvent {
         super(player);
         this.fileName = fileName;
         this.yaml = yaml;
-        //throw new RuntimeException("芜湖，YamlPacketEvent已被弃用")
     }
 
     public static HandlerList getHANDLERS() {

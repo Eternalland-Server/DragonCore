@@ -50,12 +50,4 @@ public class ChatTextboxEvent extends PlayerEvent  {
     public static HandlerList getHandlerList() {
         return HANDLERS;
     }
-
-    public void desc() {
-        System.out.println("该事件为 玩家在聊天栏输入文字 的触发事件");
-        System.out.println("每输入一个文字都会触发一次事件");
-        System.out.println("参数:");
-        System.out.println("  lastText    上次的文本");
-        System.out.println("  currentText 当前的文本");
-    }
 }
