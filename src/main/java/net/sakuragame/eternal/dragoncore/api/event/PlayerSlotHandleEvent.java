@@ -13,15 +13,15 @@ import org.bukkit.inventory.ItemStack;
 public class PlayerSlotHandleEvent extends PlayerEvent implements Cancellable {
 
     private final String identifier;
-    @Setter private ItemStack item;
+    @Setter private ItemStack handItem;
     private boolean cancel;
 
     private final static HandlerList handlerList = new HandlerList();
 
-    public PlayerSlotHandleEvent(Player who, String identifier, ItemStack item) {
+    public PlayerSlotHandleEvent(Player who, String identifier, ItemStack handItem) {
         super(who);
         this.identifier = identifier;
-        this.item = item;
+        this.handItem = handItem;
     }
 
     @Override

@@ -95,7 +95,7 @@ public class SlotListener implements Listener {
         }
 
         if (handItem.getType() != Material.AIR) {
-            PlayerSlotHandleEvent event = new PlayerSlotHandleEvent(player, slotIdentity, slotItem);
+            PlayerSlotHandleEvent event = new PlayerSlotHandleEvent(player, slotIdentity, handItem);
             if (event.isCancelled()) {
                 return;
             }
