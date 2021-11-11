@@ -30,12 +30,7 @@ public class EntityJoinWorldEvent extends PlayerEvent {
         return HANDLERS;
     }
 
-    public boolean callEvent() {
+    public void callEvent() {
         Bukkit.getPluginManager().callEvent(this);
-        if (this instanceof Cancellable) {
-            return !((Cancellable)this).isCancelled();
-        } else {
-            return true;
-        }
     }
 }

@@ -33,13 +33,8 @@ public class ChatTextboxEvent extends PlayerEvent  {
     }
 
 
-    public boolean callEvent() {
+    public void callEvent() {
         Bukkit.getPluginManager().callEvent(this);
-        if (this instanceof Cancellable) {
-            return !((Cancellable)this).isCancelled();
-        } else {
-            return true;
-        }
     }
 
     @Override

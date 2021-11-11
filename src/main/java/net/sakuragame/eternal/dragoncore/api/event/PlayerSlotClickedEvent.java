@@ -29,12 +29,7 @@ public class PlayerSlotClickedEvent extends PlayerEvent {
         return handlerList;
     }
 
-    public boolean callEvent() {
+    public void callEvent() {
         Bukkit.getPluginManager().callEvent(this);
-        if (this instanceof Cancellable) {
-            return !((Cancellable) this).isCancelled();
-        } else {
-            return true;
-        }
     }
 }

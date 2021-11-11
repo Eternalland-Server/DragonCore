@@ -1,25 +1,26 @@
 package net.sakuragame.eternal.dragoncore.api.event;
 
-import net.sakuragame.eternal.dragoncore.api.slot.ClickType;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.player.PlayerEvent;
+import org.bukkit.inventory.ItemStack;
 
-public class PlayerSlotClickEvent extends PlayerEvent implements Cancellable {
+@Getter
+public class PlayerSlotHandleEvent extends PlayerEvent implements Cancellable {
 
-    @Getter private final String identifier;
-    @Getter private final ClickType clickType;
+    private final String identifier;
+    private final ItemStack item;
     private boolean cancel;
+
     private final static HandlerList handlerList = new HandlerList();
 
-    public PlayerSlotClickEvent(Player who, String identifier, ClickType clickType) {
+    public PlayerSlotHandleEvent(Player who, String identifier, ItemStack item) {
         super(who);
         this.identifier = identifier;
-        this.clickType = clickType;
-        this.cancel = false;
+        this.item = item;
     }
 
     @Override
@@ -30,6 +31,7 @@ public class PlayerSlotClickEvent extends PlayerEvent implements Cancellable {
     public static HandlerList getHandlerList() {
         return handlerList;
     }
+
 
     @Override
     public boolean isCancelled() {

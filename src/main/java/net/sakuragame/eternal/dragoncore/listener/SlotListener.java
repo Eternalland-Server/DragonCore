@@ -5,6 +5,7 @@ import net.sakuragame.eternal.dragoncore.DragonCore;
 import net.sakuragame.eternal.dragoncore.api.SlotAPI;
 import net.sakuragame.eternal.dragoncore.api.event.PlayerSlotClickEvent;
 import net.sakuragame.eternal.dragoncore.api.event.PlayerSlotClickedEvent;
+import net.sakuragame.eternal.dragoncore.api.event.PlayerSlotHandleEvent;
 import net.sakuragame.eternal.dragoncore.api.gui.event.CustomPacketEvent;
 import net.sakuragame.eternal.dragoncore.api.slot.ClickType;
 import net.sakuragame.eternal.dragoncore.config.FileManager;
@@ -49,7 +50,7 @@ public class SlotListener implements Listener {
         if (clickType == null) return;
 
         PlayerSlotClickEvent clickEvent = new PlayerSlotClickEvent(player, identifier, clickType);
-        if (!clickEvent.callEvent()) return;
+        if (clickEvent.callEvent()) return;
 
         if (!FileManager.getSlotSettings().containsKey(identifier)) {
             return;
@@ -69,7 +70,7 @@ public class SlotListener implements Listener {
 
             @Override
             public void onFail() {
-                player.sendMessage("§c[错误] §6无法读取槽位数据");
+                player.sendMessage(" §c§l无法读取槽位数据");
                 saving.remove(player.getUniqueId());
             }
         });
@@ -93,8 +94,11 @@ public class SlotListener implements Listener {
             }
         }
 
-        if (handItem.getType() != Material.AIR && !checkItemStackCanPutInSlot(player, slotIdentity, handItem)) {
-            return;
+        if (handItem.getType() != Material.AIR) {
+            PlayerSlotHandleEvent event = new PlayerSlotHandleEvent(player, slotIdentity, slotItem);
+            if (event.isCancelled()) {
+                return;
+            }
         }
         // 判断Limit
 
@@ -207,42 +211,5 @@ public class SlotListener implements Listener {
         itemStack.setAmount(amount);
         return itemStack;
 
-    }
-
-    public static boolean checkItemStackCanPutInSlot(Player player, String slotIdentity, ItemStack itemStack) {
-        YamlConfiguration yaml = DragonCore.getInstance().getFileManager().getSlotConfig();
-        if (!yaml.contains(slotIdentity + ".limit")) {
-            return false;
-        }
-        List<String> list = yaml.getStringList(slotIdentity + ".limit");
-        for (String s : list) {
-            if (s.split("\\|").length > 1) {
-                try {
-                    String[] split = s.split("\\|", 2);
-                    String script = yaml.getString("Script." + split[0]);
-                    if (script == null) {
-                        player.sendMessage("§c[错误] 背包配置Limit存在未知判断类型" + split[0] + "，你无法将物品放入此槽内");
-                        return false;
-                    }
-                    boolean result = ScriptUtil.execute(script, player, itemStack, slotIdentity, split[1]);
-                    if (!result) {
-                        return false;
-                    }
-                } catch (Exception e) {
-                    Bukkit.getConsoleSender().sendMessage("§c[错误] 处理限制行[" + s + "]出现了错误");
-                    player.sendMessage("§c[错误] 背包配置Limit处理出现异常报错,你无法将物品放入此槽内");
-                    e.printStackTrace();
-                    return false;
-                }
-            } else {
-                List<String> lore = ItemUtil.getLore(itemStack);
-                boolean result = lore.contains(s.replace("&", "§"));
-                if (!result) {
-                    player.sendMessage("§c§l该槽位要求物品存在词条: " + Arrays.toString(list.toArray()));
-                    return false;
-                }
-            }
-        }
-        return true;
     }
 }
