@@ -99,6 +99,8 @@ public class SlotListener implements Listener {
             if (event.isCancelled()) {
                 return;
             }
+
+            slotItem = event.getItem();
         }
         // 判断Limit
 
