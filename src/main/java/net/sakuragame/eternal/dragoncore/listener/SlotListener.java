@@ -100,7 +100,7 @@ public class SlotListener implements Listener {
                 return;
             }
 
-            slotItem = event.getItem();
+            handItem = event.getHandItem();
         }
         // 判断Limit
 
