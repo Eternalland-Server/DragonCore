@@ -1,5 +1,6 @@
 package net.sakuragame.eternal.dragoncore.database;
 
+import ink.ptms.zaphkiel.ZaphkielAPI;
 import net.sakuragame.eternal.dragoncore.DragonCore;
 import net.sakuragame.eternal.dragoncore.database.mysql.DragonCoreTable;
 import net.sakuragame.eternal.dragoncore.util.ItemUtil;
@@ -19,8 +20,8 @@ import java.util.Map;
 
 public class MysqlRepository implements IDataBase {
 
-    private DragonCore plugin;
-    private DataManager dataManager;
+    private final DragonCore plugin;
+    private final DataManager dataManager;
 
     public MysqlRepository(DragonCore plugin) {
         this.plugin = plugin;
@@ -34,7 +35,9 @@ public class MysqlRepository implements IDataBase {
 
     @Override
     public void getData(Player player, String identifier, Callback<ItemStack> callback) {
-        try (DatabaseQuery query = dataManager.createQuery(DragonCoreTable.DRAGON_CORE_SLOTS.getTableName(), new String[] {"uuid", "slot"}, new String[] {player.getUniqueId().toString(), identifier})) {
+        int uid = ClientManagerAPI.getUserID(player.getUniqueId());
+
+        try (DatabaseQuery query = dataManager.createQuery(DragonCoreTable.DRAGON_CORE_SLOTS.getTableName(), new String[] {"uid", "ident"}, new Object[] {uid, identifier})) {
             ResultSet result = query.getResultSet();
             if (result.next()) {
                 String data = result.getString("data");
@@ -43,13 +46,8 @@ public class MysqlRepository implements IDataBase {
                     return;
                 }
 
-                try {
-                    ItemStack item = ItemUtil.jsonToItem(data.replace("/|/", "'"));
-                    Scheduler.run(() -> callback.onResult(item));
-                }
-                catch (MojangsonParseException e) {
-                    Scheduler.run(() -> callback.onResult(new ItemStack(Material.AIR)));
-                }
+                ItemStack item = ZaphkielAPI.INSTANCE.deserialize(data).rebuildToItemStack(player);
+                Scheduler.run(() -> callback.onResult(item));
             } else {
                 Scheduler.run(() -> callback.onResult(new ItemStack(Material.AIR)));
             }
@@ -62,35 +60,41 @@ public class MysqlRepository implements IDataBase {
 
     @Override
     public void setData(Player player, String identifier, ItemStack itemStack, Callback<ItemStack> callback) {
-        String data = ItemUtil.itemToJson(itemStack).replace("'", "/|/");
+        int uid = ClientManagerAPI.getUserID(player.getUniqueId());
+        String data = ZaphkielAPI.INSTANCE.serialize(itemStack).toString();
 
         dataManager.executeReplace(
                 DragonCoreTable.DRAGON_CORE_SLOTS.getTableName(),
-                new String[] {"uuid", "slot", "data"},
-                new Object[] {player.getUniqueId().toString(), identifier, data}
+                new String[] {"uid", "ident", "data"},
+                new Object[] {uid, identifier, data}
         );
         Scheduler.run(() -> callback.onResult(itemStack));
     }
 
     @Override
     public void getAllData(Player player, Callback<Map<String, ItemStack>> callback) {
+        int uid = ClientManagerAPI.getUserID(player.getUniqueId());
         Map<String, ItemStack> items = new HashMap<>();
 
-        try (DatabaseQuery query = dataManager.createQuery(DragonCoreTable.DRAGON_CORE_SLOTS.getTableName(), "uuid", player.getUniqueId().toString())) {
+        try (DatabaseQuery query = dataManager.createQuery(
+                DragonCoreTable.DRAGON_CORE_SLOTS.getTableName(),
+                "uid",
+                uid)
+        ) {
             ResultSet result = query.getResultSet();
             while (result.next()) {
-                String slot = result.getString("slot");
+                String ident = result.getString("ident");
                 String data = result.getString("data");
                 if (data == null || data.isEmpty()) {
-                    items.put(slot, new ItemStack(Material.AIR));
+                    items.put(ident, new ItemStack(Material.AIR));
                     continue;
                 }
                 try {
                     ItemStack item = ItemUtil.jsonToItem(data.replace("/|/", "'"));
-                    items.put(slot, item);
+                    items.put(ident, item);
                 }
                 catch (MojangsonParseException e) {
-                    items.put(slot, new ItemStack(Material.AIR));
+                    items.put(ident, new ItemStack(Material.AIR));
                 }
             }
             Scheduler.run(() -> callback.onResult(items));

@@ -35,6 +35,10 @@
             <name>Lumine Releases</name>
             <url>https://mvn.lumine.io/repository/maven-public/</url>
         </repository>
+        <repository>
+            <id>ptms</id>
+            <url>https://repo2s.ptms.ink/repository/maven-releases</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -90,14 +94,14 @@
         <dependency>
             <groupId>net.sakuragame</groupId>
             <artifactId>DataManager-Bukkit-API</artifactId>
-            <version>1.1.2-SNAPSHOT</version>
+            <version>1.2.0-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
-            <groupId>net.sakuragame.eternal</groupId>
-            <artifactId>JustAttribute</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <groupId>ink.ptms</groupId>
+            <artifactId>Zaphkiel</artifactId>
+            <version>1.7.2</version>
         </dependency>
     </dependencies>
 

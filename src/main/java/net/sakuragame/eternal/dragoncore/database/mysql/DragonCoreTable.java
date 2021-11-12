@@ -4,8 +4,8 @@ public enum DragonCoreTable {
 
     DRAGON_CORE_SLOTS(new DatabaseTable("dragoncore_slots",
             new String[] {
-                    "`uuid` varchar(36) NOT NULL",
-                    "`slot` varchar(32) NOT NULL",
+                    "`uid` int NOT NULL",
+                    "`ident` varchar(32) NOT NULL",
                     "`data` text default NULL",
                     "PRIMARY KEY (`uuid`,`slot`)",
             }));
