@@ -97,6 +97,14 @@ public class FileManager extends JustConfiguration {
     }
 
     private void loadAllProfile() {
+        armor.clear();
+        blood.clear();
+        entityModel.clear();
+        fontConfig.clear();
+        gui.clear();
+        itemIcon.clear();
+        itemModel.clear();
+        itemTip.clear();
         Bukkit.getConsoleSender().sendMessage("§6DragonCore - 开始载入文件");
         Bukkit.getConsoleSender().sendMessage("§a┏━━━━━━━━━ 开始载入Yml文件 ━━━━━━━━━");
         armor.putAll(getProfile(FolderType.Armor));

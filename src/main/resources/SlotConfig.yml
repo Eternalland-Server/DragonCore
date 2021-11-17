@@ -1,4 +1,28 @@
-# 自定义的槽位必须填在此处，否则槽位将不允许点击操作
-
-test_slot:
+glasses_slot:
+  skin: false
+eardrop_slot:
+  skin: false
+cloak_slot:
+  skin: false
+ring1_slot:
+  skin: false
+ring2_slot:
+  skin: false
+ring3_slot:
+  skin: false
+ring4_slot:
+  skin: false
+medal_slot:
+  skin: false
+honor_slot:
+  skin: false
+pet_egg_slot:
+  skin: false
+pet_saddle_slot:
+  skin: false
+pet_equip1_slot:
+  skin: false
+pet_equip2_slot:
+  skin: false
+pet_equip3_slot:
   skin: false

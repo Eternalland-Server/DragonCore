@@ -7,7 +7,7 @@ public enum DragonCoreTable {
                     "`uid` int NOT NULL",
                     "`ident` varchar(32) NOT NULL",
                     "`data` text default NULL",
-                    "PRIMARY KEY (`uuid`,`slot`)",
+                    "UNIQUE KEY `account` (`uid`,`ident`)",
             }));
 
     private final DatabaseTable table;
