@@ -100,7 +100,7 @@ public class SlotListener implements Listener {
 
         if (handItem.getType() != Material.AIR) {
             PlayerSlotHandleEvent event = new PlayerSlotHandleEvent(player, slotIdentity, handItem.clone());
-            if (event.isCancelled()) return;
+            if (event.callEvent()) return;
 
             handItem = event.getHandItem();
         }
