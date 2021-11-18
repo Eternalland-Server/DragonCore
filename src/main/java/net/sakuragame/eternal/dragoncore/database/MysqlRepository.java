@@ -1,5 +1,6 @@
 package net.sakuragame.eternal.dragoncore.database;
 
+import com.taylorswiftcn.justwei.util.MegumiUtil;
 import ink.ptms.zaphkiel.ZaphkielAPI;
 import net.sakuragame.eternal.dragoncore.DragonCore;
 import net.sakuragame.eternal.dragoncore.database.mysql.DragonCoreTable;
@@ -61,7 +62,8 @@ public class MysqlRepository implements IDataBase {
     @Override
     public void setData(Player player, String identifier, ItemStack itemStack, Callback<ItemStack> callback) {
         int uid = ClientManagerAPI.getUserID(player.getUniqueId());
-        String data = ZaphkielAPI.INSTANCE.serialize(itemStack).toString();
+
+        String data = MegumiUtil.isEmpty(itemStack) ? "" : ZaphkielAPI.INSTANCE.serialize(itemStack).toString();
 
         dataManager.executeReplace(
                 DragonCoreTable.DRAGON_CORE_SLOTS.getTableName(),
@@ -89,13 +91,9 @@ public class MysqlRepository implements IDataBase {
                     items.put(ident, new ItemStack(Material.AIR));
                     continue;
                 }
-                try {
-                    ItemStack item = ItemUtil.jsonToItem(data.replace("/|/", "'"));
-                    items.put(ident, item);
-                }
-                catch (MojangsonParseException e) {
-                    items.put(ident, new ItemStack(Material.AIR));
-                }
+
+                ItemStack item = ZaphkielAPI.INSTANCE.deserialize(data).rebuildToItemStack(player);
+                items.put(ident, item);
             }
             Scheduler.run(() -> callback.onResult(items));
         }

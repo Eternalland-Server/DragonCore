@@ -1,6 +1,7 @@
 package net.sakuragame.eternal.dragoncore.listener;
 
 import com.taylorswiftcn.justwei.util.MegumiUtil;
+import ink.ptms.zaphkiel.ZaphkielAPI;
 import net.sakuragame.eternal.dragoncore.DragonCore;
 import net.sakuragame.eternal.dragoncore.api.SlotAPI;
 import net.sakuragame.eternal.dragoncore.api.event.PlayerSlotClickEvent;
@@ -40,7 +41,7 @@ public class SlotListener implements Listener {
         if (!e.getIdentifier().equals("DragonCore_ClickSlot")) return;
         if (e.isCancelled()) return;
         if (e.getData().size() != 2) return;
-        if (saving.contains(player.getUniqueId())) return;
+        /*if (saving.contains(player.getUniqueId())) return;*/
 
         String identifier = e.getData().get(0);
         String clickParam = e.getData().get(1);
@@ -56,9 +57,12 @@ public class SlotListener implements Listener {
             return;
         }
 
-        saving.add(player.getUniqueId());
+        /*saving.add(player.getUniqueId());*/
 
-        SlotAPI.getSlotItem(player, identifier, new IDataBase.Callback<ItemStack>() {
+        ItemStack itemStack = SlotAPI.getCacheSlotItem(player, identifier);
+        handleSlotClick(player, identifier, clickType, itemStack);
+
+        /*SlotAPI.getSlotItem(player, identifier, new IDataBase.Callback<ItemStack>() {
             @Override
             public void onResult(ItemStack itemStack) {
                 saving.remove(player.getUniqueId());
@@ -73,7 +77,7 @@ public class SlotListener implements Listener {
                 player.sendMessage(" §c§l无法读取槽位数据");
                 saving.remove(player.getUniqueId());
             }
-        });
+        });*/
 
     }
 
@@ -96,17 +100,22 @@ public class SlotListener implements Listener {
 
         if (handItem.getType() != Material.AIR) {
             PlayerSlotHandleEvent event = new PlayerSlotHandleEvent(player, slotIdentity, handItem.clone());
-            if (event.isCancelled()) {
-                return;
-            }
+            if (event.isCancelled()) return;
 
             handItem = event.getHandItem();
         }
-        // 判断Limit
+
+        if (!MegumiUtil.isEmpty(handItem)) {
+            if (ZaphkielAPI.INSTANCE.read(handItem).isVanilla()) {
+                plugin.getLogger().info("已阻止玩家 " + player.getName() + " 尝试将原版物品放入槽位");
+                return;
+            }
+        }
 
 
         //左键点击槽位
         if (clickType == ClickType.LEFT_CLICK) {
+            System.out.println("left click");
             //相同物品则把手上物品放入
             if (slotItem.getType() != Material.AIR && handItem.getType() != Material.AIR) {
                 if (slotItem.isSimilar(handItem)) {
@@ -130,6 +139,7 @@ public class SlotListener implements Listener {
         }
         //右键点击槽位
         if (clickType == ClickType.RIGHT_CLICK) {
+            System.out.println("right click");
             //如果格子是空的，且手上有物品  ->  放置一个进去
             if (slotItem.getType() == Material.AIR && handItem.getType() != Material.AIR) {
                 setItemStack(player, slotIdentity, setAmount(handItem.clone(), 1));
@@ -173,9 +183,7 @@ public class SlotListener implements Listener {
         if (e.getData().size() != 1)
             return;
         String slotIdentity = e.getData().get(0);
-        if (!plugin.getFileManager().getSlotConfig().contains(slotIdentity + ".limit")) {
-            return;
-        }
+
         ItemStack itemStack = SlotAPI.getCacheSlotItem(e.getPlayer(), slotIdentity);
         if (itemStack == null) {
             itemStack = new ItemStack(Material.AIR);
