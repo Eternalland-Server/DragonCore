@@ -115,7 +115,6 @@ public class SlotListener implements Listener {
 
         //左键点击槽位
         if (clickType == ClickType.LEFT_CLICK) {
-            System.out.println("left click");
             //相同物品则把手上物品放入
             if (slotItem.getType() != Material.AIR && handItem.getType() != Material.AIR) {
                 if (slotItem.isSimilar(handItem)) {
