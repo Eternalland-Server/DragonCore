@@ -3,6 +3,7 @@ package net.sakuragame.eternal.dragoncore.network;
 
 import net.sakuragame.eternal.dragoncore.DragonCore;
 import net.sakuragame.eternal.dragoncore.api.event.YamlPacketEvent;
+import net.sakuragame.eternal.dragoncore.api.event.YamlSendFinishedEvent;
 import net.sakuragame.eternal.dragoncore.api.worldtexture.WorldTexture;
 import net.sakuragame.eternal.dragoncore.api.worldtexture.animation.Animation;
 import net.sakuragame.eternal.dragoncore.config.FolderType;
@@ -283,6 +284,9 @@ public class PacketSender extends PluginMessageSender {
     public static void sendFinished(Player player) {
         sendPluginMessage(player, 99, buffer -> {
         });
+
+        YamlSendFinishedEvent event = new YamlSendFinishedEvent(player);
+        event.callEvent();
     }
 
     public static void sendOpenGui(Player player, String guiName) {
