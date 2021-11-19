@@ -23,6 +23,10 @@ public class CoreAPI {
         plugin.getMiscManager().addOpenScreen(uuid, screenID);
     }
 
+    public static void delOpenScreen(UUID uuid) {
+        plugin.getMiscManager().delOpenScreen(uuid);
+    }
+
     public static String getOpenScreen(UUID uuid) {
         return plugin.getMiscManager().getOpenScreen(uuid);
     }

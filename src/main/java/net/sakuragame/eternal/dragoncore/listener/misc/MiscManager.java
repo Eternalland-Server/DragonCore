@@ -80,6 +80,10 @@ public class MiscManager implements Listener {
         openScreen.put(uuid, screenID);
     }
 
+    public void delOpenScreen(UUID uuid) {
+        openScreen.remove(uuid);
+    }
+
     public String getOpenScreen(UUID uuid) {
         return openScreen.get(uuid);
     }
