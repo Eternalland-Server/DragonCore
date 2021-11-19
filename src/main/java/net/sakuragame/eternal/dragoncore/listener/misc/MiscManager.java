@@ -2,6 +2,7 @@ package net.sakuragame.eternal.dragoncore.listener.misc;
 
 
 import net.sakuragame.eternal.dragoncore.DragonCore;
+import net.sakuragame.eternal.dragoncore.api.SlotAPI;
 import net.sakuragame.eternal.dragoncore.api.event.PlayerSlotLoadedEvent;
 import net.sakuragame.eternal.dragoncore.api.event.PlayerSlotUpdateEvent;
 import net.sakuragame.eternal.dragoncore.database.IDataBase;
@@ -19,12 +20,14 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class MiscManager implements Listener {
-    private Map<UUID, Map<String, ItemStack>> cacheMap;
+    private final Map<UUID, Map<String, ItemStack>> cacheMap;
+    private final HashMap<UUID, String> openScreen;
     private DragonCore plugin;
 
     public MiscManager(DragonCore plugin) {
         this.plugin = plugin;
         this.cacheMap = new ConcurrentHashMap<>();
+        this.openScreen = new HashMap<>();
 
         PluginManager pm = Bukkit.getPluginManager();
         YamlConfiguration config = plugin.getFileManager().getConfig();
@@ -60,7 +63,10 @@ public class MiscManager implements Listener {
 
     @EventHandler
     public void onQuit(PlayerQuitEvent e) {
-        cacheMap.remove(e.getPlayer().getUniqueId());
+        UUID uuid = e.getPlayer().getUniqueId();
+
+        cacheMap.remove(uuid);
+        openScreen.remove(uuid);
     }
 
     public void putItem(Player player, String identifier, ItemStack itemStack) {
@@ -68,6 +74,14 @@ public class MiscManager implements Listener {
             cacheMap.get(player.getUniqueId()).put(identifier, itemStack);
             new PlayerSlotUpdateEvent(player, identifier, itemStack).callEvent();
         }
+    }
+
+    public void addOpenScreen(UUID uuid, String screenID) {
+        openScreen.put(uuid, screenID);
+    }
+
+    public String getOpenScreen(UUID uuid) {
+        return openScreen.get(uuid);
     }
 
     public Map<UUID, Map<String, ItemStack>> getCacheMap() {

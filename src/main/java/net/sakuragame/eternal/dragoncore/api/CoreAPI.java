@@ -1,5 +1,6 @@
 package net.sakuragame.eternal.dragoncore.api;
 
+import net.sakuragame.eternal.dragoncore.DragonCore;
 import net.sakuragame.eternal.dragoncore.api.worldtexture.WorldTexture;
 import net.sakuragame.eternal.dragoncore.config.sub.ConfigFile;
 import net.sakuragame.eternal.dragoncore.network.PacketSender;
@@ -10,10 +11,21 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.HashMap;
 import java.util.Objects;
 import java.util.UUID;
 
 public class CoreAPI {
+
+    private final static DragonCore plugin = DragonCore.getInstance();
+
+    public static void addOpenScreen(UUID uuid, String screenID) {
+        plugin.getMiscManager().addOpenScreen(uuid, screenID);
+    }
+
+    public static String getOpenScreen(UUID uuid) {
+        return plugin.getMiscManager().getOpenScreen(uuid);
+    }
 
     /**
      * 跟下面一样嗷，就是少了uuid开始的那5个
