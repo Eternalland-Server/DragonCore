@@ -94,6 +94,7 @@ public class FileManager extends JustConfiguration {
         for (String s : itemTip.keySet()) {
             PacketSender.sendYaml(player, FolderType.ItemTip.format(s), itemTip.get(s));
         }
+        PacketSender.sendYaml(player, "WorldTexture.yml", worldTexture);
     }
 
     private void loadAllProfile() {
@@ -121,7 +122,6 @@ public class FileManager extends JustConfiguration {
     private void loadSlotSetting() {
         slotSettings.clear();
         for (String key : slotConfig.getKeys(false)) {
-            if ("Script".equals(key)) continue;
             ConfigurationSection section = slotConfig.getConfigurationSection(key);
             if (section != null) {
                 SlotSetting slotSetting = new SlotSetting(section);
