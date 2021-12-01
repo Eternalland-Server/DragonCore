@@ -1,12 +1,13 @@
 package net.sakuragame.eternal.dragoncore.mythicmobs.listener;
 
+import io.lumine.xikage.mythicmobs.api.bukkit.events.MythicMechanicLoadEvent;
+import io.lumine.xikage.mythicmobs.api.bukkit.events.MythicMobSpawnEvent;
+import net.minecraft.server.v1_12_R1.*;
 import net.sakuragame.eternal.dragoncore.mythicmobs.mechanics.AnimationMechanic;
 import net.sakuragame.eternal.dragoncore.mythicmobs.mechanics.ModelMechanic;
 import net.sakuragame.eternal.dragoncore.mythicmobs.mechanics.SoundPlayMechanic;
 import net.sakuragame.eternal.dragoncore.mythicmobs.mechanics.SoundStopMechanic;
-import io.lumine.xikage.mythicmobs.api.bukkit.events.MythicMechanicLoadEvent;
-import io.lumine.xikage.mythicmobs.api.bukkit.events.MythicMobSpawnEvent;
-import net.minecraft.server.v1_12_R1.*;
+import net.sakuragame.eternal.dragoncore.util.Scheduler;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftEntity;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.EventHandler;
@@ -46,23 +47,26 @@ public class MythicMobsListener implements Listener {
         if (attackDistance == 0)
             return;
 
-        net.minecraft.server.v1_12_R1.Entity handle = ((CraftEntity) entity).getHandle();
-        if (handle instanceof EntityCreature) {
-            EntityCreature entityLiving = (EntityCreature) handle;
-            PathfinderGoalSelector goalSelector = entityLiving.goalSelector;
-            try {
-                Set o = (Set) field1.get(goalSelector);
-                for (Object o1 : o) {
-                    Object o2 = field2.get(o1);
-                    if (o2 instanceof PathfinderGoalMeleeAttack) {
-                        PathfinderGoalMeleeAttack pathfinderGoalMeleeAttack = (PathfinderGoalMeleeAttack) o2;
-                        field2.set(o1, new DragonCore_PathfinderGoalMeleeAttack(entityLiving, pathfinderGoalMeleeAttack, attackDistance));
+        Scheduler.runLater(() -> {
+            net.minecraft.server.v1_12_R1.Entity handle = ((CraftEntity) entity).getHandle();
+            if (handle instanceof EntityCreature) {
+                EntityCreature entityLiving = (EntityCreature) handle;
+                PathfinderGoalSelector goalSelector = entityLiving.goalSelector;
+                try {
+                    Set o = (Set) field1.get(goalSelector);
+                    o.clear();
+                    goalSelector.a(0, new DragonCore_PathfinderGoalMeleeAttack(entityLiving, attackDistance));
+                    for (Object o1 : o) {
+                        Object o2 = field2.get(o1);
+                        if (o2 instanceof PathfinderGoalMeleeAttack) {
+                            field2.set(o1, new DragonCore_PathfinderGoalMeleeAttack(entityLiving, attackDistance));
+                        }
                     }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
                 }
-            } catch (Exception ex) {
-                ex.printStackTrace();
             }
-        }
+        }, 2);
     }
 
     @EventHandler
@@ -101,7 +105,7 @@ public class MythicMobsListener implements Listener {
         protected final int attackInterval = 20;
         private double distance;
 
-        public DragonCore_PathfinderGoalMeleeAttack(EntityCreature entityCreature, PathfinderGoalMeleeAttack parent, double distance) {
+        public DragonCore_PathfinderGoalMeleeAttack(EntityCreature entityCreature, double distance) {
             super(entityCreature, 1.0, true);
 
             this.attacker = entityCreature;
@@ -159,6 +163,8 @@ public class MythicMobsListener implements Listener {
 
         public void e() {
             EntityLiving entitylivingbase = this.attacker.getGoalTarget();
+            if (entitylivingbase == null) return;
+
             this.attacker.getControllerLook().a(entitylivingbase, 30.0F, 30.0F);
             double var2 = this.attacker.d(entitylivingbase.locX, entitylivingbase.getBoundingBox().b, entitylivingbase.locZ);
             --this.delayCounter;
@@ -178,6 +184,7 @@ public class MythicMobsListener implements Listener {
                 }
             }
 
+            System.out.println(var2);
             this.attackTick = Math.max(this.attackTick - 1, 0);
             this.a(entitylivingbase, var2);
         }
