@@ -183,8 +183,6 @@ public class MythicMobsListener implements Listener {
                     this.delayCounter += 15;
                 }
             }
-
-            System.out.println(var2);
             this.attackTick = Math.max(this.attackTick - 1, 0);
             this.a(entitylivingbase, var2);
         }
