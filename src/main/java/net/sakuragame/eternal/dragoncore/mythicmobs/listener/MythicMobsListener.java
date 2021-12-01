@@ -7,7 +7,6 @@ import net.sakuragame.eternal.dragoncore.mythicmobs.mechanics.SoundStopMechanic;
 import io.lumine.xikage.mythicmobs.api.bukkit.events.MythicMechanicLoadEvent;
 import io.lumine.xikage.mythicmobs.api.bukkit.events.MythicMobSpawnEvent;
 import net.minecraft.server.v1_12_R1.*;
-import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftEntity;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.EventHandler;
@@ -60,7 +59,8 @@ public class MythicMobsListener implements Listener {
                         field2.set(o1, new DragonCore_PathfinderGoalMeleeAttack(entityLiving, pathfinderGoalMeleeAttack, attackDistance));
                     }
                 }
-            } catch (Exception ignored) {
+            } catch (Exception ex) {
+                ex.printStackTrace();
             }
         }
     }
@@ -69,26 +69,21 @@ public class MythicMobsListener implements Listener {
     public void onMythicMechanicLoad(MythicMechanicLoadEvent e) {
         if (e.getMechanicName().equalsIgnoreCase("Animation")) {
             e.register(new AnimationMechanic(e.getContainer(), e.getConfig()));
-            Bukkit.getConsoleSender().sendMessage("§6[DragonCore] MythicMobs mechanic register:§a Animation");
             return;
         }
 
         if (e.getMechanicName().equalsIgnoreCase("SoundPlay")) {
             e.register(new SoundPlayMechanic(e.getContainer(), e.getConfig()));
-            Bukkit.getConsoleSender().sendMessage("§6[DragonCore] MythicMobs mechanic register:§a SendSound");
             return;
         }
 
         if (e.getMechanicName().equalsIgnoreCase("SoundStop")) {
             e.register(new SoundStopMechanic(e.getContainer(), e.getConfig()));
-            Bukkit.getConsoleSender().sendMessage("§6[DragonCore] MythicMobs mechanic register:§a StopSound");
             return;
         }
 
-
         if (e.getMechanicName().equalsIgnoreCase("Model")) {
             e.register(new ModelMechanic(e.getContainer(), e.getConfig()));
-            Bukkit.getConsoleSender().sendMessage("§6[DragonCore] MythicMobs mechanic register:§a Model");
         }
     }
 
@@ -107,7 +102,7 @@ public class MythicMobsListener implements Listener {
         private double distance;
 
         public DragonCore_PathfinderGoalMeleeAttack(EntityCreature entityCreature, PathfinderGoalMeleeAttack parent, double distance) {
-            super(entityCreature, 1, true);
+            super(entityCreature, 1.0, true);
 
             this.attacker = entityCreature;
             this.world = entityCreature.world;
