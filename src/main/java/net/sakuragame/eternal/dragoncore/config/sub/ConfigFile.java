@@ -31,8 +31,6 @@ public class ConfigFile {
         clientTitle = config.getString("ClientTitle");
         replaceChatColor = config.getBoolean("replaceChatColor");
         dragonArmourers = config.getBoolean("DragonArmourers");
-
-        registeredKeys = new HashSet<>();
     }
 
     private static String getString(String path) {
