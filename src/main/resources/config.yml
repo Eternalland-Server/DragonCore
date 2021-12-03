@@ -17,7 +17,7 @@ ClientTitle: "欢迎使用龙之核心,该标题可在config.yml修改"
 replaceChatColor: true
 
 # 是否兼容龙之时装付费版
-DragonArmourers: false
+DragonArmourers: true
 
 ScriptTools:
   # 这四个已默认拥有,不需要添加
