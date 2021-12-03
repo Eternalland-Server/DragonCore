@@ -26,3 +26,20 @@ pet_equip2_slot:
   skin: false
 pet_equip3_slot:
   skin: false
+
+suit_skin:
+  skin: true
+mainhand_skin:
+  skin: true
+offhand_skin:
+  skin: true
+handwear_skin:
+  skin: true
+clothes_skin:
+  skin: true
+pants_skin:
+  skin: true
+shoes_skin:
+  skin: true
+wings_skin:
+  skin: true

@@ -281,6 +281,11 @@ public class PacketSender extends PluginMessageSender {
         }
     }
 
+    public static void sendClearClientCache(Player player) {
+        sendPluginMessage(player, 98, buffer -> {
+        });
+    }
+
     public static void sendFinished(Player player) {
         sendPluginMessage(player, 99, buffer -> {
         });
