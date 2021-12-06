@@ -43,6 +43,7 @@ public class MythicMobsListener implements Listener {
     @EventHandler
     public void onMythicSpawn(MythicMobSpawnEvent e) {
         Entity entity = e.getEntity();
+        entity.setCustomNameVisible(false);
         double attackDistance = e.getMobType().getConfig().getDouble("AttackDistance");
         if (attackDistance == 0)
             return;
