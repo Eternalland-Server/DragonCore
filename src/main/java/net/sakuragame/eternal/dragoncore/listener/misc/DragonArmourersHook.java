@@ -34,8 +34,7 @@ public class DragonArmourersHook implements Listener {
         }
         for (Map.Entry<String, ItemStack> entry : map.entrySet()) {
             SlotSetting slotSetting = FileManager.getSlotSettings().get(entry.getKey());
-            if (slotSetting != null && slotSetting.isSkin() && entry.getValue() != null
-                    && entry.getValue().getType() != Material.AIR) {
+            if (slotSetting != null && slotSetting.isSkin() && entry.getValue() != null && entry.getValue().getType() != Material.AIR) {
                 // entry.key 就是槽位名  entry.value就是物品
                 e.getSkinList().add(DragonAPI.getItemSkinName(entry.getValue()));
             }

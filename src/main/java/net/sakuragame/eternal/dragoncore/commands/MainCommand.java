@@ -3,6 +3,7 @@ package net.sakuragame.eternal.dragoncore.commands;
 import com.taylorswiftcn.justwei.commands.JustCommand;
 import net.sakuragame.eternal.dragoncore.commands.sub.HelpCommand;
 import net.sakuragame.eternal.dragoncore.commands.sub.ManagerCommand;
+import net.sakuragame.eternal.dragoncore.commands.sub.NbtEditCommand;
 import net.sakuragame.eternal.dragoncore.commands.sub.ReloadCommand;
 import net.sakuragame.eternal.dragoncore.commands.sub.gui.*;
 import net.sakuragame.eternal.dragoncore.commands.sub.model.ModelPlayCommand;
@@ -38,6 +39,7 @@ public class MainCommand extends JustCommand {
         this.register(new SoundStopCommand());
         this.register(new WorldItemCommand());
         this.register(new WorldTextureCommand());
+        this.register(new NbtEditCommand());
         this.register(new ReloadCommand());
     }
 }

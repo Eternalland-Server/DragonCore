@@ -32,6 +32,11 @@ public class ItemUtil {
         return toNBT(itemStack).toString();
     }
 
+    public static ItemStack nbtToItem(NBTTagCompound parse) {
+        net.minecraft.server.v1_12_R1.ItemStack itemStack = new net.minecraft.server.v1_12_R1.ItemStack(parse);
+        return CraftItemStack.asBukkitCopy(itemStack);
+    }
+
     public static ItemStack jsonToItem(String json) throws MojangsonParseException {
         NBTTagCompound parse = MojangsonParser.parse(json);
         net.minecraft.server.v1_12_R1.ItemStack itemStack = new net.minecraft.server.v1_12_R1.ItemStack(parse);

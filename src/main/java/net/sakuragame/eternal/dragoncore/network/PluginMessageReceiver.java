@@ -2,6 +2,7 @@ package net.sakuragame.eternal.dragoncore.network;
 
 
 import net.sakuragame.eternal.dragoncore.DragonCore;
+import net.sakuragame.eternal.dragoncore.network.receiver.nbt.*;
 import net.sakuragame.eternal.dragoncore.util.Scheduler;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
@@ -29,6 +30,11 @@ public class PluginMessageReceiver implements PluginMessageListener {
         messageHandlers.put(10, MessageArrow.class);
         //messageHandlers.put(11, MessageEntityLeaveWorld.class);
         messageHandlers.put(100, MessageCustomPacket.class);
+        messageHandlers.put(1001, MessageTileRequest.class);
+        messageHandlers.put(1002, MessageEntityRequest.class);
+        messageHandlers.put(1003, MessageTileUpdate.class);
+        messageHandlers.put(1004, MessageEntityUpdate.class);
+        messageHandlers.put(1005, MessageItemUpdate.class);
     }
 
     @Override
