@@ -2,6 +2,7 @@ package net.sakuragame.eternal.dragoncore.config;
 
 import net.sakuragame.eternal.dragoncore.DragonCore;
 import net.sakuragame.eternal.dragoncore.api.event.YamlSendToPlayerEvent;
+import net.sakuragame.eternal.dragoncore.config.sub.ConfigFile;
 import net.sakuragame.eternal.dragoncore.network.PacketSender;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -19,6 +20,7 @@ public class ClientHandler {
         PacketSender.sendZipPassword(player);
         PacketSender.sendKeyRegister(player);
         PacketSender.sendPlayerWorld(player);
+        PacketSender.setWindowTitle(player, ConfigFile.clientTitle);
 
         String clientTitle = plugin.getConfig().getString("ClientTitle");
         if (clientTitle != null) {
