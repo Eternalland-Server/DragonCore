@@ -21,13 +21,11 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class MiscManager implements Listener {
     private final Map<UUID, Map<String, ItemStack>> cacheMap;
-    private final HashMap<UUID, String> openScreen;
-    private DragonCore plugin;
+    private final DragonCore plugin;
 
     public MiscManager(DragonCore plugin) {
         this.plugin = plugin;
         this.cacheMap = new ConcurrentHashMap<>();
-        this.openScreen = new HashMap<>();
 
         PluginManager pm = Bukkit.getPluginManager();
         YamlConfiguration config = plugin.getFileManager().getConfig();
@@ -66,7 +64,6 @@ public class MiscManager implements Listener {
         UUID uuid = e.getPlayer().getUniqueId();
 
         cacheMap.remove(uuid);
-        openScreen.remove(uuid);
     }
 
     public void putItem(Player player, String identifier, ItemStack itemStack) {
@@ -74,18 +71,6 @@ public class MiscManager implements Listener {
             cacheMap.get(player.getUniqueId()).put(identifier, itemStack);
             new PlayerSlotUpdateEvent(player, identifier, itemStack).callEvent();
         }
-    }
-
-    public void addOpenScreen(UUID uuid, String screenID) {
-        openScreen.put(uuid, screenID);
-    }
-
-    public void delOpenScreen(UUID uuid) {
-        openScreen.remove(uuid);
-    }
-
-    public String getOpenScreen(UUID uuid) {
-        return openScreen.get(uuid);
     }
 
     public Map<UUID, Map<String, ItemStack>> getCacheMap() {

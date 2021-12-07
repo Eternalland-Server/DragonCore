@@ -17,20 +17,6 @@ import java.util.UUID;
 
 public class CoreAPI {
 
-    private final static DragonCore plugin = DragonCore.getInstance();
-
-    public static void addOpenScreen(UUID uuid, String screenID) {
-        plugin.getMiscManager().addOpenScreen(uuid, screenID);
-    }
-
-    public static void delOpenScreen(UUID uuid) {
-        plugin.getMiscManager().delOpenScreen(uuid);
-    }
-
-    public static String getOpenScreen(UUID uuid) {
-        return plugin.getMiscManager().getOpenScreen(uuid);
-    }
-
     /**
      * 跟下面一样嗷，就是少了uuid开始的那5个
      */
