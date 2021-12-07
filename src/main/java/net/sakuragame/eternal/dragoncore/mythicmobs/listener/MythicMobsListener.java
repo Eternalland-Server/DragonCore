@@ -8,6 +8,7 @@ import net.sakuragame.eternal.dragoncore.mythicmobs.mechanics.ModelMechanic;
 import net.sakuragame.eternal.dragoncore.mythicmobs.mechanics.SoundPlayMechanic;
 import net.sakuragame.eternal.dragoncore.mythicmobs.mechanics.SoundStopMechanic;
 import net.sakuragame.eternal.dragoncore.util.Scheduler;
+import net.sakuragame.eternal.dragoncore.util.Utils;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftEntity;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.EventHandler;
@@ -43,7 +44,6 @@ public class MythicMobsListener implements Listener {
     @EventHandler
     public void onMythicSpawn(MythicMobSpawnEvent e) {
         Entity entity = e.getEntity();
-        entity.setCustomNameVisible(false);
         double attackDistance = e.getMobType().getConfig().getDouble("AttackDistance");
         if (attackDistance == 0)
             return;

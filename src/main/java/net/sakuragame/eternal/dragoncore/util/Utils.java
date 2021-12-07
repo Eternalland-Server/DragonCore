@@ -1,8 +1,15 @@
 package net.sakuragame.eternal.dragoncore.util;
 
-import net.minecraft.server.v1_12_R1.Entity;
+import com.comphenix.protocol.PacketType;
+import com.comphenix.protocol.events.PacketContainer;
+import com.comphenix.protocol.wrappers.WrappedDataWatcher;
+import net.sakuragame.eternal.dragoncore.DragonCore;
+import net.sakuragame.eternal.dragoncore.network.PacketSender;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -71,15 +78,6 @@ public class Utils {
         return fieldList;
     }
 
-   /* public static List<Method> getDeclaredMethods(Class<?> class_) {
-        List<Method> fieldList = new ArrayList<>();
-        while (class_ != null) {
-            fieldList.addAll(Arrays.asList(class_.getDeclaredMethods()));
-            class_ = class_.getSuperclass();
-        }
-        return fieldList;
-    }*/
-
     public static Method getDeclaredMethod(Class<?> class_, String name, Class<?>... s) {
         Class<?> class__ = class_;
         while (true) {
@@ -93,12 +91,4 @@ public class Utils {
             }
         }
     }
-
-    private static int id;
-
-    public static String generateComponentId() {
-        return "component" + id++;
-    }
-
-
 }

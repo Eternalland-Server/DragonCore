@@ -1,6 +1,8 @@
 package net.sakuragame.eternal.dragoncore;
 
 
+import com.comphenix.protocol.ProtocolLibrary;
+import com.comphenix.protocol.ProtocolManager;
 import net.sakuragame.eternal.dragoncore.commands.MainCommand;
 import net.sakuragame.eternal.dragoncore.config.FileManager;
 import net.sakuragame.eternal.dragoncore.config.sub.ConfigFile;
@@ -33,7 +35,6 @@ public class DragonCore extends JavaPlugin {
         return instance;
     }
 
-
     @Override
     public void onEnable() {
 
@@ -44,7 +45,6 @@ public class DragonCore extends JavaPlugin {
 
         instance = this;
 
-        /*Config.init(this);*/
         fileManager = new FileManager(this);
         fileManager.init();
         if (ConfigFile.sql) {
@@ -62,9 +62,7 @@ public class DragonCore extends JavaPlugin {
 
         Bukkit.getPluginCommand("dragoncore").setExecutor(new MainCommand());
 
-
         Bukkit.getMessenger().registerOutgoingPluginChannel(this, "dragoncore:main");
-
         Bukkit.getMessenger().registerIncomingPluginChannel(this, "dragoncore:main", new PluginMessageReceiver(this));
 
         registerListener(miscManager = new MiscManager(this));
@@ -78,8 +76,6 @@ public class DragonCore extends JavaPlugin {
             registerListener(new MythicMobsListener());
 
         Bukkit.getConsoleSender().sendMessage("§6DragonCore - 加载完成");
-
-
     }
 
     @Override
@@ -90,7 +86,6 @@ public class DragonCore extends JavaPlugin {
     public void registerListener(Listener listener) {
         Bukkit.getPluginManager().registerEvents(listener, this);
     }
-
 
     public Logger getLog() {
         return log;
