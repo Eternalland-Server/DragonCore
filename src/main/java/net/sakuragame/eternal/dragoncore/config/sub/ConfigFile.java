@@ -28,7 +28,7 @@ public class ConfigFile {
         playerDataFolder = config.getString("PlayerDataFolder");
         joinPacketDelay = config.getInt("JoinPacketDelay", 60);
         password = config.getString("Password", "unknown");
-        clientTitle = config.getString("ClientTitle");
+        clientTitle = config.getString("ClientTitle", "亘古大陆");
         replaceChatColor = config.getBoolean("replaceChatColor");
         dragonArmourers = config.getBoolean("DragonArmourers");
     }

@@ -1,19 +1,17 @@
 package net.sakuragame.eternal.dragoncore;
 
 
-import com.comphenix.protocol.ProtocolLibrary;
-import com.comphenix.protocol.ProtocolManager;
+import lombok.Getter;
 import net.sakuragame.eternal.dragoncore.commands.MainCommand;
 import net.sakuragame.eternal.dragoncore.config.FileManager;
 import net.sakuragame.eternal.dragoncore.config.sub.ConfigFile;
 import net.sakuragame.eternal.dragoncore.database.IDataBase;
-import net.sakuragame.eternal.dragoncore.database.YamlRepository;
 import net.sakuragame.eternal.dragoncore.database.MysqlRepository;
+import net.sakuragame.eternal.dragoncore.database.YamlRepository;
 import net.sakuragame.eternal.dragoncore.listener.*;
 import net.sakuragame.eternal.dragoncore.listener.misc.MiscManager;
 import net.sakuragame.eternal.dragoncore.mythicmobs.listener.MythicMobsListener;
 import net.sakuragame.eternal.dragoncore.network.PluginMessageReceiver;
-import lombok.Getter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.bukkit.Bukkit;
