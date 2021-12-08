@@ -10,9 +10,6 @@ JoinPacketDelay: 40
 # 压缩包需放在DragonCore目录下，并命名为Resource.zip
 Password: "压缩包密码"
 
-# 若删除这条配置则不会修改标题
-ClientTitle: "亘古大陆"
-
 # 聊天若输入渐变格式，会变成渐变色文本
 replaceChatColor: true
 
