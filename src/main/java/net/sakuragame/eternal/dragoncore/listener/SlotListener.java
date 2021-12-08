@@ -5,25 +5,22 @@ import ink.ptms.zaphkiel.ZaphkielAPI;
 import net.sakuragame.eternal.dragoncore.DragonCore;
 import net.sakuragame.eternal.dragoncore.api.SlotAPI;
 import net.sakuragame.eternal.dragoncore.api.event.PlayerSlotClickEvent;
-import net.sakuragame.eternal.dragoncore.api.event.PlayerSlotClickedEvent;
 import net.sakuragame.eternal.dragoncore.api.event.PlayerSlotHandleEvent;
 import net.sakuragame.eternal.dragoncore.api.gui.event.CustomPacketEvent;
 import net.sakuragame.eternal.dragoncore.api.slot.ClickType;
 import net.sakuragame.eternal.dragoncore.config.FileManager;
 import net.sakuragame.eternal.dragoncore.database.IDataBase;
 import net.sakuragame.eternal.dragoncore.network.PacketSender;
-import net.sakuragame.eternal.dragoncore.util.ItemUtil;
-import net.sakuragame.eternal.dragoncore.util.ScriptUtil;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
 
 public class SlotListener implements Listener {
 

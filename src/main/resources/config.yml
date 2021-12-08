@@ -11,7 +11,7 @@ JoinPacketDelay: 40
 Password: "压缩包密码"
 
 # 若删除这条配置则不会修改标题
-ClientTitle: "欢迎使用龙之核心,该标题可在config.yml修改"
+ClientTitle: "亘古大陆"
 
 # 聊天若输入渐变格式，会变成渐变色文本
 replaceChatColor: true
