@@ -118,18 +118,20 @@ public class MythicMobsListener implements Listener {
         }
 
         public boolean a() {
-            EntityLiving entitylivingbase = this.attacker.getGoalTarget();
-            if (entitylivingbase == null) {
+            EntityLiving target = this.attacker.getGoalTarget();
+            if (target == null) {
                 return false;
-            } else if (!entitylivingbase.isAlive()) {
+            }
+
+            if (!target.isAlive()) {
                 return false;
+            }
+
+            this.path = this.attacker.getNavigation().a(target);
+            if (this.path != null) {
+                return true;
             } else {
-                this.path = this.attacker.getNavigation().a(entitylivingbase);
-                if (this.path != null) {
-                    return true;
-                } else {
-                    return this.a(entitylivingbase) >= this.attacker.d(entitylivingbase.locX, entitylivingbase.getBoundingBox().b, entitylivingbase.locZ);
-                }
+                return this.a(target) >= this.attacker.d(target.locX, target.getBoundingBox().b, target.locZ);
             }
         }
 
@@ -137,11 +139,18 @@ public class MythicMobsListener implements Listener {
             EntityLiving entitylivingbase = this.attacker.getGoalTarget();
             if (entitylivingbase == null) {
                 return false;
-            } else if (!entitylivingbase.isAlive()) {
+            }
+            if (!entitylivingbase.isAlive()) {
                 return false;
-            } else if (!this.longMemory) {
+            }
+            if (attacker.d(entitylivingbase.locX, entitylivingbase.getBoundingBox().b, entitylivingbase.locZ) <= distance) {
+                e();
+                return false;
+            }
+            if (!this.longMemory) {
                 return !this.attacker.getNavigation().o();
-            } else if (!this.attacker.f(new BlockPosition(entitylivingbase))) {
+            }
+            if (!this.attacker.f(new BlockPosition(entitylivingbase))) {
                 return false;
             } else {
                 return !(entitylivingbase instanceof EntityHuman) || !((EntityHuman) entitylivingbase).isSpectator() && !((EntityHuman) entitylivingbase).z();
@@ -154,8 +163,8 @@ public class MythicMobsListener implements Listener {
         }
 
         public void d() {
-            EntityLiving entitylivingbase = this.attacker.getGoalTarget();
-            if (entitylivingbase instanceof EntityHuman && (((EntityHuman) entitylivingbase).isSpectator() || ((EntityHuman) entitylivingbase).z())) {
+            EntityLiving target = this.attacker.getGoalTarget();
+            if (target instanceof EntityHuman && (((EntityHuman) target).isSpectator() || ((EntityHuman) target).z())) {
                 this.attacker.setGoalTarget(null);
             }
 

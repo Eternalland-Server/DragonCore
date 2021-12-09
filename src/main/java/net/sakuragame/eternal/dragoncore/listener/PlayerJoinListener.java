@@ -14,7 +14,6 @@ public class PlayerJoinListener implements Listener {
     @EventHandler
     public void join(PlayerJoinEvent e) {
         Scheduler.runLaterAsync(() -> ClientHandler.sendYaml2Player(e.getPlayer()), ConfigFile.joinPacketDelay);
-
     }
 
     @EventHandler
