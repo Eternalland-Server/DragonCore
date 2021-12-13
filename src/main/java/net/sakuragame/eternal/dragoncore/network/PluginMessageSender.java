@@ -59,7 +59,9 @@ public class PluginMessageSender {
 
     protected static List<byte[]> generatePackets(int packetID, IPacket iPacket) {
         PacketBuffer buffer = new PacketBuffer();
-        iPacket.write(buffer);
+        if (iPacket != null) {
+            iPacket.write(buffer);
+        }
         if (buffer.readableBytes() > 30000) {
             List<byte[]> list = new ArrayList<>();
             byte[] bytes;
