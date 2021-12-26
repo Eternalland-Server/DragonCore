@@ -56,6 +56,7 @@ public class SlotListener implements Listener {
 
         String identifier = e.getData().get(0);
         String clickParam = e.getData().get(1);
+        if (identifier.startsWith("container_")) return;
         if (!MegumiUtil.isInteger(clickParam)) return;
 
         ClickType clickType = ClickType.getType(Integer.parseInt(clickParam));
@@ -65,6 +66,7 @@ public class SlotListener implements Listener {
         if (clickEvent.callEvent()) return;
 
         PlayerSlotItemRequestEvent requestEvent = new PlayerSlotItemRequestEvent(player, identifier);
+        requestEvent.callEvent();
         ItemStack item = requestEvent.getItem();
 
         handleSlotClick(player, identifier, clickType, item);

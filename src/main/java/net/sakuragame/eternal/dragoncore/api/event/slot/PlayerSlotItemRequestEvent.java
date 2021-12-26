@@ -2,7 +2,7 @@ package net.sakuragame.eternal.dragoncore.api.event.slot;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.bukkit.Material;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.player.PlayerEvent;
@@ -20,7 +20,6 @@ public class PlayerSlotItemRequestEvent extends PlayerEvent {
     public PlayerSlotItemRequestEvent(Player who, String identifier) {
         super(who);
         this.identifier = identifier;
-        this.item = new ItemStack(Material.AIR);
     }
 
     @Override
@@ -30,5 +29,9 @@ public class PlayerSlotItemRequestEvent extends PlayerEvent {
 
     public static HandlerList getHandlerList() {
         return handlerList;
+    }
+
+    public void callEvent() {
+        Bukkit.getPluginManager().callEvent(this);
     }
 }
