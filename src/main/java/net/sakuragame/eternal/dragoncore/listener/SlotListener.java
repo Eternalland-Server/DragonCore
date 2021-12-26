@@ -4,8 +4,10 @@ import com.taylorswiftcn.justwei.util.MegumiUtil;
 import ink.ptms.zaphkiel.ZaphkielAPI;
 import net.sakuragame.eternal.dragoncore.DragonCore;
 import net.sakuragame.eternal.dragoncore.api.SlotAPI;
-import net.sakuragame.eternal.dragoncore.api.event.PlayerSlotClickEvent;
+import net.sakuragame.eternal.dragoncore.api.event.slot.PlayerSlotClickEvent;
 import net.sakuragame.eternal.dragoncore.api.event.PlayerSlotHandleEvent;
+import net.sakuragame.eternal.dragoncore.api.event.slot.PlayerSlotClickedEvent;
+import net.sakuragame.eternal.dragoncore.api.event.slot.PlayerSlotItemRequestEvent;
 import net.sakuragame.eternal.dragoncore.api.gui.event.CustomPacketEvent;
 import net.sakuragame.eternal.dragoncore.api.slot.ClickType;
 import net.sakuragame.eternal.dragoncore.config.FileManager;
@@ -24,11 +26,23 @@ import java.util.UUID;
 
 public class SlotListener implements Listener {
 
-    private DragonCore plugin;
+    private final DragonCore plugin;
     private final Set<UUID> saving = new HashSet<>();
 
     public SlotListener(DragonCore plugin) {
         this.plugin = plugin;
+    }
+
+    @EventHandler(priority = EventPriority.HIGH)
+    public void onItemRequest(PlayerSlotItemRequestEvent e) {
+        Player player = e.getPlayer();
+        String ident = e.getIdentifier();
+
+        if (!FileManager.getSlotSettings().containsKey(ident)) return;
+        ItemStack item = SlotAPI.getCacheSlotItem(player, ident);
+        if (MegumiUtil.isEmpty(item)) return;
+
+        e.setItem(item);
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
@@ -38,7 +52,7 @@ public class SlotListener implements Listener {
         if (!e.getIdentifier().equals("DragonCore_ClickSlot")) return;
         if (e.isCancelled()) return;
         if (e.getData().size() != 2) return;
-        /*if (saving.contains(player.getUniqueId())) return;*/
+        if (saving.contains(player.getUniqueId())) return;
 
         String identifier = e.getData().get(0);
         String clickParam = e.getData().get(1);
@@ -50,14 +64,13 @@ public class SlotListener implements Listener {
         PlayerSlotClickEvent clickEvent = new PlayerSlotClickEvent(player, identifier, clickType);
         if (clickEvent.callEvent()) return;
 
-        if (!FileManager.getSlotSettings().containsKey(identifier)) {
-            return;
-        }
+        PlayerSlotItemRequestEvent requestEvent = new PlayerSlotItemRequestEvent(player, identifier);
+        ItemStack item = requestEvent.getItem();
 
-        /*saving.add(player.getUniqueId());*/
+        handleSlotClick(player, identifier, clickType, item);
 
-        ItemStack itemStack = SlotAPI.getCacheSlotItem(player, identifier);
-        handleSlotClick(player, identifier, clickType, itemStack);
+        PlayerSlotClickedEvent clickedEvent = new PlayerSlotClickedEvent(player, identifier, clickType);
+        clickedEvent.callEvent();
 
         /*SlotAPI.getSlotItem(player, identifier, new IDataBase.Callback<ItemStack>() {
             @Override
