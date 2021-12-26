@@ -15,10 +15,3 @@ replaceChatColor: true
 
 # 是否兼容龙之时装付费版
 DragonArmourers: true
-
-ScriptTools:
-  # 这四个已默认拥有,不需要添加
-  #PlaceholderAPI: "me.clip.placeholderapi.PlaceholderAPI"
-  #Bukkit: "org.bukkit.Bukkit"
-  #Arrays: "java.util.Arrays"
-  #SlotAPI: "eos.moe.dragoncore.api.SlotAPI"
