@@ -35,10 +35,6 @@
             <name>Lumine Releases</name>
             <url>https://mvn.lumine.io/repository/maven-public/</url>
         </repository>
-        <repository>
-            <id>ptms</id>
-            <url>https://repo2s.ptms.ink/repository/maven-releases</url>
-        </repository>
     </repositories>
 
     <dependencies>
@@ -74,7 +70,15 @@
             <artifactId>armourers</artifactId>
             <version>5.05</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/libs/DragonArmourers-5.05.jar</systemPath>
+            <systemPath>${project.basedir}/.lib/DragonArmourers-5.05.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ink.ptms</groupId>
+            <artifactId>Zaphkiel</artifactId>
+            <version>1.7.6</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/.lib/Zaphkiel-1.7.6.jar</systemPath>
         </dependency>
 
         <dependency>
@@ -96,12 +100,6 @@
             <artifactId>DataManager-Bukkit-API</artifactId>
             <version>1.2.0-SNAPSHOT</version>
             <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>ink.ptms</groupId>
-            <artifactId>Zaphkiel</artifactId>
-            <version>1.7.2</version>
         </dependency>
     </dependencies>
 
