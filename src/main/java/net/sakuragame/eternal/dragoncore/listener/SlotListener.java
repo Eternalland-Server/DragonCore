@@ -7,7 +7,6 @@ import net.sakuragame.eternal.dragoncore.api.SlotAPI;
 import net.sakuragame.eternal.dragoncore.api.event.slot.PlayerSlotClickEvent;
 import net.sakuragame.eternal.dragoncore.api.event.PlayerSlotHandleEvent;
 import net.sakuragame.eternal.dragoncore.api.event.slot.PlayerSlotClickedEvent;
-import net.sakuragame.eternal.dragoncore.api.event.slot.PlayerSlotItemRequestEvent;
 import net.sakuragame.eternal.dragoncore.api.gui.event.CustomPacketEvent;
 import net.sakuragame.eternal.dragoncore.api.slot.ClickType;
 import net.sakuragame.eternal.dragoncore.config.FileManager;
@@ -34,7 +33,7 @@ public class SlotListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.HIGH)
-    public void onItemRequest(PlayerSlotItemRequestEvent e) {
+    public void onItemRequest(PlayerSlotClickEvent e) {
         Player player = e.getPlayer();
         String ident = e.getIdentifier();
 
@@ -42,7 +41,7 @@ public class SlotListener implements Listener {
         ItemStack item = SlotAPI.getCacheSlotItem(player, ident);
         if (MegumiUtil.isEmpty(item)) return;
 
-        e.setItem(item);
+        e.setSlotItem(item);
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
@@ -65,9 +64,7 @@ public class SlotListener implements Listener {
         PlayerSlotClickEvent clickEvent = new PlayerSlotClickEvent(player, identifier, clickType);
         if (clickEvent.callEvent()) return;
 
-        PlayerSlotItemRequestEvent requestEvent = new PlayerSlotItemRequestEvent(player, identifier);
-        requestEvent.callEvent();
-        ItemStack item = requestEvent.getItem();
+        ItemStack item = clickEvent.getSlotItem();
 
         handleSlotClick(player, identifier, clickType, item);
 

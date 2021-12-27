@@ -1,5 +1,6 @@
 package net.sakuragame.eternal.dragoncore.api.event.slot;
 
+import lombok.Setter;
 import net.sakuragame.eternal.dragoncore.api.slot.ClickType;
 import lombok.Getter;
 import org.bukkit.Bukkit;
@@ -7,12 +8,15 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.player.PlayerEvent;
+import org.bukkit.inventory.ItemStack;
 
 @Getter
+@Setter
 public class PlayerSlotClickEvent extends PlayerEvent implements Cancellable {
 
     private final String identifier;
     private final ClickType clickType;
+    private ItemStack slotItem;
     private boolean cancel;
     private final static HandlerList handlerList = new HandlerList();
 
