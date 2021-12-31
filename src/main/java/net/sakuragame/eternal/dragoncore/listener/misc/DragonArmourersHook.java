@@ -1,11 +1,13 @@
 package net.sakuragame.eternal.dragoncore.listener.misc;
 
+import com.taylorswiftcn.justwei.util.MegumiUtil;
 import eos.moe.armourers.api.DragonAPI;
 import eos.moe.armourers.api.PlayerSkinUpdateEvent;
 import net.sakuragame.eternal.dragoncore.api.event.PlayerSlotUpdateEvent;
 import net.sakuragame.eternal.dragoncore.config.FileManager;
 import net.sakuragame.eternal.dragoncore.config.SlotSetting;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
@@ -26,17 +28,27 @@ public class DragonArmourersHook implements Listener {
 
     @EventHandler
     public void updateSkin(PlayerSkinUpdateEvent e) {
-       // MiscManager miscManager = DragonCore.getInstance().getMiscManager();
+        Player player = e.getPlayer();
 
-        Map<String, ItemStack> map = manager.getCacheMap().get(e.getPlayer().getUniqueId());
+        Map<String, ItemStack> map = manager.getCacheMap().get(player.getUniqueId());
         if (map == null) {
             return;
         }
-        for (Map.Entry<String, ItemStack> entry : map.entrySet()) {
-            SlotSetting slotSetting = FileManager.getSlotSettings().get(entry.getKey());
-            if (slotSetting != null && slotSetting.isSkin() && entry.getValue() != null && entry.getValue().getType() != Material.AIR) {
-                // entry.key 就是槽位名  entry.value就是物品
-                e.getSkinList().add(DragonAPI.getItemSkinName(entry.getValue()));
+
+        for (String key : map.keySet()) {
+            ItemStack item = map.get(key);
+
+            SlotSetting slotSetting = FileManager.getSlotSettings().get(key);
+            if (slotSetting == null) continue;
+            if (!slotSetting.isSkin()) continue;
+
+            if (!MegumiUtil.isEmpty(item)) {
+                e.getSkinList().add(DragonAPI.getItemSkinName(item));
+            }
+            else {
+                if (slotSetting.getIdentifier().equals("offhand_skin")) {
+                    e.getSkinList().add("eternal-shield");
+                }
             }
         }
     }
