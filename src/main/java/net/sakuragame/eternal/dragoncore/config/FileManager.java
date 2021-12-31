@@ -1,7 +1,9 @@
 package net.sakuragame.eternal.dragoncore.config;
 
 import com.taylorswiftcn.justwei.file.JustConfiguration;
+import com.taylorswiftcn.justwei.util.MegumiUtil;
 import net.sakuragame.eternal.dragoncore.DragonCore;
+import net.sakuragame.eternal.dragoncore.config.constructor.SlotSetting;
 import net.sakuragame.eternal.dragoncore.config.sub.ConfigFile;
 import net.sakuragame.eternal.dragoncore.network.PacketSender;
 import net.sakuragame.eternal.dragoncore.util.DYaml;
@@ -29,7 +31,6 @@ public class FileManager extends JustConfiguration {
     @Getter private YamlConfiguration keyConfig;
     @Getter private YamlConfiguration slotConfig;
     @Getter private YamlConfiguration worldTexture;
-
     @Getter private final HashMap<String, YamlConfiguration> armor;
     @Getter private final HashMap<String, YamlConfiguration> blood;
     @Getter private final HashMap<String, YamlConfiguration> entityModel;

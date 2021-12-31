@@ -1,6 +1,5 @@
 package net.sakuragame.eternal.dragoncore.api;
 
-import net.sakuragame.eternal.dragoncore.DragonCore;
 import net.sakuragame.eternal.dragoncore.api.worldtexture.WorldTexture;
 import net.sakuragame.eternal.dragoncore.config.sub.ConfigFile;
 import net.sakuragame.eternal.dragoncore.network.PacketSender;
@@ -11,7 +10,6 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.HashMap;
 import java.util.Objects;
 import java.util.UUID;
 

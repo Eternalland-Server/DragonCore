@@ -1,4 +1,4 @@
-package net.sakuragame.eternal.dragoncore.config;
+package net.sakuragame.eternal.dragoncore.config.constructor;
 
 import lombok.Getter;
 import org.bukkit.configuration.ConfigurationSection;

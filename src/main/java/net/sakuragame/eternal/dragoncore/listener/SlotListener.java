@@ -28,8 +28,8 @@ public class SlotListener implements Listener {
     private final DragonCore plugin;
     private final Set<UUID> saving = new HashSet<>();
 
-    public SlotListener(DragonCore plugin) {
-        this.plugin = plugin;
+    public SlotListener() {
+        this.plugin = DragonCore.getInstance();
     }
 
     @EventHandler(priority = EventPriority.HIGH)

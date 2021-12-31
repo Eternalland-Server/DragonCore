@@ -5,6 +5,7 @@ depend:
   - MegumiLib
   - DataManager
   - PlaceholderAPI
+  - Citizens
 softdepend:
   - MythicMobs
   - DragonArmourers

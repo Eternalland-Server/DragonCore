@@ -5,7 +5,7 @@ import eos.moe.armourers.api.DragonAPI;
 import eos.moe.armourers.api.PlayerSkinUpdateEvent;
 import net.sakuragame.eternal.dragoncore.api.event.PlayerSlotUpdateEvent;
 import net.sakuragame.eternal.dragoncore.config.FileManager;
-import net.sakuragame.eternal.dragoncore.config.SlotSetting;
+import net.sakuragame.eternal.dragoncore.config.constructor.SlotSetting;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

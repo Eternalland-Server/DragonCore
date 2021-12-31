@@ -68,7 +68,7 @@ public class DragonCore extends JavaPlugin {
         registerListener(new PlayerKeyListener());
         registerListener(new PlayerChatListener());
         registerListener(new PlaceholderListener());
-        registerListener(new SlotListener(this));
+        registerListener(new SlotListener());
 
         if (Bukkit.getPluginManager().isPluginEnabled("MythicMobs"))
             registerListener(new MythicMobsListener());
