@@ -4,9 +4,7 @@ import com.taylorswiftcn.justwei.util.MegumiUtil;
 import ink.ptms.zaphkiel.ZaphkielAPI;
 import net.sakuragame.eternal.dragoncore.DragonCore;
 import net.sakuragame.eternal.dragoncore.database.mysql.DragonCoreTable;
-import net.sakuragame.eternal.dragoncore.util.ItemUtil;
 import net.sakuragame.eternal.dragoncore.util.Scheduler;
-import net.minecraft.server.v1_12_R1.MojangsonParseException;
 import net.sakuragame.serversystems.manage.api.database.DataManager;
 import net.sakuragame.serversystems.manage.api.database.DatabaseQuery;
 import net.sakuragame.serversystems.manage.client.api.ClientManagerAPI;
@@ -92,8 +90,13 @@ public class MysqlRepository implements IDataBase {
                     continue;
                 }
 
-                ItemStack item = ZaphkielAPI.INSTANCE.deserialize(data).rebuildToItemStack(player);
-                items.put(ident, item);
+                try {
+                    ItemStack item = ZaphkielAPI.INSTANCE.deserialize(data).rebuildToItemStack(player);
+                    items.put(ident, item);
+                }
+                catch (IllegalStateException e) {
+                    plugin.getLogger().info(String.format("读取 %s 玩家 %s 槽位物品失败", player.getName(), ident));
+                }
             }
             Scheduler.run(() -> callback.onResult(items));
         }
