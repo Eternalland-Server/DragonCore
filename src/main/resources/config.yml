@@ -15,3 +15,5 @@ replaceChatColor: true
 
 # 是否兼容龙之时装付费版
 DragonArmourers: true
+
+SlotEnable: true

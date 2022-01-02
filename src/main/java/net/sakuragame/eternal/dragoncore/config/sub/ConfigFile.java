@@ -18,6 +18,7 @@ public class ConfigFile {
     public static String clientTitle;
     public static boolean replaceChatColor;
     public static boolean dragonArmourers;
+    public static boolean slotEnable;
 
     public static Set<String> registeredKeys = new HashSet<>();
 
@@ -31,6 +32,7 @@ public class ConfigFile {
         clientTitle = "亘古大陆";
         replaceChatColor = config.getBoolean("replaceChatColor");
         dragonArmourers = config.getBoolean("DragonArmourers");
+        slotEnable = config.getBoolean("SlotEnable", true);
     }
 
     private static String getString(String path) {

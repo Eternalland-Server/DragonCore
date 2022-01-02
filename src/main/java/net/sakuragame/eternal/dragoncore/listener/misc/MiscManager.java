@@ -5,6 +5,7 @@ import net.sakuragame.eternal.dragoncore.DragonCore;
 import net.sakuragame.eternal.dragoncore.api.SlotAPI;
 import net.sakuragame.eternal.dragoncore.api.event.PlayerSlotLoadedEvent;
 import net.sakuragame.eternal.dragoncore.api.event.PlayerSlotUpdateEvent;
+import net.sakuragame.eternal.dragoncore.config.sub.ConfigFile;
 import net.sakuragame.eternal.dragoncore.database.IDataBase;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -37,6 +38,8 @@ public class MiscManager implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
+        if (!ConfigFile.slotEnable) return;
+
         Player player = e.getPlayer();
         cacheMap.remove(e.getPlayer().getUniqueId());
         Bukkit.getConsoleSender().sendMessage("[DragonCore] 开始载入玩家 " + player.getName() + " 物品");
