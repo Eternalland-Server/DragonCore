@@ -16,6 +16,8 @@ medal_slot:
   skin: false
 honor_slot:
   skin: false
+potion_slot:
+  skin: false
 pet_egg_slot:
   skin: false
 pet_saddle_slot:
