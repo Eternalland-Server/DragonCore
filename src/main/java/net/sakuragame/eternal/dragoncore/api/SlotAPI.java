@@ -1,5 +1,6 @@
 package net.sakuragame.eternal.dragoncore.api;
 
+import com.taylorswiftcn.justwei.util.MegumiUtil;
 import net.sakuragame.eternal.dragoncore.DragonCore;
 import net.sakuragame.eternal.dragoncore.database.IDataBase;
 import net.sakuragame.eternal.dragoncore.network.PacketSender;
@@ -9,6 +10,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class SlotAPI {
 
@@ -53,10 +55,19 @@ public class SlotAPI {
 
     public static ItemStack getCacheSlotItem(Player player, String identifier) {
         Map<String, ItemStack> map = plugin.getMiscManager().getCacheMap().get(player.getUniqueId());
-        return map != null ? map.get(identifier).clone() : null;
+        if (map == null) {
+            return null;
+        }
+        ItemStack item = map.get(identifier);
+
+        return item == null ? null : item.clone();
     }
 
     public static Map<String, ItemStack> getCacheAllSlotItem(Player player) {
-        return new HashMap<>(plugin.getMiscManager().getCacheMap().get(player.getUniqueId()));
+        UUID uuid = player.getUniqueId();
+        Map<String, ItemStack> map = plugin.getMiscManager().getCacheMap().get(uuid);
+        if (map == null) return new HashMap<>();
+
+        return new HashMap<>(map);
     }
 }
