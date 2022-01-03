@@ -7,11 +7,12 @@ import org.apache.commons.lang.Validate;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class SlotAPI {
 
-    private static DragonCore plugin = DragonCore.getInstance();
+    private final static DragonCore plugin = DragonCore.getInstance();
 
     public static void setSlotItem(Player player, String identifier, ItemStack itemStack, boolean syncToClient) {
         setSlotItem(player, identifier, itemStack, syncToClient, null);
@@ -52,10 +53,10 @@ public class SlotAPI {
 
     public static ItemStack getCacheSlotItem(Player player, String identifier) {
         Map<String, ItemStack> map = plugin.getMiscManager().getCacheMap().get(player.getUniqueId());
-        return map != null ? map.get(identifier) : null;
+        return map != null ? map.get(identifier).clone() : null;
     }
 
     public static Map<String, ItemStack> getCacheAllSlotItem(Player player) {
-        return plugin.getMiscManager().getCacheMap().get(player.getUniqueId());
+        return new HashMap<>(plugin.getMiscManager().getCacheMap().get(player.getUniqueId()));
     }
 }
