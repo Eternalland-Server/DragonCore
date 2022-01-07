@@ -1,6 +1,7 @@
 package net.sakuragame.eternal.dragoncore.database;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.taylorswiftcn.justwei.util.MegumiUtil;
 import ink.ptms.zaphkiel.ZaphkielAPI;
@@ -122,7 +123,8 @@ public class MysqlRepository implements IDataBase {
             JsonObject target = gson.fromJson(input, JsonObject.class);
             ItemStream itemStream = ZaphkielAPI.INSTANCE.deserialize(target);
             ItemStack itemStack = itemStream.rebuildToItemStack(player);
-            itemStack.setAmount(target.get("amount").getAsInt());
+            JsonElement count = target.get("amount");
+            itemStack.setAmount(count == null ? 1 : count.getAsInt());
 
             return itemStack;
         }
