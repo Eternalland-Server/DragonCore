@@ -2,32 +2,33 @@ package net.sakuragame.eternal.dragoncore.util;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 
-public class DYaml extends YamlConfiguration {
-    private String toStringCache;
+public class YamlContainer extends YamlConfiguration {
+    private String cache;
 
     @Override
     public String saveToString() {
-        if (toStringCache == null) {
-            toStringCache = super.saveToString();
+        if (cache == null) {
+            cache = super.saveToString();
+            return cache;
         }
-        return toStringCache;
+        return cache;
     }
 
     @Override
     public void set(String path, Object value) {
         super.set(path, value);
-        toStringCache = null;
+        cache = null;
     }
 
     @Override
     public Object get(String path) {
-        toStringCache = null;
+        cache = null;
         return super.get(path);
     }
 
     @Override
     public Object get(String path, Object def) {
-        toStringCache = null;
+        cache = null;
         return super.get(path, def);
     }
 }

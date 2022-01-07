@@ -1,14 +1,13 @@
 package net.sakuragame.eternal.dragoncore.config;
 
 import com.taylorswiftcn.justwei.file.JustConfiguration;
-import com.taylorswiftcn.justwei.util.MegumiUtil;
 import net.sakuragame.eternal.dragoncore.DragonCore;
 import net.sakuragame.eternal.dragoncore.config.constructor.SlotSetting;
 import net.sakuragame.eternal.dragoncore.config.sub.ConfigFile;
 import net.sakuragame.eternal.dragoncore.network.PacketSender;
-import net.sakuragame.eternal.dragoncore.util.DYaml;
 import lombok.Getter;
-import org.apache.commons.lang.Validate;
+import net.sakuragame.eternal.dragoncore.util.YamlContainer;
+import org.apache.commons.lang3.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -141,7 +140,7 @@ public class FileManager extends JustConfiguration {
     private HashMap<String, YamlConfiguration> getProfile(FolderType type) {
         String subFolder = type.getName();
 
-        HashMap<String, YamlConfiguration> yaml = new HashMap<>();
+        HashMap<String, YamlConfiguration> profiles = new HashMap<>();
         File file = new File(plugin.getDataFolder(), subFolder);
 
         if (!file.exists()) {
@@ -149,16 +148,25 @@ public class FileManager extends JustConfiguration {
         }
         else {
             List<File> files = getYamlFiles(file, new ArrayList<>());
-            files.forEach(sub -> yaml.put(sub.getName(), loadConfiguration(sub)));
+            files.forEach(sub -> {
+                YamlConfiguration yaml = loadConfiguration(sub);
+                try {
+                    yaml.saveToString();
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+                profiles.put(sub.getName(), yaml);
+            });
         }
 
         Bukkit.getConsoleSender().sendMessage("§a┃ §6Loading " + subFolder + ":");
-        for (String s : yaml.keySet()) {
+        for (String s : profiles.keySet()) {
             Bukkit.getConsoleSender().sendMessage("§a┃   - " + s);
         }
         Bukkit.getConsoleSender().sendMessage("§a┃");
 
-        return yaml;
+        return profiles;
     }
 
     public static List<File> getYamlFiles(File folder, List<File> list) {
@@ -178,16 +186,16 @@ public class FileManager extends JustConfiguration {
 
     public YamlConfiguration loadConfiguration(File file) {
         Validate.notNull(file, "File cannot be null");
-        DYaml config = new DYaml();
+        YamlContainer container = new YamlContainer();
 
         try {
-            config.load(file);
+            container.load(file);
         } catch (FileNotFoundException ignored) {
         } catch (IOException | InvalidConfigurationException var4) {
             Bukkit.getLogger().log(Level.SEVERE, "Cannot load " + file, var4);
         }
 
-        return config;
+        return container;
     }
 
     public void saveWorldTexture() {

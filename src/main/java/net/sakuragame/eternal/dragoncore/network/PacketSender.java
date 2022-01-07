@@ -2,13 +2,11 @@ package net.sakuragame.eternal.dragoncore.network;
 
 
 import net.sakuragame.eternal.dragoncore.DragonCore;
-import net.sakuragame.eternal.dragoncore.api.event.YamlPacketEvent;
 import net.sakuragame.eternal.dragoncore.api.event.YamlSendFinishedEvent;
 import net.sakuragame.eternal.dragoncore.api.worldtexture.WorldTexture;
 import net.sakuragame.eternal.dragoncore.api.worldtexture.animation.Animation;
 import net.sakuragame.eternal.dragoncore.config.FolderType;
 import net.sakuragame.eternal.dragoncore.config.sub.ConfigFile;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Entity;
@@ -67,14 +65,10 @@ public class PacketSender extends PluginMessageSender {
     }
 
     public static void sendYaml(Player player, String fileName, YamlConfiguration yaml) {
-        YamlPacketEvent yamlPacketEvent = new YamlPacketEvent(player, fileName, yaml);
-        Bukkit.getPluginManager().callEvent(yamlPacketEvent);
-
-        YamlConfiguration yamlConfiguration = yamlPacketEvent.getYaml();
-        String file = yamlPacketEvent.getFileName();
+        plugin.getLogger().info("send yaml file: " + fileName);
         sendPluginMessage(player, 2, buffer -> {
-            buffer.writeString(file);
-            buffer.writeString(yamlConfiguration.saveToString());
+            buffer.writeString(fileName);
+            buffer.writeString(yaml.saveToString());
         });
     }
 
