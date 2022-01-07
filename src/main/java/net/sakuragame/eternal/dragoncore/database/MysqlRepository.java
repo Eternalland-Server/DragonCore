@@ -1,7 +1,10 @@
 package net.sakuragame.eternal.dragoncore.database;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.taylorswiftcn.justwei.util.MegumiUtil;
 import ink.ptms.zaphkiel.ZaphkielAPI;
+import ink.ptms.zaphkiel.api.ItemStream;
 import net.sakuragame.eternal.dragoncore.DragonCore;
 import net.sakuragame.eternal.dragoncore.database.mysql.DragonCoreTable;
 import net.sakuragame.eternal.dragoncore.util.Scheduler;
@@ -22,9 +25,12 @@ public class MysqlRepository implements IDataBase {
     private final DragonCore plugin;
     private final DataManager dataManager;
 
+    private final Gson gson;
+
     public MysqlRepository(DragonCore plugin) {
         this.plugin = plugin;
         this.dataManager = ClientManagerAPI.getDataManager();
+        this.gson = new Gson();
         this.init();
     }
 
@@ -45,8 +51,8 @@ public class MysqlRepository implements IDataBase {
                     return;
                 }
 
-                ItemStack item = ZaphkielAPI.INSTANCE.deserialize(data).rebuildToItemStack(player);
-                Scheduler.run(() -> callback.onResult(item));
+                ItemStack itemStack = deserialize(player, data);
+                Scheduler.run(() -> callback.onResult(itemStack));
             } else {
                 Scheduler.run(() -> callback.onResult(new ItemStack(Material.AIR)));
             }
@@ -61,7 +67,12 @@ public class MysqlRepository implements IDataBase {
     public void setData(Player player, String identifier, ItemStack itemStack, Callback<ItemStack> callback) {
         int uid = ClientManagerAPI.getUserID(player.getUniqueId());
 
-        String data = MegumiUtil.isEmpty(itemStack) ? "" : ZaphkielAPI.INSTANCE.serialize(itemStack).toString();
+        JsonObject json = MegumiUtil.isEmpty(itemStack) ? null : ZaphkielAPI.INSTANCE.serialize(itemStack);
+        if (json != null) {
+            json.addProperty("amount", itemStack.getAmount());
+        }
+
+        String data = json == null ? "" : json.toString();
 
         dataManager.executeReplace(
                 DragonCoreTable.DRAGON_CORE_SLOTS.getTableName(),
@@ -91,7 +102,7 @@ public class MysqlRepository implements IDataBase {
                 }
 
                 try {
-                    ItemStack item = ZaphkielAPI.INSTANCE.deserialize(data).rebuildToItemStack(player);
+                    ItemStack item = deserialize(player, data);
                     items.put(ident, item);
                 }
                 catch (IllegalStateException e) {
@@ -103,6 +114,20 @@ public class MysqlRepository implements IDataBase {
         catch (Exception e) {
             e.printStackTrace();
             Scheduler.run(callback::onFail);
+        }
+    }
+
+    private ItemStack deserialize(Player player, String input) {
+        try {
+            JsonObject target = gson.fromJson(input, JsonObject.class);
+            ItemStream itemStream = ZaphkielAPI.INSTANCE.deserialize(target);
+            ItemStack itemStack = itemStream.rebuildToItemStack(player);
+            itemStack.setAmount(target.get("amount").getAsInt());
+
+            return itemStack;
+        }
+        catch (Exception e) {
+            return new ItemStack(Material.AIR);
         }
     }
 }
