@@ -65,7 +65,6 @@ public class PacketSender extends PluginMessageSender {
     }
 
     public static void sendYaml(Player player, String fileName, YamlConfiguration yaml) {
-        plugin.getLogger().info("send yaml file: " + fileName);
         sendPluginMessage(player, 2, buffer -> {
             buffer.writeString(fileName);
             buffer.writeString(yaml.saveToString());
