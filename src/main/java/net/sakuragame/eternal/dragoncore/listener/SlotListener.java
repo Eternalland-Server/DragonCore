@@ -4,6 +4,7 @@ import com.taylorswiftcn.justwei.util.MegumiUtil;
 import ink.ptms.zaphkiel.ZaphkielAPI;
 import net.sakuragame.eternal.dragoncore.DragonCore;
 import net.sakuragame.eternal.dragoncore.api.SlotAPI;
+import net.sakuragame.eternal.dragoncore.api.event.PlayerSlotUpdateEvent;
 import net.sakuragame.eternal.dragoncore.api.event.slot.PlayerSlotClickEvent;
 import net.sakuragame.eternal.dragoncore.api.event.PlayerSlotHandleEvent;
 import net.sakuragame.eternal.dragoncore.api.event.slot.PlayerSlotClickedEvent;
@@ -200,6 +201,14 @@ public class SlotListener implements Listener {
     }
 
     public void setItemStack(Player player, String slotIdentity, ItemStack itemStack) {
+        if (!FileManager.getSlotSettings().containsKey(slotIdentity)) {
+            PacketSender.putClientSlotItem(player, slotIdentity, itemStack);
+
+            PlayerSlotUpdateEvent event = new PlayerSlotUpdateEvent(player, slotIdentity, itemStack);
+            event.callEvent();
+            return;
+        }
+
         saving.add(player.getUniqueId());
 
         SlotAPI.setSlotItem(player, slotIdentity, itemStack, true, new IDataBase.Callback<ItemStack>() {
