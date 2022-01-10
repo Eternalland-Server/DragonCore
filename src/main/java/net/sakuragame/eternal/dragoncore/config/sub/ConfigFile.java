@@ -11,8 +11,6 @@ import java.util.Set;
 public class ConfigFile {
     private static YamlConfiguration config;
 
-    public static boolean sql;
-    public static String playerDataFolder;
     public static int joinPacketDelay;
     public static String password;
     public static String clientTitle;
@@ -25,8 +23,6 @@ public class ConfigFile {
     public static void init() {
         config = DragonCore.getInstance().getFileManager().getConfig();
 
-        sql = config.getBoolean("SQL.enable");
-        playerDataFolder = config.getString("PlayerDataFolder");
         joinPacketDelay = config.getInt("JoinPacketDelay", 60);
         password = config.getString("Password", "unknown");
         clientTitle = "亘古大陆";
