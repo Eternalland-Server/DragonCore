@@ -22,11 +22,11 @@ pet_egg_slot:
   skin: false
 pet_saddle_slot:
   skin: false
-pet_equip1_slot:
+pet_hat_slot:
   skin: false
-pet_equip2_slot:
+pet_clothes_slot:
   skin: false
-pet_equip3_slot:
+pet_adorn_slot:
   skin: false
 
 suit_skin:
