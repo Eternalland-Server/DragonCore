@@ -7,7 +7,6 @@ import net.sakuragame.eternal.dragoncore.config.FileManager;
 import net.sakuragame.eternal.dragoncore.config.sub.ConfigFile;
 import net.sakuragame.eternal.dragoncore.database.IDataBase;
 import net.sakuragame.eternal.dragoncore.database.MysqlRepository;
-import net.sakuragame.eternal.dragoncore.database.YamlRepository;
 import net.sakuragame.eternal.dragoncore.listener.*;
 import net.sakuragame.eternal.dragoncore.listener.misc.MiscManager;
 import net.sakuragame.eternal.dragoncore.mythicmobs.listener.MythicMobsListener;
@@ -45,18 +44,7 @@ public class DragonCore extends JavaPlugin {
 
         fileManager = new FileManager(this);
         fileManager.init();
-        if (ConfigFile.sql) {
-            Bukkit.getConsoleSender().sendMessage("§6当前数据存储: §cMysql");
-            DB = new MysqlRepository(this);
-        } else {
-            Bukkit.getConsoleSender().sendMessage("§6当前数据存储: §cYaml");
-            String playerDataFolder = ConfigFile.playerDataFolder;
-            if (playerDataFolder == null || playerDataFolder.isEmpty()) {
-                DB = new YamlRepository(new File(getDataFolder(), "PlayerData"));
-            } else {
-                DB = new YamlRepository(new File(playerDataFolder));
-            }
-        }
+        DB = new MysqlRepository(this);
 
         Bukkit.getPluginCommand("dragoncore").setExecutor(new MainCommand());
 
