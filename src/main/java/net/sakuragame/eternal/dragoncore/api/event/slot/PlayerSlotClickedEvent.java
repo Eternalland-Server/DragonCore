@@ -7,11 +7,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.player.PlayerEvent;
 
-@Getter
 public class PlayerSlotClickedEvent extends PlayerEvent {
 
-    private final String identifier;
-    private final ClickType clickType;
+    @Getter private final String identifier;
+    @Getter private final ClickType clickType;
     private final static HandlerList handlerList = new HandlerList();
 
     public PlayerSlotClickedEvent(Player who, String identifier, ClickType clickType) {
