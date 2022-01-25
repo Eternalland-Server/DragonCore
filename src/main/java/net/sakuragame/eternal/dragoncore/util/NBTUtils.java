@@ -1,7 +1,6 @@
 package net.sakuragame.eternal.dragoncore.util;
 
-import com.taylorswiftcn.justwei.nbt.NBTItem;
-
+import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.inventory.ItemStack;
 
 public class NBTUtils {
