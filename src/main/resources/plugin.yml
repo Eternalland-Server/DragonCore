@@ -5,6 +5,7 @@ depend:
   - MegumiLib
   - DataManager
   - PlaceholderAPI
+  - NBTAPI
 softdepend:
   - MythicMobs
   - DragonArmourers
