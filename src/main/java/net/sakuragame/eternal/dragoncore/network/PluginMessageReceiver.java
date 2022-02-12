@@ -21,7 +21,7 @@ public class PluginMessageReceiver implements PluginMessageListener {
     public PluginMessageReceiver(DragonCore plugin) {
         this.plugin = plugin;
         messageHandlers = new HashMap<>();
-        messageHandlers.put(3, MessagePlaceholder.class);
+        // messageHandlers.put(3, MessagePlaceholder.class);
         messageHandlers.put(4, MessageEntityJoinWorld.class);
         messageHandlers.put(5, MessageKeyPress.class);
         messageHandlers.put(6, MessageChatTextbox.class);
