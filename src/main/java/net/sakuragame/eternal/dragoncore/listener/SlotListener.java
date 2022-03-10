@@ -193,6 +193,8 @@ public class SlotListener implements Listener {
             return;
         String slotIdentity = e.getData().get(0);
 
+        if (!FileManager.getSlotSettings().containsKey(slotIdentity)) return;
+
         ItemStack itemStack = SlotAPI.getCacheSlotItem(e.getPlayer(), slotIdentity);
         if (itemStack == null) {
             itemStack = new ItemStack(Material.AIR);

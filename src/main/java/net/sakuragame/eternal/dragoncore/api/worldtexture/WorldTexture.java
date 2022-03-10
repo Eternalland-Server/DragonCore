@@ -1,5 +1,6 @@
 package net.sakuragame.eternal.dragoncore.api.worldtexture;
 
+import lombok.AllArgsConstructor;
 import net.sakuragame.eternal.dragoncore.api.worldtexture.animation.Animation;
 import org.bukkit.inventory.ItemStack;
 
@@ -7,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+@AllArgsConstructor
 public class WorldTexture {
     // 世界名，只有玩家在该世界才能看到[ 为*则所有世界均能看到 ]
     public String world = "*";

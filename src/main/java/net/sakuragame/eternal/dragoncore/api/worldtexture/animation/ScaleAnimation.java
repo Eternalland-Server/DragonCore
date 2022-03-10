@@ -1,6 +1,8 @@
 package net.sakuragame.eternal.dragoncore.api.worldtexture.animation;
 
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor
 public class ScaleAnimation implements Animation {
 
     public int delay = 0;

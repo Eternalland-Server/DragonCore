@@ -4,7 +4,6 @@ package net.sakuragame.eternal.dragoncore;
 import lombok.Getter;
 import net.sakuragame.eternal.dragoncore.commands.MainCommand;
 import net.sakuragame.eternal.dragoncore.config.FileManager;
-import net.sakuragame.eternal.dragoncore.config.sub.ConfigFile;
 import net.sakuragame.eternal.dragoncore.database.IDataBase;
 import net.sakuragame.eternal.dragoncore.database.MysqlRepository;
 import net.sakuragame.eternal.dragoncore.listener.*;
@@ -16,8 +15,6 @@ import org.apache.logging.log4j.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.io.File;
 
 @Getter
 public class DragonCore extends JavaPlugin {
