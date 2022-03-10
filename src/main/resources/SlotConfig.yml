@@ -31,10 +31,13 @@ pet_adorn_slot:
 
 suit_skin:
   skin: true
+  ignore-only-suit: true
 mainhand_skin:
   skin: true
+  ignore-only-suit: true
 offhand_skin:
   skin: true
+  ignore-only-suit: true
 handwear_skin:
   skin: true
 clothes_skin:

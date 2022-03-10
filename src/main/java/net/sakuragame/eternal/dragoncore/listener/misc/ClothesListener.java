@@ -3,6 +3,9 @@ package net.sakuragame.eternal.dragoncore.listener.misc;
 import com.taylorswiftcn.justwei.util.MegumiUtil;
 import eos.moe.armourers.api.DragonAPI;
 import eos.moe.armourers.api.PlayerSkinUpdateEvent;
+import net.sakuragame.eternal.cargo.CargoAPI;
+import net.sakuragame.eternal.cargo.user.CargoAccount;
+import net.sakuragame.eternal.cargo.value.ValueType;
 import net.sakuragame.eternal.dragoncore.api.event.PlayerSlotUpdateEvent;
 import net.sakuragame.eternal.dragoncore.config.FileManager;
 import net.sakuragame.eternal.dragoncore.config.constructor.SlotSetting;
@@ -15,10 +18,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class DragonArmourersHook implements Listener {
+public class ClothesListener implements Listener {
     private final MiscManager manager;
 
-    public DragonArmourersHook(MiscManager miscManager) {
+    public ClothesListener(MiscManager miscManager) {
         this.manager = miscManager;
     }
 
@@ -41,17 +44,22 @@ public class DragonArmourersHook implements Listener {
             return skins;
         }
 
+        CargoAccount account = CargoAPI.getAccountsManager().getAccount(player);
+        boolean onlySuit = Boolean.parseBoolean(account.get(ValueType.STORAGE, "CLOTHES_ONLY_SUIT"));
+
         for (String key : FileManager.getSlotSettings().keySet()) {
             ItemStack item = map.get(key);
 
-            SlotSetting slotSetting = FileManager.getSlotSettings().get(key);
-            if (!slotSetting.isSkin()) continue;
+            SlotSetting slot = FileManager.getSlotSettings().get(key);
+            if (!slot.isSkin()) continue;
+
+            if (onlySuit && !slot.isIgnoreOnlySuit()) continue;
 
             if (!MegumiUtil.isEmpty(item)) {
                 skins.add(DragonAPI.getItemSkinName(item));
             }
             else {
-                if (slotSetting.getIdentifier().equals("offhand_skin")) {
+                if (slot.getIdentifier().equals("offhand_skin")) {
                     skins.add("eternal-shield");
                 }
             }

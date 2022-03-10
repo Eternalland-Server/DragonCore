@@ -2,7 +2,6 @@ package net.sakuragame.eternal.dragoncore.listener.misc;
 
 
 import net.sakuragame.eternal.dragoncore.DragonCore;
-import net.sakuragame.eternal.dragoncore.api.SlotAPI;
 import net.sakuragame.eternal.dragoncore.api.event.PlayerSlotLoadedEvent;
 import net.sakuragame.eternal.dragoncore.api.event.PlayerSlotUpdateEvent;
 import net.sakuragame.eternal.dragoncore.config.sub.ConfigFile;
@@ -31,7 +30,7 @@ public class MiscManager implements Listener {
         PluginManager pm = Bukkit.getPluginManager();
         YamlConfiguration config = plugin.getFileManager().getConfig();
         if (pm.isPluginEnabled("DragonArmourers") && config.getBoolean("DragonArmourers", false)) {
-            plugin.registerListener(new DragonArmourersHook(this));
+            plugin.registerListener(new ClothesListener(this));
             Bukkit.getConsoleSender().sendMessage(" - 已兼容龙之时装付费版");
         }
     }
