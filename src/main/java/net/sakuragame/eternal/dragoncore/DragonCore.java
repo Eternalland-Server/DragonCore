@@ -41,7 +41,7 @@ public class DragonCore extends JavaPlugin {
 
         fileManager = new FileManager(this);
         fileManager.init();
-        DB = new MysqlRepository(this);
+        DB = new MysqlRepository();
 
         Bukkit.getPluginCommand("dragoncore").setExecutor(new MainCommand());
 

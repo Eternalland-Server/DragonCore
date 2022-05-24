@@ -3,6 +3,7 @@ package net.sakuragame.eternal.dragoncore.database;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.taylorswiftcn.justwei.util.MegumiUtil;
 import ink.ptms.zaphkiel.ZaphkielAPI;
 import ink.ptms.zaphkiel.api.ItemStream;
@@ -23,15 +24,12 @@ import java.util.Map;
 
 public class MysqlRepository implements IDataBase {
 
-    private final DragonCore plugin;
     private final DataManager dataManager;
 
-    private final Gson gson;
+    private final JsonParser parse = new JsonParser();
 
-    public MysqlRepository(DragonCore plugin) {
-        this.plugin = plugin;
+    public MysqlRepository() {
         this.dataManager = ClientManagerAPI.getDataManager();
-        this.gson = new Gson();
         this.init();
     }
 
@@ -43,16 +41,23 @@ public class MysqlRepository implements IDataBase {
     public void getData(Player player, String identifier, Callback<ItemStack> callback) {
         int uid = ClientManagerAPI.getUserID(player.getUniqueId());
 
-        try (DatabaseQuery query = dataManager.createQuery(DragonCoreTable.DRAGON_CORE_SLOTS.getTableName(), new String[] {"uid", "ident"}, new Object[] {uid, identifier})) {
+        try (DatabaseQuery query = dataManager.createQuery(
+                DragonCoreTable.DRAGON_CORE_SLOTS.getTableName(), new String[] {"uid", "ident"},
+                new Object[] {uid, identifier}
+        )) {
             ResultSet result = query.getResultSet();
             if (result.next()) {
-                String data = result.getString("data");
-                if (data == null || data.isEmpty()) {
+                String id = result.getString("item_id");
+                if (id == null || id.equals("")) {
                     Scheduler.run(() -> callback.onResult(new ItemStack(Material.AIR)));
                     return;
                 }
 
-                ItemStack itemStack = deserialize(player, data);
+                int amount = result.getInt("item_amount");
+                String data = result.getString("item_data");
+                String unique = result.getString("item_unique");
+
+                ItemStack itemStack = deserialize(player, id, amount, data, unique);
                 Scheduler.run(() -> callback.onResult(itemStack));
             } else {
                 Scheduler.run(() -> callback.onResult(new ItemStack(Material.AIR)));
@@ -96,19 +101,18 @@ public class MysqlRepository implements IDataBase {
             ResultSet result = query.getResultSet();
             while (result.next()) {
                 String ident = result.getString("ident");
-                String data = result.getString("data");
-                if (data == null || data.isEmpty()) {
+                String id = result.getString("item_id");
+                if (id == null || id.equals("")) {
                     items.put(ident, new ItemStack(Material.AIR));
                     continue;
                 }
 
-                try {
-                    ItemStack item = deserialize(player, data);
-                    items.put(ident, item);
-                }
-                catch (IllegalStateException e) {
-                    plugin.getLogger().info(String.format("读取 %s 玩家 %s 槽位物品失败", player.getName(), ident));
-                }
+                int amount = result.getInt("item_amount");
+                String data = result.getString("item_data");
+                String unique = result.getString("item_unique");
+
+                ItemStack itemStack = deserialize(player, id, amount, data, unique);
+                items.put(ident, itemStack);
             }
             Scheduler.run(() -> callback.onResult(items));
         }
@@ -118,18 +122,16 @@ public class MysqlRepository implements IDataBase {
         }
     }
 
-    private ItemStack deserialize(Player player, String input) {
-        try {
-            JsonObject target = gson.fromJson(input, JsonObject.class);
-            ItemStream itemStream = ZaphkielAPI.INSTANCE.deserialize(target);
-            ItemStack itemStack = itemStream.rebuildToItemStack(player);
-            JsonElement count = target.get("amount");
-            itemStack.setAmount(count == null ? 1 : count.getAsInt());
+    private ItemStack deserialize(Player player, String id, int amount, String data, String unique) {
+        JsonObject object = new JsonObject();
+        object.addProperty("id", id);
+        if (data != null && !data.isEmpty()) object.add("data", parse.parse(data));
+        if (unique != null && !unique.isEmpty()) object.add("unique", parse.parse(unique));
 
-            return itemStack;
-        }
-        catch (Exception e) {
-            return new ItemStack(Material.AIR);
-        }
+        ItemStream itemStream = ZaphkielAPI.INSTANCE.deserialize(object);
+        ItemStack result = itemStream.rebuildToItemStack(player);
+        result.setAmount(amount);
+
+        return result;
     }
 }

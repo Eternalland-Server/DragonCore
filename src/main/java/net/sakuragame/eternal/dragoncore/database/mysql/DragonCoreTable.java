@@ -6,7 +6,10 @@ public enum DragonCoreTable {
             new String[] {
                     "`uid` int NOT NULL",
                     "`ident` varchar(32) NOT NULL",
-                    "`data` text default NULL",
+                    "`item_id` varchar(64)",
+                    "`item_amount` int default 0",
+                    "`item_data` varchar(512)",
+                    "`item_unique` varchar(128)",
                     "UNIQUE KEY `account` (`uid`,`ident`)",
             }));
 

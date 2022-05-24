@@ -148,7 +148,6 @@ public class SlotListener implements Listener {
         }
         //右键点击槽位
         if (clickType == ClickType.RIGHT_CLICK) {
-            System.out.println("right click");
             //如果格子是空的，且手上有物品  ->  放置一个进去
             if (slotItem.getType() == Material.AIR && handItem.getType() != Material.AIR) {
                 setItemStack(player, slotIdentity, setAmount(handItem.clone(), 1));
