@@ -7,6 +7,7 @@ import com.google.gson.JsonParser;
 import com.taylorswiftcn.justwei.util.MegumiUtil;
 import ink.ptms.zaphkiel.ZaphkielAPI;
 import ink.ptms.zaphkiel.api.ItemStream;
+import ink.ptms.zaphkiel.taboolib.module.nms.ItemTag;
 import net.sakuragame.eternal.dragoncore.DragonCore;
 import net.sakuragame.eternal.dragoncore.database.mysql.DragonCoreTable;
 import net.sakuragame.eternal.dragoncore.util.Scheduler;
@@ -73,24 +74,35 @@ public class MysqlRepository implements IDataBase {
     public void setData(Player player, String identifier, ItemStack itemStack, Callback<ItemStack> callback) {
         int uid = ClientManagerAPI.getUserID(player.getUniqueId());
 
-        JsonObject json = MegumiUtil.isEmpty(itemStack) ? null : ZaphkielAPI.INSTANCE.serialize(itemStack);
-        if (json != null) {
-            json.addProperty("amount", itemStack.getAmount());
+        if (MegumiUtil.isEmpty(itemStack)) {
+            dataManager.executeReplace(
+                    DragonCoreTable.DRAGON_CORE_SLOTS.getTableName(),
+                    new String[]{"uid", "ident", "item_id", "item_amount", "item_data", "item_unique"},
+                    new Object[]{uid, identifier, null, 0, null, null}
+            );
+        }
+        else {
+            ItemStream itemStream = ZaphkielAPI.INSTANCE.read(itemStack);
+            String id = itemStream.getZaphkielName();
+            int amount = itemStack.getAmount();
+            String data = itemStream.getZaphkielData().toJson();
+            ItemTag uniqueTag = itemStream.getZaphkielUniqueData();
+            String unique = uniqueTag == null ? null : uniqueTag.toJson();
+
+            dataManager.executeReplace(
+                    DragonCoreTable.DRAGON_CORE_SLOTS.getTableName(),
+                    new String[]{"uid", "ident", "item_id", "item_amount", "item_data", "item_unique"},
+                    new Object[]{uid, identifier, id, amount, data, unique}
+            );
         }
 
-        String data = json == null ? "" : json.toString();
-
-        dataManager.executeReplace(
-                DragonCoreTable.DRAGON_CORE_SLOTS.getTableName(),
-                new String[] {"uid", "ident", "data"},
-                new Object[] {uid, identifier, data}
-        );
         Scheduler.run(() -> callback.onResult(itemStack));
     }
 
     @Override
     public void getAllData(Player player, Callback<Map<String, ItemStack>> callback) {
         int uid = ClientManagerAPI.getUserID(player.getUniqueId());
+
         Map<String, ItemStack> items = new HashMap<>();
 
         try (DatabaseQuery query = dataManager.createQuery(
