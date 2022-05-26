@@ -34,11 +34,6 @@ public class OpenHudCommand extends SubCommand {
             return;
         }
 
-        if (!plugin.getFileManager().getGui().containsKey(s2 + ".yml")) {
-            sender.sendMessage(" §7Gui文件夹内无该文件: " + s2 + ".yml");
-            return;
-        }
-
         PacketSender.sendOpenHud(player, s2);
     }
 
