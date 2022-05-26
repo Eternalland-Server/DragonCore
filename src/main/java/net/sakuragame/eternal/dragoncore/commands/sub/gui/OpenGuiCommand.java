@@ -16,7 +16,7 @@ public class OpenGuiCommand extends SubCommand {
 
     @Override
     public void perform(CommandSender sender, String[] args) {
-        if (args.length < 1) return;
+        if (args.length < 2) return;
 
         String s1 = args[0];
         String s2 = args[1];
