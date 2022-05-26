@@ -1,7 +1,6 @@
 package net.sakuragame.eternal.dragoncore.commands.sub.gui;
 
 import com.taylorswiftcn.justwei.commands.sub.SubCommand;
-import net.sakuragame.eternal.dragoncore.DragonCore;
 import net.sakuragame.eternal.dragoncore.commands.CommandPerms;
 import net.sakuragame.eternal.dragoncore.network.PacketSender;
 import org.bukkit.Bukkit;
@@ -9,12 +8,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class OpenHudCommand extends SubCommand {
-
-    private DragonCore plugin;
-
-    public OpenHudCommand() {
-        this.plugin = DragonCore.getInstance();
-    }
 
     @Override
     public String getIdentifier() {
