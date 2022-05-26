@@ -28,8 +28,6 @@ public class StatementCommand extends SubCommand {
         }
 
         PacketSender.sendRunFunction(player, s2, s3, false);
-
-        sender.sendMessage(" §7界面执行语句完成");
     }
 
     @Override
