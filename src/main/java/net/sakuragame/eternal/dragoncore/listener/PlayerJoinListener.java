@@ -11,6 +11,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,17 +23,22 @@ public class PlayerJoinListener implements Listener {
         Scheduler.runLaterAsync(() -> {
             if (player == null) return;
             ClientHandler.sendYaml2Player(e.getPlayer());
-
-            int uid = ClientManagerAPI.getUserID(player.getUniqueId());
-            Map<String, String> map = new HashMap<>();
-            map.put("eternal_user_uid", uid + "");
-            PacketSender.sendSyncPlaceholder(player, map);
+            this.sendUID(player);
         }, ConfigFile.joinPacketDelay);
     }
 
     @EventHandler
     public void teleport(PlayerTeleportEvent e) {
         Scheduler.runLaterAsync(() -> PacketSender.sendPlayerWorld(e.getPlayer()), 20);
+    }
+
+    private void sendUID(Player player) {
+        int uid = ClientManagerAPI.getUserID(player.getUniqueId());
+        String str = new DecimalFormat("0000000").format(uid);
+
+        Map<String, String> map = new HashMap<>();
+        map.put("eternal_user_uid", str);
+        PacketSender.sendSyncPlaceholder(player, map);
     }
 
 }
