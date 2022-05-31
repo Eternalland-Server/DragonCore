@@ -10,7 +10,6 @@ public class CommonListener implements Listener {
 
     @EventHandler
     public void onDrop(PlayerDropItemEvent e) {
-        Player player = e.getPlayer();
         Entity entity = e.getItemDrop();
         entity.setCustomName(e.getItemDrop().getCustomName());
         entity.setCustomNameVisible(true);
