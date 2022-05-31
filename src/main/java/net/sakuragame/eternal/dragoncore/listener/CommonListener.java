@@ -1,17 +1,33 @@
 package net.sakuragame.eternal.dragoncore.listener;
 
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.Item;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.entity.ItemMergeEvent;
+import org.bukkit.event.entity.ItemSpawnEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 public class CommonListener implements Listener {
 
     @EventHandler
-    public void onDrop(PlayerDropItemEvent e) {
-        Entity entity = e.getItemDrop();
-        entity.setCustomName(e.getItemDrop().getCustomName());
+    public void onSpawn(ItemSpawnEvent e) {
+        this.showName(e.getEntity());
+    }
+
+    @EventHandler
+    public void onMerge(ItemMergeEvent e) {
+        this.showName(e.getEntity());
+    }
+
+    private void showName(Entity entity) {
+        Item item = (Item) entity;
+        ItemStack itemStack = item.getItemStack();
+        ItemMeta meta = itemStack.getItemMeta();
+        if (!meta.hasDisplayName()) return;
+
+        entity.setCustomName(meta.getDisplayName());
         entity.setCustomNameVisible(true);
     }
 }
