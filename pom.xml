@@ -23,11 +23,6 @@
 
     <repositories>
         <repository>
-            <id>codemc-repo</id>
-            <url>https://repo.codemc.org/repository/maven-public/</url>
-            <layout>default</layout>
-        </repository>
-        <repository>
             <id>ycraft</id>
             <url>https://maven.ycraft.cn/repository/maven-public/</url>
         </repository>
@@ -41,9 +36,9 @@
             <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
         </repository>
         <repository>
-            <id>nexus</id>
-            <name>Lumine Releases</name>
-            <url>https://mvn.lumine.io/repository/maven/</url>
+            <id>codemc-repo</id>
+            <url>https://repo.codemc.org/repository/maven-public/</url>
+            <layout>default</layout>
         </repository>
     </repositories>
 
@@ -78,7 +73,9 @@
         <dependency>
             <groupId>io.lumine.xikage</groupId>
             <artifactId>MythicMobs</artifactId>
-            <version>4.12.0</version>
+            <version>4.13.1</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/.lib/MythicMobs-4.13.1.jar</systemPath>
         </dependency>
 
         <dependency>
@@ -86,7 +83,7 @@
             <artifactId>armourers</artifactId>
             <version>5.05</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/.lib/DragonArmourers-5.05.jar</systemPath>
+            <systemPath>${pom.basedir}/.lib/DragonArmourers-5.05.jar</systemPath>
         </dependency>
 
         <dependency>
@@ -94,7 +91,7 @@
             <artifactId>Zaphkiel</artifactId>
             <version>1.7.6</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/.lib/Zaphkiel-1.7.6.jar</systemPath>
+            <systemPath>${pom.basedir}/.lib/Zaphkiel-1.7.6.jar</systemPath>
         </dependency>
 
         <dependency>
