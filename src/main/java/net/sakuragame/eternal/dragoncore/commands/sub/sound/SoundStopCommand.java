@@ -28,7 +28,6 @@ public class SoundStopCommand extends SubCommand {
         String sound = args[1];
 
         PacketSender.sendStopSound(player, sound);
-        player.sendMessage(" §7已停止播放: " + sound);
     }
 
     @Override

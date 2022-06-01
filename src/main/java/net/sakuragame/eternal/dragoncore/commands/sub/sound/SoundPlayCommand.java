@@ -33,7 +33,6 @@ public class SoundPlayCommand extends SubCommand {
             boolean loop = Boolean.parseBoolean(args[4]);
 
             PacketSender.sendPlaySound(player, sound, sound, volume, pitch, loop, 0, 0, 0);
-            player.sendMessage(" §7已开始播放: " + sound);
         } catch (NumberFormatException e) {
             sender.sendMessage(" §7参数错误，请检查输入的数字");
         }
