@@ -15,15 +15,28 @@ import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PlayerJoinListener implements Listener {
+public class PlayerListener implements Listener {
 
     @EventHandler
     public void join(PlayerJoinEvent e) {
         Player player = e.getPlayer();
         Scheduler.runLaterAsync(() -> {
             if (player == null) return;
+
             ClientHandler.sendYaml2Player(e.getPlayer());
             this.sendUID(player);
+
+            if (ConfigFile.bgm == null) {
+                PacketSender.sendStopSound(player, "eternal_bgm");
+            }
+            else {
+                PacketSender.sendPlaySound(
+                        player, "eternal_bgm", "bgms/" + ConfigFile.bgm,
+                        0.3f, 1,
+                        true,
+                        0, 0, 0
+                );
+            }
         }, ConfigFile.joinPacketDelay);
     }
 

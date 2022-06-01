@@ -9,7 +9,7 @@ import org.bukkit.event.Listener;
 
 import java.util.List;
 
-public class PlayerKeyListener implements Listener {
+public class KeyListener implements Listener {
 
     private DragonCore plugin = DragonCore.getInstance();
 

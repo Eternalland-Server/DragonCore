@@ -49,9 +49,9 @@ public class DragonCore extends JavaPlugin {
         Bukkit.getMessenger().registerIncomingPluginChannel(this, "dragoncore:main", new PluginMessageReceiver(this));
 
         registerListener(miscManager = new MiscManager(this));
-        registerListener(new PlayerJoinListener());
-        registerListener(new PlayerKeyListener());
-        registerListener(new PlayerChatListener());
+        registerListener(new PlayerListener());
+        registerListener(new KeyListener());
+        registerListener(new ChatListener());
         registerListener(new PlaceholderListener());
         registerListener(new SlotListener());
         registerListener(new CommonListener());
