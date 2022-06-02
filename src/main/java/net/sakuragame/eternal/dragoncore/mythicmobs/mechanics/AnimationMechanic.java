@@ -33,12 +33,9 @@ public class AnimationMechanic extends SkillMechanic implements ITargetedEntityS
 
         if (!this.isRemove) {
             PacketSender.setModelEntityAnimation(bukkitTarget, animation, transitionTime);
-            debug(target, "开始播放: " + animation);
-            debug(target, "过渡时间: " + transitionTime);
 
         } else {
             PacketSender.removeModelEntityAnimation(bukkitTarget, animation, transitionTime);
-            debug(target, "删除动画");
         }
         return true;
     }
