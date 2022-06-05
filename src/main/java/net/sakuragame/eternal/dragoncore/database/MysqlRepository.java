@@ -41,6 +41,10 @@ public class MysqlRepository implements IDataBase {
     @Override
     public void getData(Player player, String identifier, Callback<ItemStack> callback) {
         int uid = ClientManagerAPI.getUserID(player.getUniqueId());
+        if (uid == -1) {
+            Scheduler.run(callback::onFail);
+            return;
+        }
 
         try (DatabaseQuery query = dataManager.createQuery(
                 DragonCoreTable.DRAGON_CORE_SLOTS.getTableName(), new String[] {"uid", "ident"},
@@ -73,6 +77,10 @@ public class MysqlRepository implements IDataBase {
     @Override
     public void setData(Player player, String identifier, ItemStack itemStack, Callback<ItemStack> callback) {
         int uid = ClientManagerAPI.getUserID(player.getUniqueId());
+        if (uid == -1) {
+            Scheduler.run(callback::onFail);
+            return;
+        }
 
         if (MegumiUtil.isEmpty(itemStack)) {
             dataManager.executeReplace(
@@ -102,6 +110,10 @@ public class MysqlRepository implements IDataBase {
     @Override
     public void getAllData(Player player, Callback<Map<String, ItemStack>> callback) {
         int uid = ClientManagerAPI.getUserID(player.getUniqueId());
+        if (uid == -1) {
+            Scheduler.run(callback::onFail);
+            return;
+        }
 
         Map<String, ItemStack> items = new HashMap<>();
 
