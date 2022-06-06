@@ -3,7 +3,7 @@ main: net.sakuragame.eternal.dragoncore.DragonCore
 version: ${project.version}
 depend:
   - MegumiLib
-  - DataManager
+  - DataManager-Bukkit
   - PlaceholderAPI
   - NBTAPI
   - EternalCargo
