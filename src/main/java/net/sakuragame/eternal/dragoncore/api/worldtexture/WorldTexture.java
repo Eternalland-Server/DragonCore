@@ -21,6 +21,10 @@ public class WorldTexture {
     public float rotateX = 0;
     public float rotateZ = 0;
 
+    public boolean through = false;
+
+    public float distance = 64;
+
     // 贴图路径[ 当前缀为[text]时,则为渲染文字 ]
     public String path = "unknown.png";
     // 渲染物品[ 当itemStack不为null时, 将绘制物品而不绘制path路径的贴图 ]
@@ -47,4 +51,33 @@ public class WorldTexture {
 
     // 旋转,缩放,平移动画[RotateAnimation,ScaleAnimation,TranslateAnimation]
     public List<Animation> animationList = new ArrayList<>();
+
+    public WorldTexture(String world, double translateX, double translateY, double translateZ,
+                        float rotateX, float rotateY, float rotateZ,
+                        String path, ItemStack itemStack,
+                        float width, float height, float alpha,
+                        boolean glow, boolean followPlayerEyes,
+                        UUID entity, boolean followEntityDirection,
+                        double translateEntityFront, double translateEntityRight,
+                        List<Animation> animationList) {
+        this.world = world;
+        this.translateX = translateX;
+        this.translateY = translateY;
+        this.translateZ = translateZ;
+        this.rotateX = rotateX;
+        this.rotateY = rotateY;
+        this.rotateZ = rotateZ;
+        this.path = path;
+        this.itemStack = itemStack;
+        this.width = width;
+        this.height = height;
+        this.alpha = alpha;
+        this.glow = glow;
+        this.followPlayerEyes = followPlayerEyes;
+        this.entity = entity;
+        this.followEntityDirection = followEntityDirection;
+        this.translateEntityFront = translateEntityFront;
+        this.translateEntityRight = translateEntityRight;
+        this.animationList = animationList;
+    }
 }

@@ -143,6 +143,8 @@ public class PacketSender extends PluginMessageSender {
                 buffer.writeDouble(z);
             }
             buffer.writeInt(0);
+            buffer.writeBoolean(false);
+            buffer.writeDouble(64);
         });
     }
 
@@ -173,6 +175,8 @@ public class PacketSender extends PluginMessageSender {
                 buffer.writeDouble(z);
             }
             buffer.writeInt(0);
+            buffer.writeBoolean(false);
+            buffer.writeDouble(64);
         });
     }
 
@@ -206,6 +210,8 @@ public class PacketSender extends PluginMessageSender {
                 for (Animation animation : worldTexture.animationList) {
                     buffer.writeString(animation.toData());
                 }
+                buffer.writeBoolean(worldTexture.through);
+                buffer.writeDouble(worldTexture.distance);
             });
         } else {
             sendPluginMessage(player, 15, buffer -> {
@@ -234,6 +240,8 @@ public class PacketSender extends PluginMessageSender {
                 for (Animation animation : worldTexture.animationList) {
                     buffer.writeString(animation.toData());
                 }
+                buffer.writeBoolean(worldTexture.through);
+                buffer.writeDouble(worldTexture.distance);
             });
         }
     }
