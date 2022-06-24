@@ -3,10 +3,7 @@ package net.sakuragame.eternal.dragoncore.mythicmobs.listener;
 import io.lumine.xikage.mythicmobs.api.bukkit.events.MythicMechanicLoadEvent;
 import io.lumine.xikage.mythicmobs.api.bukkit.events.MythicMobSpawnEvent;
 import net.minecraft.server.v1_12_R1.*;
-import net.sakuragame.eternal.dragoncore.mythicmobs.mechanics.AnimationMechanic;
-import net.sakuragame.eternal.dragoncore.mythicmobs.mechanics.ModelMechanic;
-import net.sakuragame.eternal.dragoncore.mythicmobs.mechanics.SoundPlayMechanic;
-import net.sakuragame.eternal.dragoncore.mythicmobs.mechanics.SoundStopMechanic;
+import net.sakuragame.eternal.dragoncore.mythicmobs.mechanics.*;
 import net.sakuragame.eternal.dragoncore.util.Scheduler;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftEntity;
 import org.bukkit.entity.Entity;
@@ -88,6 +85,16 @@ public class MythicMobsListener implements Listener {
 
         if (e.getMechanicName().equalsIgnoreCase("Model")) {
             e.register(new ModelMechanic(e.getContainer(), e.getConfig()));
+            return;
+        }
+
+        if (e.getMechanicName().equalsIgnoreCase("ParticleApply")) {
+            e.register(new ParticleApplyMechanic(e.getContainer(), e.getConfig()));
+            return;
+        }
+
+        if (e.getMechanicName().equalsIgnoreCase("ParticleRemove")) {
+            e.register(new ParticleRemoveMechanic(e.getContainer(), e.getConfig()));
         }
     }
 
