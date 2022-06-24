@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 
 public class PacketSender extends PluginMessageSender {
 
-    private static DragonCore plugin = DragonCore.getInstance();
+    private final static DragonCore plugin = DragonCore.getInstance();
 
     public static void removeModelEntityAnimation(LivingEntity entity, String animation, int transitionTime) {
         sendPluginMessage(getNearPlayers(entity), 0, buffer -> {
@@ -73,15 +73,11 @@ public class PacketSender extends PluginMessageSender {
 
 
     public static void sendPlayerWorld(Player player) {
-        sendPluginMessage(player, 3, buffer -> {
-            buffer.writeString(player.getWorld().getName());
-        });
+        sendPluginMessage(player, 3, buffer -> buffer.writeString(player.getWorld().getName()));
     }
 
     public static void setChatBoxText(Player player, String text) {
-        sendPluginMessage(player, 4, buffer -> {
-            buffer.writeString(text);
-        });
+        sendPluginMessage(player, 4, buffer -> buffer.writeString(text));
     }
 
     public static void setEntityModel(Player player, UUID uuid, String name) {
@@ -91,9 +87,7 @@ public class PacketSender extends PluginMessageSender {
                 buffer.writeString(name);
             });
         } else {
-            sendPluginMessage(player, 6, buffer -> {
-                buffer.writeUniqueId(uuid);
-            });
+            sendPluginMessage(player, 6, buffer -> buffer.writeUniqueId(uuid));
         }
     }
 
@@ -101,9 +95,7 @@ public class PacketSender extends PluginMessageSender {
     // 压缩包密码
     public static void sendZipPassword(Player player) {
         String str = ConfigFile.password;
-        sendPluginMessage(player, 18, buffer -> {
-            buffer.writeString(str);
-        });
+        sendPluginMessage(player, 18, buffer -> buffer.writeString(str));
     }
 
 
@@ -247,9 +239,7 @@ public class PacketSender extends PluginMessageSender {
     }
 
     public static void removePlayerWorldTexture(Player player, String key) {
-        sendPluginMessage(player, 13, buffer -> {
-            buffer.writeString(key);
-        });
+        sendPluginMessage(player, 13, buffer -> buffer.writeString(key));
     }
 
     public static void sendKeyRegister(Player player) {
@@ -267,8 +257,6 @@ public class PacketSender extends PluginMessageSender {
     /**
      * 同步客户端的papi变量
      *
-     * @param player
-     * @param map
      */
     public static void sendSyncPlaceholder(Player player, Map<String, String> map) {
         if (map.size() > 0) {
@@ -340,9 +328,7 @@ public class PacketSender extends PluginMessageSender {
     }
 
     public static void sendStopSound(Player player, String key) {
-        sendPluginMessage(player, 20, buffer -> {
-            buffer.writeString(key);
-        });
+        sendPluginMessage(player, 20, buffer -> buffer.writeString(key));
     }
 
 
@@ -376,17 +362,90 @@ public class PacketSender extends PluginMessageSender {
     }
 
     public static void setThirdPersonView(Player player, int val) {
-        sendPluginMessage(player, 24, buffer -> {
-            buffer.writeInt(val);
-        });
+        sendPluginMessage(player, 24, buffer -> buffer.writeInt(val));
     }
 
     public static void setWindowTitle(Player player, String title) {
-        sendPluginMessage(player, 25, buffer -> {
-            buffer.writeString(title);
+        sendPluginMessage(player, 25, buffer -> buffer.writeString(title));
+    }
+
+    public static void setEntityModelItemAnimation(LivingEntity entity, String animation) {
+        PluginMessageSender.sendPluginMessage(getNearPlayers(entity), 102, buffer -> {
+            buffer.writeUniqueId(entity.getUniqueId());
+            buffer.writeString(animation);
         });
     }
 
+    public static void setPlayerAnimation(Player player, String animation) {
+        PluginMessageSender.sendPluginMessage(getNearPlayers(player), 27, buffer -> {
+            buffer.writeUniqueId(player.getUniqueId());
+            buffer.writeString(animation);
+        });
+    }
+
+    public static void removePlayerAnimation(Player player) {
+        PluginMessageSender.sendPluginMessage(getNearPlayers(player), 28, buffer -> {
+            buffer.writeUniqueId(player.getUniqueId());
+            buffer.writeString("all");
+        });
+    }
+
+    public static void runEntityTagFunction(Player player, UUID uuid, String function) {
+        PluginMessageSender.sendPluginMessage(player, 31, buffer -> {
+            buffer.writeUniqueId(uuid);
+            buffer.writeString(function);
+        });
+    }
+
+    public static void setBlockAnimation(Player player, int x, int y, int z, String animation) {
+        PluginMessageSender.sendPluginMessage(player, 32, buffer -> {
+            buffer.writeInt(x);
+            buffer.writeInt(y);
+            buffer.writeInt(z);
+            buffer.writeString(animation);
+        });
+    }
+
+    public static void runEntityAnimationFunction(Player player, UUID uuid, String function) {
+        PluginMessageSender.sendPluginMessage(player, 33, buffer -> {
+            buffer.writeUniqueId(uuid);
+            buffer.writeString(function);
+        });
+    }
+
+    public static void setEntityHeadTag(Player player, UUID uuid, String matchName) {
+        if (matchName != null) {
+            PluginMessageSender.sendPluginMessage(player, 34, buffer -> {
+                buffer.writeUniqueId(uuid);
+                buffer.writeString(matchName);
+            });
+        }
+        else {
+            PluginMessageSender.sendPluginMessage(player, 35, buffer -> buffer.writeUniqueId(uuid));
+        }
+    }
+
+    public static void addParticle(Player player, String schemeKey, String particleUUID, String posOrEntityUUID, String rotation, int lifeTime) {
+        PluginMessageSender.sendPluginMessage(player, 201, buffer -> {
+            buffer.writeString(schemeKey);
+            buffer.writeString(particleUUID);
+            buffer.writeString(posOrEntityUUID);
+            buffer.writeString(rotation);
+            buffer.writeInt(lifeTime);
+        });
+    }
+
+    public static void removeParticle(Player player, String particleUUID) {
+        PluginMessageSender.sendPluginMessage(player, 202, buffer -> buffer.writeString(particleUUID));
+    }
+
+    public static void removeParticle(Player player, UUID entityUUID) {
+        PluginMessageSender.sendPluginMessage(player, 203, buffer -> buffer.writeUniqueId(entityUUID));
+    }
+
+    public static void clearParticle(Player player) {
+        PluginMessageSender.sendPluginMessage(player, 204, null);
+    }
 
     public static List<Player> getNearPlayers(Entity entity) {
         return getNearPlayers(entity, 50);

@@ -31,22 +31,26 @@ pet_adorn_slot:
 
 suit_skin:
   skin: true
-  ignore-only-suit: true
+  skin-type: 0
 mainhand_skin:
   skin: true
-  ignore-only-suit: true
 offhand_skin:
   skin: true
-  ignore-only-suit: true
 handwear_skin:
   skin: true
+  skin-type: 1
 clothes_skin:
   skin: true
+  skin-type: 1
 pants_skin:
   skin: true
+  skin-type: 1
 shoes_skin:
   skin: true
+  skin-type: 1
 wings_1_skin:
   skin: true
+  skin-type: 2
 wings_2_skin:
   skin: true
+  skin-type: 2

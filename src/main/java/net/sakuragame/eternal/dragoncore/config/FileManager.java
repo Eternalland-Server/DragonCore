@@ -160,11 +160,6 @@ public class FileManager extends JustConfiguration {
             });
         }
 
-        /*Bukkit.getConsoleSender().sendMessage("§a┃ §6Loading " + subFolder + ":");
-        for (String s : profiles.keySet()) {
-            Bukkit.getConsoleSender().sendMessage("§a┃   - " + s);
-        }
-        Bukkit.getConsoleSender().sendMessage("§a┃");*/
         Bukkit.getConsoleSender().sendMessage("§a┃ §b" + type.getName() + "§a loaded: " + profiles.size());
 
         return profiles;

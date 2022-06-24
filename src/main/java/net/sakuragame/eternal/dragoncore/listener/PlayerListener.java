@@ -8,8 +8,10 @@ import net.sakuragame.serversystems.manage.client.api.ClientManagerAPI;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.inventory.EquipmentSlot;
 
 import java.text.DecimalFormat;
 import java.util.HashMap;
@@ -52,6 +54,20 @@ public class PlayerListener implements Listener {
         Map<String, String> map = new HashMap<>();
         map.put("eternal_user_uid", str);
         PacketSender.sendSyncPlaceholder(player, map);
+    }
+
+    @EventHandler
+    public void onInteractAnimation(PlayerInteractEvent e) {
+        if (e.getHand() == EquipmentSlot.OFF_HAND) return;
+        switch (e.getAction()) {
+            case LEFT_CLICK_AIR:
+            case LEFT_CLICK_BLOCK:
+                PacketSender.setEntityModelItemAnimation(e.getPlayer(), "leftclick");
+                return;
+            case RIGHT_CLICK_AIR:
+            case RIGHT_CLICK_BLOCK:
+                PacketSender.setEntityModelItemAnimation(e.getPlayer(), "rightclick");
+        }
     }
 
 }

@@ -7,11 +7,11 @@ import org.bukkit.configuration.ConfigurationSection;
 public class SlotSetting {
     private final String identifier;
     private final boolean skin;
-    private final boolean ignoreOnlySuit;
+    private final SkinType type;
 
     public SlotSetting(ConfigurationSection section) {
         this.identifier = section.getName();
         this.skin = section.getBoolean("skin");
-        this.ignoreOnlySuit = section.getBoolean("ignore-only-suit", false);
+        this.type = SkinType.match(section.getInt("skin-type", -1));
     }
 }
