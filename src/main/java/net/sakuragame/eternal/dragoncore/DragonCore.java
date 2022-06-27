@@ -11,6 +11,7 @@ import net.sakuragame.eternal.dragoncore.listener.misc.MiscManager;
 import net.sakuragame.eternal.dragoncore.mythicmobs.listener.MythicMobsListener;
 import net.sakuragame.eternal.dragoncore.network.PluginMessageReceiver;
 import net.sakuragame.eternal.dragoncore.skript.SkriptHandler;
+import net.sakuragame.eternal.dragoncore.util.Scheduler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.bukkit.Bukkit;
@@ -60,9 +61,9 @@ public class DragonCore extends JavaPlugin {
         if (Bukkit.getPluginManager().isPluginEnabled("MythicMobs"))
             registerListener(new MythicMobsListener());
 
-        SkriptHandler.init();
-
         Bukkit.getConsoleSender().sendMessage("§6DragonCore - 加载完成");
+
+        Scheduler.runLaterAsync(SkriptHandler::init, 3);
     }
 
     @Override
