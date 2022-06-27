@@ -10,6 +10,7 @@ depend:
 softdepend:
   - MythicMobs
   - DragonArmourers
+  - Skript
 commands:
   dragoncore:
     aliases:

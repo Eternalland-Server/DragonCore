@@ -8,7 +8,6 @@ import java.util.List;
 
 public class ColorUtil {
 
-
     public static String parseColor(String s) {
         StringBuilder builder = new StringBuilder();
         List<String> colors = new ArrayList<>();
