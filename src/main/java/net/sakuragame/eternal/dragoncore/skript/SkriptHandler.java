@@ -15,6 +15,7 @@ public class SkriptHandler {
             return;
         }
         DragonCore.getInstance().getLog().info("与 Skript 进行挂钩.");
+        registerEffects();
     }
 
     private static void registerEffects() {
