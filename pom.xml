@@ -83,14 +83,6 @@
         </dependency>
 
         <dependency>
-            <groupId>com.github.SkriptLang</groupId>
-            <artifactId>Skript</artifactId>
-            <version>1.0.0</version>
-            <scope>system</scope>
-            <systemPath>${pom.basedir}/.lib/Skript.jar</systemPath>
-        </dependency>
-
-        <dependency>
             <groupId>ink.ptms</groupId>
             <artifactId>Zaphkiel</artifactId>
             <version>1.7.6</version>
