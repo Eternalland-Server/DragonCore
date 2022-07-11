@@ -1,10 +1,19 @@
 package net.sakuragame.eternal.dragoncore.listener;
 
+import com.mojang.authlib.GameProfile;
+import com.mojang.authlib.properties.Property;
+import de.tr7zw.nbtapi.NBTBlock;
+import net.minecraft.server.v1_12_R1.BlockPosition;
+import net.minecraft.server.v1_12_R1.TileEntitySkull;
 import net.sakuragame.eternal.dragoncore.config.ClientHandler;
 import net.sakuragame.eternal.dragoncore.config.sub.ConfigFile;
 import net.sakuragame.eternal.dragoncore.network.PacketSender;
 import net.sakuragame.eternal.dragoncore.util.Scheduler;
 import net.sakuragame.serversystems.manage.client.api.ClientManagerAPI;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.block.Skull;
+import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -13,9 +22,12 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.inventory.EquipmentSlot;
 
+import java.lang.reflect.Field;
 import java.text.DecimalFormat;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class PlayerListener implements Listener {
 
