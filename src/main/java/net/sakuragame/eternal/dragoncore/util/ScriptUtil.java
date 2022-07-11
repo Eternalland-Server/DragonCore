@@ -1,10 +1,10 @@
 package net.sakuragame.eternal.dragoncore.util;
 
 import eos.moe.armourers.api.DragonAPI;
+import jdk.nashorn.api.scripting.NashornScriptEngineFactory;
 import net.sakuragame.eternal.dragoncore.DragonCore;
 import net.sakuragame.eternal.dragoncore.api.SlotAPI;
 import net.sakuragame.eternal.dragoncore.config.sub.ConfigFile;
-import jdk.nashorn.api.scripting.NashornScriptEngineFactory;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -57,7 +57,6 @@ public class ScriptUtil {
                 engine.put(key, Class.forName(scriptTools.getString(key)));
             }
         }
-
 
         engine.eval(script);
         if (engine instanceof Invocable) {
