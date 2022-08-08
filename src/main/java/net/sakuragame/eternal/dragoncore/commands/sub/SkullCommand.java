@@ -40,7 +40,8 @@ public class SkullCommand extends SubCommand {
         try {
             Field profileField = meta.getClass().getDeclaredField("profile");
             profileField.setAccessible(true);
-            GameProfile profile = new GameProfile(UUID.randomUUID(), null);
+            GameProfile profile = new GameProfile(UUID.randomUUID(), id);
+            profile.getProperties().put("textures", new Property("", ""));
             profile.getProperties().put("model", new Property("model", "model: " + id));
             profileField.set(meta, profile);
 
