@@ -12,6 +12,8 @@ import net.sakuragame.eternal.dragoncore.commands.sub.item.LoreCommand;
 import net.sakuragame.eternal.dragoncore.commands.sub.item.NameCommand;
 import net.sakuragame.eternal.dragoncore.commands.sub.particle.ParticleApplyCommand;
 import net.sakuragame.eternal.dragoncore.commands.sub.particle.ParticleRemoveCommand;
+import net.sakuragame.eternal.dragoncore.commands.sub.skull.GetSkullCommand;
+import net.sakuragame.eternal.dragoncore.commands.sub.skull.SetSkullCommand;
 import net.sakuragame.eternal.dragoncore.commands.sub.sound.SoundPlayCommand;
 import net.sakuragame.eternal.dragoncore.commands.sub.sound.SoundStopCommand;
 import net.sakuragame.eternal.dragoncore.commands.sub.texture.WorldItemCommand;
@@ -41,7 +43,8 @@ public class MainCommand extends JustCommand {
         this.register(new NbtEditCommand());
         this.register(new ParticleApplyCommand());
         this.register(new ParticleRemoveCommand());
-        this.register(new SkullCommand());
+        this.register(new GetSkullCommand());
+        this.register(new SetSkullCommand());
         this.register(new ReloadCommand());
     }
 }

@@ -1,4 +1,4 @@
-package net.sakuragame.eternal.dragoncore.commands.sub;
+package net.sakuragame.eternal.dragoncore.commands.sub.skull;
 
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
@@ -14,11 +14,11 @@ import org.bukkit.inventory.meta.SkullMeta;
 import java.lang.reflect.Field;
 import java.util.UUID;
 
-public class SkullCommand extends SubCommand {
+public class GetSkullCommand extends SubCommand {
 
     @Override
     public String getIdentifier() {
-        return "skull";
+        return "getSkull";
     }
 
     @Override
@@ -40,8 +40,7 @@ public class SkullCommand extends SubCommand {
         try {
             Field profileField = meta.getClass().getDeclaredField("profile");
             profileField.setAccessible(true);
-            GameProfile profile = new GameProfile(UUID.randomUUID(), id);
-            profile.getProperties().put("textures", new Property("", ""));
+            GameProfile profile = new GameProfile(UUID.randomUUID(), null);
             profile.getProperties().put("model", new Property("model", "model: " + id));
             profileField.set(meta, profile);
 
