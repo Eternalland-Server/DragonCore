@@ -24,10 +24,12 @@ public class CommonListener implements Listener {
     private void showName(Entity entity) {
         Item item = (Item) entity;
         ItemStack itemStack = item.getItemStack();
+        int amount = itemStack.getAmount();
+
         ItemMeta meta = itemStack.getItemMeta();
         if (!meta.hasDisplayName()) return;
 
-        entity.setCustomName(meta.getDisplayName());
+        entity.setCustomName(meta.getDisplayName() + (amount > 1 ? "§3(x" + amount + ")" : ""));
         entity.setCustomNameVisible(true);
     }
 }
