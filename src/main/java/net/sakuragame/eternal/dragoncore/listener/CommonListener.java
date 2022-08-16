@@ -1,5 +1,6 @@
 package net.sakuragame.eternal.dragoncore.listener;
 
+import com.taylorswiftcn.justwei.util.MegumiUtil;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
 import org.bukkit.event.EventHandler;
@@ -24,6 +25,8 @@ public class CommonListener implements Listener {
     private void showName(Entity entity) {
         Item item = (Item) entity;
         ItemStack itemStack = item.getItemStack();
+        if (MegumiUtil.isEmpty(itemStack)) return;
+
         int amount = itemStack.getAmount();
 
         ItemMeta meta = itemStack.getItemMeta();
