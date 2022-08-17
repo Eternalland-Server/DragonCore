@@ -45,6 +45,7 @@ public class MainCommand extends JustCommand {
         this.register(new ParticleRemoveCommand());
         this.register(new GetSkullCommand());
         this.register(new SetSkullCommand());
+        this.register(new GetSkinsCommand());
         this.register(new ReloadCommand());
     }
 }
