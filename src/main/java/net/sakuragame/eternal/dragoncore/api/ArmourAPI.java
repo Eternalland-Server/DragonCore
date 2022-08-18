@@ -10,9 +10,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.inventory.ItemStack;
 
 import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class ArmourAPI {
 
@@ -32,9 +30,9 @@ public class ArmourAPI {
         DragonAPI.setEntitySkin(entity, skins);
     }
 
-    public static List<String> getSkinsFormDB(int uid) {
+    public static Map<String, String> getSkinsFormDB(int uid) {
         JsonParser parser = new JsonParser();
-        List<String> skins = new ArrayList<>();
+        Map<String, String> skins = new HashMap<>();
 
         try (DatabaseQuery query = ClientManagerAPI.getDataManager().createQuery(
                 DragonCoreTable.DRAGON_CORE_SLOTS.getTableName(),
@@ -51,7 +49,7 @@ public class ArmourAPI {
                 JsonObject json = parser.parse(data).getAsJsonObject();
                 String skin = json.get("justattribute").getAsJsonObject().get("skin").getAsString();
                 skin = skin.substring(0, skin.length() - 1);
-                skins.add(skin);
+                skins.put(ident, skin);
             }
         }
         catch (Exception e) {
