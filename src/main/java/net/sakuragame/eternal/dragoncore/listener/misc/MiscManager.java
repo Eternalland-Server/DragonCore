@@ -12,20 +12,25 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.PluginManager;
+import org.bukkit.util.Vector;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class MiscManager implements Listener {
-    private final Map<UUID, Map<String, ItemStack>> cacheMap;
+
     private final DragonCore plugin;
+    private final Map<UUID, Map<String, ItemStack>> cacheMap;
+    private final Map<UUID, Vector> moveDir;
 
     public MiscManager(DragonCore plugin) {
         this.plugin = plugin;
         this.cacheMap = new ConcurrentHashMap<>();
+        this.moveDir = new HashMap<>();
 
         PluginManager pm = Bukkit.getPluginManager();
         YamlConfiguration config = plugin.getFileManager().getConfig();
@@ -60,12 +65,21 @@ public class MiscManager implements Listener {
         });
     }
 
+    @EventHandler
+    public void onMove(PlayerMoveEvent e) {
+        Player player = e.getPlayer();
+        UUID uuid = player.getUniqueId();
+
+        this.moveDir.put(uuid, e.getTo().clone().subtract(e.getFrom()).toVector());
+    }
+
 
     @EventHandler
     public void onQuit(PlayerQuitEvent e) {
         UUID uuid = e.getPlayer().getUniqueId();
 
-        cacheMap.remove(uuid);
+        this.cacheMap.remove(uuid);
+        this.moveDir.remove(uuid);
     }
 
     public void putItem(Player player, String identifier, ItemStack itemStack) {
@@ -77,6 +91,10 @@ public class MiscManager implements Listener {
 
     public Map<UUID, Map<String, ItemStack>> getCacheMap() {
         return cacheMap;
+    }
+
+    public Vector getMoveDirection(UUID uuid) {
+        return this.moveDir.get(uuid);
     }
 
 }
