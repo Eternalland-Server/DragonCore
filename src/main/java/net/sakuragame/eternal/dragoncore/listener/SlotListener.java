@@ -183,7 +183,6 @@ public class SlotListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onSlotRequireEvent(CustomPacketEvent e) {
-
         if (!e.getIdentifier().equals("DragonCore_RetrieveSlot"))
             return;
         if (e.isCancelled())
