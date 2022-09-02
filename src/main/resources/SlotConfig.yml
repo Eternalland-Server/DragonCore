@@ -20,14 +20,6 @@ potion_slot:
   skin: false
 pet_egg_slot:
   skin: false
-pet_saddle_slot:
-  skin: false
-pet_hat_slot:
-  skin: false
-pet_clothes_slot:
-  skin: false
-pet_adorn_slot:
-  skin: false
 
 suit_skin:
   skin: true
