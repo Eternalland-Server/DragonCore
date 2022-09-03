@@ -83,7 +83,7 @@ public class MiscManager implements Listener {
         Map<String, ItemStack> slotItems = this.cacheMap.remove(uuid);
         if (slotItems == null || slotItems.size() == 0) return;
 
-        plugin.getDB().saveSlotItems(player, slotItems);
+        Scheduler.runAsync(() -> plugin.getDB().saveSlotItems(player, slotItems));
     }
 
     public void putItem(Player player, String identifier, ItemStack itemStack) {
