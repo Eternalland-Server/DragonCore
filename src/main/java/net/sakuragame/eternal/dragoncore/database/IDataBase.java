@@ -7,18 +7,7 @@ import java.util.Map;
 
 public interface IDataBase {
 
-    void getData(Player player, String identifier, Callback<ItemStack> callback);
+    Map<String, ItemStack> getSlotItems(Player player);
 
-    void setData(Player player, String identifier, ItemStack itemStack, Callback<ItemStack> callback);
-
-    void getAllData(Player player, Callback<Map<String, ItemStack>> callback);
-
-    default void close() {
-    }
-
-    public interface Callback<T> {
-        void onResult(T p0);
-
-        void onFail();
-    }
+    void saveSlotItems(Player player, Map<String, ItemStack> items);
 }

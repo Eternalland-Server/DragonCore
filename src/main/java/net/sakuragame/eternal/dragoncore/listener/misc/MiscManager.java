@@ -5,7 +5,7 @@ import net.sakuragame.eternal.dragoncore.DragonCore;
 import net.sakuragame.eternal.dragoncore.api.event.PlayerSlotLoadedEvent;
 import net.sakuragame.eternal.dragoncore.api.event.PlayerSlotUpdateEvent;
 import net.sakuragame.eternal.dragoncore.config.sub.ConfigFile;
-import net.sakuragame.eternal.dragoncore.database.IDataBase;
+import net.sakuragame.eternal.dragoncore.util.Scheduler;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -18,7 +18,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.util.Vector;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class MiscManager implements Listener {
@@ -45,24 +47,21 @@ public class MiscManager implements Listener {
         if (!ConfigFile.slotEnable) return;
 
         Player player = e.getPlayer();
-        cacheMap.remove(e.getPlayer().getUniqueId());
-        Bukkit.getConsoleSender().sendMessage("[DragonCore] 开始载入玩家 " + player.getName() + " 物品");
-        long start = System.currentTimeMillis();
-        plugin.getDB().getAllData(player, new IDataBase.Callback<Map<String, ItemStack>>() {
-            @Override
-            public void onResult(Map<String, ItemStack> p0) {
-                long end = System.currentTimeMillis();
-                MiscManager.this.cacheMap.put(player.getUniqueId(), p0);
-                new PlayerSlotLoadedEvent(player).callEvent();
-                Bukkit.getConsoleSender().sendMessage("[DragonCore] 载入玩家 " + player.getName() + " 物品完成,共 " + p0.size() + " 个物品(" + (end - start) + "ms)");
-            }
+        UUID uuid = player.getUniqueId();
+        cacheMap.remove(uuid);
 
-            @Override
-            public void onFail() {
-                MiscManager.this.cacheMap.put(player.getUniqueId(), new HashMap<>());
-                Bukkit.getConsoleSender().sendMessage("[DragonCore] 载入玩家 " + player.getName() + " 物品失败");
-            }
-        });
+        Scheduler.runLater(() -> {
+            Bukkit.getConsoleSender().sendMessage("[DragonCore] 开始载入玩家 " + player.getName() + " 物品");
+
+            long start = System.currentTimeMillis();
+            Map<String, ItemStack> slotItems = plugin.getDB().getSlotItems(player);
+            long end = System.currentTimeMillis();
+
+            Bukkit.getConsoleSender().sendMessage("[DragonCore] 载入玩家 " + player.getName() + " 物品完成,共 " + slotItems.size() + " 个物品(" + (end - start) + "ms)");
+
+            this.cacheMap.put(uuid, slotItems);
+            new PlayerSlotLoadedEvent(player).callEvent();
+        }, 20);
     }
 
     @EventHandler
@@ -76,16 +75,30 @@ public class MiscManager implements Listener {
 
     @EventHandler
     public void onQuit(PlayerQuitEvent e) {
-        UUID uuid = e.getPlayer().getUniqueId();
+        Player player = e.getPlayer();
+        UUID uuid = player.getUniqueId();
 
-        this.cacheMap.remove(uuid);
         this.moveDir.remove(uuid);
+
+        Map<String, ItemStack> slotItems = this.cacheMap.remove(uuid);
+        if (slotItems == null || slotItems.size() == 0) return;
+
+        plugin.getDB().saveSlotItems(player, slotItems);
     }
 
     public void putItem(Player player, String identifier, ItemStack itemStack) {
-        if (cacheMap.containsKey(player.getUniqueId())) {
-            cacheMap.get(player.getUniqueId()).put(identifier, itemStack);
+        UUID uuid = player.getUniqueId();
+        if (cacheMap.containsKey(uuid)) {
+            cacheMap.get(uuid).put(identifier, itemStack);
             new PlayerSlotUpdateEvent(player, identifier, itemStack).callEvent();
+        }
+    }
+
+    public void removeItem(Player player, String identifier) {
+        UUID uuid = player.getUniqueId();
+        if (cacheMap.containsKey(uuid)) {
+            cacheMap.get(uuid).remove(identifier);
+            new PlayerSlotUpdateEvent(player, identifier, null).callEvent();
         }
     }
 
