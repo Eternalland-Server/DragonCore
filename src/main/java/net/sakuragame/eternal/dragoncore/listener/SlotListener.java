@@ -19,14 +19,9 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
-
 public class SlotListener implements Listener {
 
     private final DragonCore plugin;
-    private final Set<UUID> saving = new HashSet<>();
 
     public SlotListener() {
         this.plugin = DragonCore.getInstance();
@@ -51,7 +46,6 @@ public class SlotListener implements Listener {
         if (!e.getIdentifier().equals("DragonCore_ClickSlot")) return;
         if (e.isCancelled()) return;
         if (e.getData().size() != 2) return;
-        if (saving.contains(player.getUniqueId())) return;
 
         String identifier = e.getData().get(0);
         String clickParam = e.getData().get(1);
@@ -207,8 +201,6 @@ public class SlotListener implements Listener {
             event.callEvent();
             return;
         }
-
-        saving.add(player.getUniqueId());
 
         SlotAPI.setSlotItem(player, slotIdentity, itemStack, true);
     }
