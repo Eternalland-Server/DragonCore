@@ -4,14 +4,13 @@ import com.taylorswiftcn.justwei.util.MegumiUtil;
 import ink.ptms.zaphkiel.ZaphkielAPI;
 import net.sakuragame.eternal.dragoncore.DragonCore;
 import net.sakuragame.eternal.dragoncore.api.SlotAPI;
+import net.sakuragame.eternal.dragoncore.api.event.PlayerSlotHandleEvent;
 import net.sakuragame.eternal.dragoncore.api.event.PlayerSlotUpdateEvent;
 import net.sakuragame.eternal.dragoncore.api.event.slot.PlayerSlotClickEvent;
-import net.sakuragame.eternal.dragoncore.api.event.PlayerSlotHandleEvent;
 import net.sakuragame.eternal.dragoncore.api.event.slot.PlayerSlotClickedEvent;
 import net.sakuragame.eternal.dragoncore.api.gui.event.CustomPacketEvent;
 import net.sakuragame.eternal.dragoncore.api.slot.ClickType;
 import net.sakuragame.eternal.dragoncore.config.FileManager;
-import net.sakuragame.eternal.dragoncore.database.IDataBase;
 import net.sakuragame.eternal.dragoncore.network.PacketSender;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -211,19 +210,7 @@ public class SlotListener implements Listener {
 
         saving.add(player.getUniqueId());
 
-        SlotAPI.setSlotItem(player, slotIdentity, itemStack, true, new IDataBase.Callback<ItemStack>() {
-            @Override
-            public void onResult(ItemStack p0) {
-                saving.remove(player.getUniqueId());
-            }
-
-            @Override
-            public void onFail() {
-                player.sendMessage("§a物品储存失败，已将物品返回至背包中");
-                player.getInventory().addItem(itemStack);
-                saving.remove(player.getUniqueId());
-            }
-        });
+        SlotAPI.setSlotItem(player, slotIdentity, itemStack, true);
     }
 
     public void setCursorItem(Player player, ItemStack itemStack) {

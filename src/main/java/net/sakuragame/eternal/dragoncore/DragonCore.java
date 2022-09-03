@@ -64,7 +64,7 @@ public class DragonCore extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        DB.close();
+        Bukkit.getConsoleSender().sendMessage("§6DragonCore - 已卸载");
     }
 
     public void registerListener(Listener listener) {
