@@ -57,7 +57,9 @@ public class MysqlRepository implements IDataBase {
 
                 if (amount == 0) continue;
 
-                ItemStack itemStack = deserialize(player, id, amount, data, unique);
+                ItemStack itemStack = this.deserialize(player, id, amount, data, unique);
+                if (itemStack == null) continue;
+
                 items.put(ident, itemStack);
             }
             return items;
@@ -99,6 +101,8 @@ public class MysqlRepository implements IDataBase {
     }
 
     private ItemStack deserialize(Player player, String id, int amount, String data, String unique) {
+        if (!ZaphkielAPI.INSTANCE.getRegisteredItem().containsKey(id)) return null;
+
         JsonObject object = new JsonObject();
         object.addProperty("id", id);
         if (data != null && !data.isEmpty()) object.add("data", parse.parse(data));
