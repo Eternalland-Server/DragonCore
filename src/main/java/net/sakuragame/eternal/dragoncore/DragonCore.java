@@ -55,9 +55,7 @@ public class DragonCore extends JavaPlugin {
         registerListener(new PlaceholderListener());
         registerListener(new SlotListener());
         registerListener(new CommonListener());
-
-        if (Bukkit.getPluginManager().isPluginEnabled("MythicMobs"))
-            registerListener(new MythicMobsListener());
+        registerListener(new MythicMobsListener());
 
         Bukkit.getConsoleSender().sendMessage("§6DragonCore - 加载完成");
     }
